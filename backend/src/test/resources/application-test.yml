@@ -1,0 +1,26 @@
+# Testovi rade protiv stvarnog PostgreSQL-a, ne H2 — jer se ključna pravila
+# (EXCLUDE constraint nad tstzrange, uvjetni UPDATE-ovi) oslanjaju na
+# PostgreSQL semantiku. Test na H2 bi prolazio, a produkcija bi padala.
+spring:
+  datasource:
+    url: jdbc:postgresql://${POSTGRES_HOST:localhost}:${POSTGRES_PORT:5432}/${POSTGRES_TEST_DB:vulkanizer_test}
+    username: ${POSTGRES_USER:postgres}
+    password: ${POSTGRES_PASSWORD:postgres}
+  flyway:
+    locations: classpath:db/migration,classpath:db/testdata
+    clean-disabled: false
+  jpa:
+    hibernate:
+      ddl-auto: validate
+
+app:
+  jwt:
+    secret: test-only-secret-key-with-at-least-32-characters
+  rate-limit:
+    login-attempts: 5
+    login-window-minutes: 1
+
+logging:
+  level:
+    root: WARN
+    hr.demo.vulkanizer: WARN

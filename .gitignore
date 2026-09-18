@@ -1,0 +1,31 @@
+# --- Tajne / okolina ---
+.env
+.env.local
+*.pem
+*.key
+*.p12
+
+# --- Java / Maven ---
+target/
+!.mvn/wrapper/maven-wrapper.jar
+*.log
+
+# --- Node / Vite ---
+node_modules/
+dist/
+dist-ssr/
+.vite/
+coverage/
+playwright-report/
+test-results/
+blob-report/
+.playwright/
+
+# --- IDE ---
+.idea/
+.vscode/
+*.iml
+.DS_Store
+
+# --- Ostalo ---
+/screenshots/

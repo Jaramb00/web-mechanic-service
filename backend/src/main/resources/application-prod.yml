@@ -1,0 +1,20 @@
+# Produkcijski profil. Sve tajne dolaze iz okoline, ništa nema default vrijednost.
+spring:
+  flyway:
+    locations: classpath:db/migration   # BEZ demo seeda
+    clean-disabled: true
+
+server:
+  # Aplikacija je iza reverse proxyja koji terminira TLS; proxy mora slati
+  # X-Forwarded-Proto kako bi Spring znao da je zahtjev bio HTTPS.
+  forward-headers-strategy: framework
+
+app:
+  cookie:
+    secure: true          # cookie se ne smije slati preko čistog HTTP-a
+  cors:
+    allowed-origins: ${CORS_ALLOWED_ORIGINS}
+
+logging:
+  level:
+    hr.demo.vulkanizer: INFO

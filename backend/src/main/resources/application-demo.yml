@@ -1,0 +1,15 @@
+# Profil za demo prezentaciju: uključuje seed podatke i otključava `flyway clean`
+# kako bi se demo mogao resetirati skriptom scripts/reset-demo.sh.
+spring:
+  flyway:
+    locations: classpath:db/migration,classpath:db/demo
+    clean-disabled: false
+
+app:
+  jwt:
+    # Samo za lokalni demo. Produkcija nema default i pada bez JWT_SECRET.
+    secret: ${JWT_SECRET:demo-only-secret-key-min-32-bytes-long-do-not-use-in-production}
+
+logging:
+  level:
+    hr.demo.vulkanizer: DEBUG
