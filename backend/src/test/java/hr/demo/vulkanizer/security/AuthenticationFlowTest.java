@@ -12,6 +12,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -146,9 +147,22 @@ class AuthenticationFlowTest extends AbstractIntegrationTest {
     }
 
     @Test
-    @DisplayName("Neprijavljeni korisnik ne može doći do vlastitog profila")
-    void anonymousCannotReachProfile() throws Exception {
-        mockMvc.perform(get("/api/auth/me")).andExpect(status().isUnauthorized());
+    @DisplayName("Za neprijavljenog posjetitelja /me vraća prazan odgovor, ne grešku")
+    void anonymousProfileIsEmptyNotAnError() throws Exception {
+        // Odsutnost sesije je činjenica, ne greška: javna stranica poziva ovu
+        // rutu pri svakom učitavanju i ne smije pritom proizvoditi 401.
+        mockMvc.perform(get("/api/auth/me"))
+                .andExpect(status().isNoContent())
+                .andExpect(content().string(""));
+    }
+
+    @Test
+    @DisplayName("Neprijavljeni korisnik ne može doći do zaštićenih podataka")
+    void anonymousCannotReachProtectedData() throws Exception {
+        mockMvc.perform(get("/api/me/vehicles")).andExpect(status().isUnauthorized());
+        mockMvc.perform(get("/api/me/appointments")).andExpect(status().isUnauthorized());
+        mockMvc.perform(get("/api/admin/dashboard")).andExpect(status().isUnauthorized());
+        mockMvc.perform(get("/api/warehouse/products")).andExpect(status().isUnauthorized());
     }
 
     @Test

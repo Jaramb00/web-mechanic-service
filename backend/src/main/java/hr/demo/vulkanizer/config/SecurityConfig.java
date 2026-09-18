@@ -42,6 +42,10 @@ public class SecurityConfig {
             "/api/product-categories/**",
             "/api/working-hours",
             "/api/auth/csrf",
+            // `me` je javan namjerno: opisuje trenutnu sesiju i za anonimnog
+            // posjetitelja vraća 204, umjesto da javna stranica pri svakom
+            // učitavanju proizvede 401 u konzoli preglednika.
+            "/api/auth/me",
             "/v3/api-docs/**",
             "/swagger-ui/**",
             "/swagger-ui.html",

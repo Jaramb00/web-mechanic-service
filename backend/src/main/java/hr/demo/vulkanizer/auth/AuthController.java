@@ -64,11 +64,15 @@ class AuthController {
                 .build();
     }
 
-    @Operation(summary = "Podaci o prijavljenom korisniku")
+    @Operation(summary = "Podaci o prijavljenom korisniku; 204 ako nitko nije prijavljen")
     @GetMapping("/me")
-    AuthUserResponse me(@AuthenticationPrincipal AppPrincipal principal) {
+    ResponseEntity<AuthUserResponse> me(@AuthenticationPrincipal AppPrincipal principal) {
+        if (principal == null) {
+            return ResponseEntity.noContent().build();
+        }
         UserView user = users.getById(principal.userId());
-        return new AuthUserResponse(user.id(), user.email(), user.fullName(), user.roles());
+        return ResponseEntity.ok(
+                new AuthUserResponse(user.id(), user.email(), user.fullName(), user.roles()));
     }
 
     @Operation(summary = "Izmjena vlastitog profila")

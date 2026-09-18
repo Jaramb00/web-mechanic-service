@@ -1,0 +1,14 @@
+# TODO(klijent): prije objave zamijeniti domenu stvarnom.
+User-agent: *
+Allow: /
+
+# Portali i prijava nemaju što tražiti u tražilici.
+Disallow: /moj-racun
+Disallow: /admin
+Disallow: /radionica
+Disallow: /skladiste
+Disallow: /obavijesti
+Disallow: /prijava
+Disallow: /registracija
+
+Sitemap: https://www.primjer-vulkanizer.hr/sitemap.xml

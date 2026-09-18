@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="hr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0b4c8c" />
+
+    <!-- Naslov i opis postavlja svaka ruta kroz src/lib/seo.ts.
+         Ove vrijednosti su zadane i vide se prije hidracije. -->
+    <title>Vulkanizerski servis — rezervacija termina online</title>
+    <meta
+      name="description"
+      content="Zamjena sezonskih guma, balansiranje, popravak gume i hotel za gume. Rezervirajte termin online i vidite točno kad ima mjesta."
+    />
+    <link rel="canonical" href="https://www.primjer-vulkanizer.hr/" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="hr_HR" />
+    <meta property="og:site_name" content="Vulkanizerski servis (demo)" />
+    <meta property="og:title" content="Vulkanizerski servis — rezervacija termina online" />
+    <meta
+      property="og:description"
+      content="Vidite slobodne termine i rezervirajte bez poziva. Zamjena guma, balansiranje, popravak i hotel za gume."
+    />
+    <meta property="og:image" content="/og-image.svg" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/favicon.svg" />
+
+    <!-- Font se poslužuje s vlastite domene; preload skraćuje prvi ispis. -->
+    <link
+      rel="preload"
+      href="/fonts/archivo-latin.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+  </head>
+  <body>
+    <div id="root"></div>
+    <noscript>
+      Za rezervaciju termina potreban je JavaScript. Nazovite nas na broj naveden na stranici
+      i rado ćemo vas naručiti telefonom.
+    </noscript>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

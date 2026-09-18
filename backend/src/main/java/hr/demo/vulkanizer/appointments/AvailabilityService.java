@@ -1,6 +1,7 @@
 package hr.demo.vulkanizer.appointments;
 
 import hr.demo.vulkanizer.appointments.dto.DayAvailability;
+import hr.demo.vulkanizer.appointments.dto.NextSlot;
 import hr.demo.vulkanizer.appointments.dto.SlotView;
 import hr.demo.vulkanizer.catalog.ServiceCatalogFacade;
 import hr.demo.vulkanizer.catalog.ServiceView;
@@ -16,6 +17,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -117,6 +119,39 @@ public class AvailabilityService {
             }
         }
         return slots;
+    }
+
+    /**
+     * Prvi slobodan termin od sada nadalje.
+     *
+     * Javna stranica na tome gradi cijelu poruku, pa je to jedan namjenski upit
+     * umjesto da preglednik pogađa dan po dan. Pretraga staje čim nađe prvi
+     * slobodan termin ili dođe do kraja horizonta.
+     *
+     * Bez zadane usluge uzima se najkraća aktivna — nju je najlakše smjestiti,
+     * pa daje najraniji mogući termin.
+     */
+    @Transactional(readOnly = true)
+    public Optional<NextSlot> nextFreeSlot(Long serviceId) {
+        ServiceView service = serviceId != null
+                ? catalog.getBookable(serviceId)
+                : catalog.listActive().stream()
+                        .min(Comparator.comparingInt(ServiceView::durationMinutes))
+                        .orElse(null);
+        if (service == null) {
+            return Optional.empty();
+        }
+
+        LocalDate date = LocalDate.now(config.zone());
+        for (int offset = 0; offset <= config.horizonDays(); offset++) {
+            DayAvailability day = forDate(date.plusDays(offset), service.id());
+            Optional<SlotView> free = day.slots().stream().filter(SlotView::available).findFirst();
+            if (free.isPresent()) {
+                return Optional.of(new NextSlot(free.get().startAt(), free.get().endAt(),
+                        service.id(), service.name(), free.get().freeBays()));
+            }
+        }
+        return Optional.empty();
     }
 
     /** Provjere koje se rade prije upisa termina; baca ako termin nije legitiman. */

@@ -16,7 +16,9 @@ INSERT INTO users (email, password_hash, full_name, phone) VALUES
     ('skladiste@demo.local', '$2a$10$0/.jhBpR21f5pcCiUKHbhOEQAi36CTIS8tKM/0EVashDlOwoVdKuK', 'Demo Skladištar',    '+385 91 000 0003'),
     ('ivan@demo.local',      '$2a$10$0/.jhBpR21f5pcCiUKHbhOEQAi36CTIS8tKM/0EVashDlOwoVdKuK', 'Ivan Demić',         '+385 91 000 0011'),
     ('ana@demo.local',       '$2a$10$0/.jhBpR21f5pcCiUKHbhOEQAi36CTIS8tKM/0EVashDlOwoVdKuK', 'Ana Demić',          '+385 91 000 0012'),
-    ('marko@demo.local',     '$2a$10$0/.jhBpR21f5pcCiUKHbhOEQAi36CTIS8tKM/0EVashDlOwoVdKuK', 'Marko Demić',        '+385 91 000 0013');
+    ('marko@demo.local',     '$2a$10$0/.jhBpR21f5pcCiUKHbhOEQAi36CTIS8tKM/0EVashDlOwoVdKuK', 'Marko Demić',        '+385 91 000 0013'),
+    ('petra@demo.local',     '$2a$10$0/.jhBpR21f5pcCiUKHbhOEQAi36CTIS8tKM/0EVashDlOwoVdKuK', 'Petra Demić',        '+385 91 000 0014'),
+    ('tomislav@demo.local',  '$2a$10$0/.jhBpR21f5pcCiUKHbhOEQAi36CTIS8tKM/0EVashDlOwoVdKuK', 'Tomislav Demić',     '+385 91 000 0015');
 
 INSERT INTO user_roles (user_id, role_id)
 SELECT u.id, r.id
@@ -26,7 +28,9 @@ FROM (VALUES
     ('skladiste@demo.local', 'WAREHOUSE_WORKER'),
     ('ivan@demo.local',      'CUSTOMER'),
     ('ana@demo.local',       'CUSTOMER'),
-    ('marko@demo.local',     'CUSTOMER')
+    ('marko@demo.local',     'CUSTOMER'),
+    ('petra@demo.local',     'CUSTOMER'),
+    ('tomislav@demo.local',  'CUSTOMER')
 ) AS v (email, role_name)
 JOIN users u ON u.email = v.email
 JOIN roles r ON r.name = v.role_name;
@@ -41,7 +45,11 @@ FROM (VALUES
     ('ivan@demo.local',  'Škoda',      'Octavia',   2019, 'ZG5678CD', '225/45 R17'),
     ('ana@demo.local',   'Opel',       'Astra',     2014, 'ST2233EF', '195/65 R15'),
     ('ana@demo.local',   'Renault',    'Clio',      2021, 'ST4455GH', '185/65 R15'),
-    ('marko@demo.local', 'BMW',        'Serija 3',  2018, 'RI6677IJ', '225/50 R17')
+    ('marko@demo.local', 'BMW',        'Serija 3',  2018, 'RI6677IJ', '225/50 R17'),
+    ('marko@demo.local', 'Ford',       'Focus',     2017, 'RI8899OP', '205/55 R16'),
+    ('petra@demo.local',  'Peugeot',   '208',       2020, 'OS1122KL', '195/65 R15'),
+    ('petra@demo.local',  'Citroën',   'C3',        2015, 'OS7788QR', '185/65 R15'),
+    ('tomislav@demo.local','Toyota',   'Corolla',   2019, 'ZD3344MN', '205/55 R16')
 ) AS v (email, make, model, model_year, registration, tire_size)
 JOIN users u ON u.email = v.email;
 
@@ -159,19 +167,47 @@ SELECT u.id, v.id, s.id, b.id,
        (CURRENT_DATE + a.day_offset + a.start_time + make_interval(mins => s.duration_minutes)) AT TIME ZONE 'Europe/Zagreb',
        a.status, a.customer_note, a.mechanic_note
 FROM (VALUES
-    -- danas
-    ('ivan@demo.local',  'ZG1234AB', 'Zamjena sezonskih guma',   'Radno mjesto 1', 0, TIME '08:00', 'COMPLETED',   'Prelazak na zimske.',            'Odrađeno, tlak podešen na 2.3 bara.'),
-    ('ana@demo.local',   'ST2233EF', 'Balansiranje kotača',      'Radno mjesto 2', 0, TIME '08:30', 'IN_PROGRESS', 'Vibracije na 100 km/h.',          'Prednji lijevi kotač jako neuravnotežen.'),
-    ('marko@demo.local', 'RI6677IJ', 'Popravak gume',            'Radno mjesto 1', 0, TIME '10:00', 'CONFIRMED',   'Vijak u gumi, stražnja desna.',   NULL),
-    ('ana@demo.local',   'ST4455GH', 'Kontrola tlaka i ventila', 'Radno mjesto 3', 0, TIME '11:00', 'PENDING',     NULL,                              NULL),
-    ('ivan@demo.local',  'ZG5678CD', 'Hotel za gume (sezona)',   'Radno mjesto 2', 0, TIME '14:00', 'PENDING',     'Ostavljam ljetne na čuvanje.',    NULL),
-    -- sutra
-    ('marko@demo.local', 'RI6677IJ', 'Zamjena sezonskih guma',   'Radno mjesto 1', 1, TIME '09:00', 'CONFIRMED',   NULL,                              NULL),
-    ('ivan@demo.local',  'ZG1234AB', 'Krpanje gume',             'Radno mjesto 3', 1, TIME '09:30', 'PENDING',     'Sporo gubi tlak.',                NULL),
-    -- prošli tjedan
-    ('ana@demo.local',   'ST2233EF', 'Zamjena sezonskih guma',   'Radno mjesto 1', -7, TIME '08:00', 'COMPLETED',  NULL,                              'Gume istrošene, preporučena zamjena do proljeća.'),
-    ('marko@demo.local', 'RI6677IJ', 'Montaža i demontaža',      'Radno mjesto 2', -7, TIME '10:00', 'NO_SHOW',    NULL,                              'Stranka se nije pojavila.'),
-    ('ivan@demo.local',  'ZG5678CD', 'Popravak naplatka',        'Radno mjesto 3', -5, TIME '11:00', 'CANCELLED',  'Ipak idem kod ovlaštenog.',       NULL)
+    -- DANAS: sezonska navala. Jutro je namjerno popunjeno na sva tri radna
+    -- mjesta — bez toga tabla termina nikad ne prikaže zauzeto stanje, a upravo
+    -- je vidljiva popunjenost ono što demo treba pokazati.
+    ('ivan@demo.local',     'ZG1234AB', 'Zamjena sezonskih guma',   'Radno mjesto 1', 0, TIME '08:00', 'COMPLETED',   'Prelazak na zimske.',            'Odrađeno, tlak podešen na 2.3 bara.'),
+    ('ana@demo.local',      'ST2233EF', 'Zamjena sezonskih guma',   'Radno mjesto 2', 0, TIME '08:00', 'IN_PROGRESS', NULL,                              NULL),
+    ('marko@demo.local',    'RI6677IJ', 'Balansiranje kotača',      'Radno mjesto 3', 0, TIME '08:00', 'COMPLETED',   'Vibracije na 100 km/h.',          'Prednji lijevi kotač jako neuravnotežen.'),
+    ('petra@demo.local',    'OS1122KL', 'Krpanje gume',             'Radno mjesto 3', 0, TIME '08:30', 'CONFIRMED',   'Sporo gubi tlak.',                NULL),
+    ('ivan@demo.local',     'ZG5678CD', 'Zamjena sezonskih guma',   'Radno mjesto 1', 0, TIME '09:00', 'CONFIRMED',   NULL,                              NULL),
+    ('ana@demo.local',      'ST4455GH', 'Popravak gume',            'Radno mjesto 2', 0, TIME '09:00', 'CONFIRMED',   'Vijak u gumi, stražnja desna.',   NULL),
+    ('tomislav@demo.local', 'ZD3344MN', 'Zamjena sezonskih guma',   'Radno mjesto 3', 0, TIME '09:00', 'CONFIRMED',   NULL,                              NULL),
+    ('marko@demo.local',    'RI8899OP', 'Popravak gume',            'Radno mjesto 1', 0, TIME '10:00', 'CONFIRMED',   NULL,                              NULL),
+    ('petra@demo.local',    'OS1122KL', 'Kontrola tlaka i ventila', 'Radno mjesto 2', 0, TIME '10:00', 'PENDING',     NULL,                              NULL),
+    ('ivan@demo.local',     'ZG1234AB', 'Hotel za gume (sezona)',   'Radno mjesto 3', 0, TIME '10:00', 'PENDING',     'Ostavljam ljetne na čuvanje.',    NULL),
+    ('ana@demo.local',      'ST2233EF', 'Zamjena sezonskih guma',   'Radno mjesto 1', 0, TIME '11:00', 'PENDING',     NULL,                              NULL),
+    ('tomislav@demo.local', 'ZD3344MN', 'Krpanje gume',             'Radno mjesto 2', 0, TIME '11:00', 'PENDING',     NULL,                              NULL),
+    ('marko@demo.local',    'RI6677IJ', 'Montaža i demontaža',      'Radno mjesto 3', 0, TIME '11:00', 'PENDING',     NULL,                              NULL),
+    ('petra@demo.local',    'OS7788QR', 'Balansiranje kotača',      'Radno mjesto 2', 0, TIME '12:00', 'PENDING',     NULL,                              NULL),
+    ('ivan@demo.local',     'ZG5678CD', 'Hotel za gume (sezona)',   'Radno mjesto 1', 0, TIME '14:00', 'PENDING',     NULL,                              NULL),
+    -- SUTRA: jutro popunjeno na sva tri radna mjesta.
+    --
+    -- Popunjenost mora sjediti na danu koji posjetitelj STVARNO vidi. Termini u
+    -- prošlosti se ne nude, pa demo otvoren poslijepodne ne bi imao što
+    -- pokazati da je popunjen samo današnji dan.
+    ('ivan@demo.local',     'ZG1234AB', 'Zamjena sezonskih guma',   'Radno mjesto 1', 1, TIME '08:00', 'CONFIRMED',   NULL,                              NULL),
+    ('ana@demo.local',      'ST2233EF', 'Zamjena sezonskih guma',   'Radno mjesto 2', 1, TIME '08:00', 'CONFIRMED',   NULL,                              NULL),
+    ('marko@demo.local',    'RI6677IJ', 'Balansiranje kotača',      'Radno mjesto 3', 1, TIME '08:00', 'CONFIRMED',   NULL,                              NULL),
+    ('petra@demo.local',    'OS1122KL', 'Montaža i demontaža',      'Radno mjesto 3', 1, TIME '08:30', 'CONFIRMED',   NULL,                              NULL),
+    ('tomislav@demo.local', 'ZD3344MN', 'Zamjena sezonskih guma',   'Radno mjesto 1', 1, TIME '09:00', 'CONFIRMED',   NULL,                              NULL),
+    ('marko@demo.local',    'RI8899OP', 'Krpanje gume',             'Radno mjesto 2', 1, TIME '09:00', 'PENDING',     'Sporo gubi tlak.',                NULL),
+    ('ana@demo.local',      'ST4455GH', 'Zamjena sezonskih guma',   'Radno mjesto 3', 1, TIME '09:00', 'CONFIRMED',   NULL,                              NULL),
+    ('petra@demo.local',    'OS7788QR', 'Balansiranje kotača',      'Radno mjesto 2', 1, TIME '09:30', 'PENDING',     NULL,                              NULL),
+    ('ivan@demo.local',     'ZG5678CD', 'Popravak gume',            'Radno mjesto 1', 1, TIME '10:00', 'PENDING',     NULL,                              NULL),
+    ('ivan@demo.local',     'ZG1234AB', 'Kontrola tlaka i ventila', 'Radno mjesto 2', 1, TIME '10:00', 'PENDING',     NULL,                              NULL),
+    ('marko@demo.local',    'RI6677IJ', 'Hotel za gume (sezona)',   'Radno mjesto 3', 1, TIME '10:00', 'PENDING',     'Ostavljam ljetne na čuvanje.',    NULL),
+    -- PREKOSUTRA: rijetko popunjeno — razlika prema sutra čini nestašicu čitljivom.
+    ('ana@demo.local',      'ST2233EF', 'Zamjena sezonskih guma',   'Radno mjesto 1', 2, TIME '09:00', 'CONFIRMED',   NULL,                              NULL),
+    ('tomislav@demo.local', 'ZD3344MN', 'Popravak gume',            'Radno mjesto 2', 2, TIME '11:00', 'PENDING',     NULL,                              NULL),
+    -- POVIJEST: zatvoreni nalozi, da portal kupca ima što prikazati.
+    ('ana@demo.local',      'ST2233EF', 'Zamjena sezonskih guma',   'Radno mjesto 1', -7, TIME '08:00', 'COMPLETED',  NULL,                              'Gume istrošene, preporučena zamjena do proljeća.'),
+    ('marko@demo.local',    'RI6677IJ', 'Montaža i demontaža',      'Radno mjesto 2', -7, TIME '10:00', 'NO_SHOW',    NULL,                              'Stranka se nije pojavila.'),
+    ('ivan@demo.local',     'ZG5678CD', 'Popravak naplatka',        'Radno mjesto 3', -5, TIME '11:00', 'CANCELLED',  'Ipak idem kod ovlaštenog.',       NULL)
 ) AS a (email, registration, service_name, bay_name, day_offset, start_time, status, customer_note, mechanic_note)
 JOIN users u        ON u.email = a.email
 JOIN vehicles v     ON upper(v.registration) = upper(a.registration)

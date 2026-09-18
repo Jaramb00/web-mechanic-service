@@ -29,3 +29,9 @@ blob-report/
 
 # --- Ostalo ---
 /screenshots/
+
+# --- Impeccable radni artefakti ---
+.impeccable/review/
+.impeccable/mocks/
+.impeccable/build/
+*.tsbuildinfo
