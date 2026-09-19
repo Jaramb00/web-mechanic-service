@@ -51,7 +51,7 @@ jobs:
           POSTGRES_TEST_DB: vulkanizer_test
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
-        run: mvn -B verify
+        run: ./mvnw -B verify
 
       - name: Izvještaji o testovima
         if: always()
@@ -138,7 +138,7 @@ jobs:
 
       - name: Sagradi backend
         working-directory: backend
-        run: mvn -B -q package -DskipTests
+        run: ./mvnw -B -q package -DskipTests
 
       - name: Pokreni backend s demo podacima
         env:

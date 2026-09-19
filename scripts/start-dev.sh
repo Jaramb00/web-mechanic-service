@@ -39,9 +39,58 @@ fail() { printf '\n\033[31m✗ %s\033[0m\n' "$1" >&2; exit 1; }
 
 # --- 1. Preduvjeti ---------------------------------------------------------
 say "Provjeravam preduvjete"
-for cmd in java mvn node npm psql; do
-  command -v "$cmd" >/dev/null 2>&1 || fail "Nedostaje '$cmd'. Potrebno: Java 21+, Maven 3.9+, Node 22+, PostgreSQL klijent."
+
+# Maven NIJE preduvjet: projekt nosi Maven Wrapper, koji pri prvom pokretanju
+# sam skine ispravnu verziju Mavena. Sustavski `mvn` koristimo samo ako wrapper
+# iz nekog razloga nedostaje.
+if [ -x "$ROOT/backend/mvnw" ]; then
+  MVN="$ROOT/backend/mvnw"
+elif command -v mvn >/dev/null 2>&1; then
+  MVN="mvn"
+else
+  MVN=""
+fi
+
+# Sve što nedostaje prijavljujemo odjednom — inače korisnik instalira jedno po
+# jedno i svaki put ponovno pokreće skriptu.
+MISSING=""
+for cmd in java node npm psql; do
+  command -v "$cmd" >/dev/null 2>&1 || MISSING="$MISSING $cmd"
 done
+[ -n "$MVN" ] || MISSING="$MISSING maven"
+
+if [ -n "$MISSING" ]; then
+  # Nazivi paketa se razlikuju po sustavu, pa ih ne pogađamo — ispisujemo točnu naredbu.
+  case "$(uname -s)" in
+    Darwin)
+      JAVA_CMD="brew install --cask temurin@21"
+      NODE_CMD="brew install node"
+      PG_CMD="brew install postgresql@16 && brew services start postgresql@16"
+      MVN_CMD="brew install maven" ;;
+    Linux)
+      JAVA_CMD="sudo apt install openjdk-21-jdk"
+      NODE_CMD="sudo apt install nodejs npm"
+      PG_CMD="sudo apt install postgresql-16 postgresql-client-16"
+      MVN_CMD="sudo apt install maven" ;;
+    *)
+      JAVA_CMD="instalirajte JDK 21"
+      NODE_CMD="instalirajte Node 22"
+      PG_CMD="instalirajte PostgreSQL 16"
+      MVN_CMD="instalirajte Maven 3.9+" ;;
+  esac
+  HINTS=""
+  for m in $MISSING; do
+    case "$m" in
+      java)     HINTS="$HINTS\n    $JAVA_CMD" ;;
+      node)     HINTS="$HINTS\n    $NODE_CMD" ;;
+      npm)      ;;   # dolazi uz node, ne prijavljujemo dvaput
+      psql)     HINTS="$HINTS\n    $PG_CMD" ;;
+      maven)    HINTS="$HINTS\n    $MVN_CMD   (ili vratite backend/mvnw iz repozitorija)" ;;
+    esac
+  done
+  # shellcheck disable=SC2059
+  fail "$(printf "Nedostaje:%s\n\n  Instalirajte s:%b\n" "$MISSING" "$HINTS")"
+fi
 
 # Verziju vadimo iz navodnika (version "21.0.10"), a ne iz prvog retka: kad je
 # postavljen JAVA_TOOL_OPTIONS ili _JAVA_OPTIONS, JVM prvo ispiše redak
@@ -76,11 +125,33 @@ if ! pg_isready -h "$DB_HOST" -p "$DB_PORT" -q 2>/dev/null; then
 fi
 
 export PGPASSWORD="${POSTGRES_PASSWORD:-postgres}"
+
+# Homebrew na macOS-u NE stvara ulogu 'postgres' — superkorisnik se zove kao
+# korisnik sustava i nema lozinku. Zato probamo redom i uzmemo prvu koja spoji,
+# umjesto da tvrdimo da PostgreSQL ne radi.
+if [ -z "${POSTGRES_USER:-}" ]; then
+  for candidate in postgres "$(id -un)"; do
+    if psql -h "$DB_HOST" -p "$DB_PORT" -U "$candidate" -d postgres -tAc 'SELECT 1' >/dev/null 2>&1; then
+      DB_USER="$candidate"
+      break
+    fi
+  done
+fi
+
+if ! psql -h "$DB_HOST" -p "$DB_PORT" -U "$DB_USER" -d postgres -tAc 'SELECT 1' >/dev/null 2>&1; then
+  fail \
+"Ne mogu se spojiti na PostgreSQL kao '${DB_USER}'.
+  Postavite ispravne podatke i pokušajte ponovno, npr.:
+    POSTGRES_USER=$(id -un) POSTGRES_PASSWORD='' ./scripts/start-dev.sh"
+fi
+echo "  Spojen kao '${DB_USER}'."
+
 psql_root() { psql -h "$DB_HOST" -p "$DB_PORT" -U "$DB_USER" -d postgres -v ON_ERROR_STOP=1 -q "$@"; }
 
 if [ "$RESET" = true ]; then
   say "Resetiram demo podatke"
-  "$ROOT/scripts/reset-demo.sh" >/dev/null
+  POSTGRES_USER="$DB_USER" POSTGRES_DB="$DB_NAME" POSTGRES_HOST="$DB_HOST" \
+  POSTGRES_PORT="$DB_PORT" "$ROOT/scripts/reset-demo.sh" >/dev/null
   echo "  Baza '${DB_NAME}' je ponovno stvorena — Flyway će je popuniti pri dizanju."
 elif ! psql_root -tAc "SELECT 1 FROM pg_database WHERE datname='${DB_NAME}'" | grep -q 1; then
   say "Stvaram bazu '${DB_NAME}'"
@@ -116,7 +187,7 @@ echo "  Log: ${LOG_DIR}/backend.log"
   POSTGRES_DB="$DB_NAME" POSTGRES_USER="$DB_USER" \
   POSTGRES_HOST="$DB_HOST" POSTGRES_PORT="$DB_PORT" \
   POSTGRES_PASSWORD="$PGPASSWORD" \
-  mvn -q spring-boot:run
+  "$MVN" -q spring-boot:run
 ) > "$LOG_DIR/backend.log" 2>&1 &
 BACKEND_PID=$!
 

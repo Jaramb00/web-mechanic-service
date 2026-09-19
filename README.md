@@ -54,7 +54,9 @@ Potpun popis: [docs/IMPLEMENTED.md](docs/IMPLEMENTED.md).
 
 ### Jednom naredbom (preporučeno za demo)
 
-Potrebno: **Java 21+**, **Maven 3.9+**, **Node 22+**, **PostgreSQL 16+**.
+Potrebno: **Java 21+**, **Node 22+**, **PostgreSQL 16+**.
+Maven ne treba instalirati — projekt nosi Maven Wrapper (`backend/mvnw`), koji pri prvom
+pokretanju sam skine ispravnu verziju.
 
 ```bash
 ./scripts/start-dev.sh
@@ -91,7 +93,7 @@ Aplikacija: <http://localhost:8080> · Swagger: <http://localhost:8080/swagger-u
 
 ### Ručno (bez Dockera)
 
-Potrebno: **Java 21+**, **Maven 3.9+**, **Node 22+**, **PostgreSQL 16+**.
+Potrebno: **Java 21+**, **Node 22+**, **PostgreSQL 16+** (Maven dolazi kroz `./mvnw`).
 
 ```bash
 # 1. Baza
@@ -102,7 +104,7 @@ cd backend
 POSTGRES_USER=postgres POSTGRES_PASSWORD=postgres POSTGRES_DB=vulkanizer \
 SPRING_PROFILES_ACTIVE=demo \
 JWT_SECRET=$(openssl rand -base64 48) \
-mvn spring-boot:run
+./mvnw spring-boot:run
 
 # 3. Frontend (u drugom terminalu)
 cd frontend
@@ -155,8 +157,8 @@ Ti su podaci vidljivi i na stranici za prijavu dok je `IS_DEMO` uključen
 ```bash
 # Backend
 cd backend
-mvn spring-boot:run          # pokretanje
-mvn verify                   # testovi (traži PostgreSQL, vidi niže)
+./mvnw spring-boot:run       # pokretanje
+./mvnw verify                # testovi (traži PostgreSQL, vidi niže)
 
 # Frontend
 cd frontend
@@ -181,7 +183,7 @@ PostgreSQL semantiku, pa bi in-memory baza davala lažno zeleno.
 
 ```bash
 createdb vulkanizer_test
-cd backend && mvn verify
+cd backend && ./mvnw verify
 ```
 
 Pokriveno je ono što stvarno može poći po zlu:
