@@ -55,7 +55,7 @@ jobs:
 
       - name: Izvještaji o testovima
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: backend-surefire
           path: backend/target/surefire-reports/
@@ -178,7 +178,7 @@ jobs:
 
       - name: Playwright izvještaj
         if: failure()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: playwright-report
           path: frontend/playwright-report/
