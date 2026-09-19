@@ -29,6 +29,7 @@ blob-report/
 
 # --- Ostalo ---
 /screenshots/
+.dev-logs/
 
 # --- Impeccable radni artefakti ---
 .impeccable/review/

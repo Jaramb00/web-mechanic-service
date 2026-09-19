@@ -52,7 +52,27 @@ Potpun popis: [docs/IMPLEMENTED.md](docs/IMPLEMENTED.md).
 
 ## Brzo pokretanje
 
-### Docker Compose (preporučeno)
+### Jednom naredbom (preporučeno za demo)
+
+Potrebno: **Java 21+**, **Maven 3.9+**, **Node 22+**, **PostgreSQL 16+**.
+
+```bash
+./scripts/start-dev.sh
+```
+
+Skripta provjeri preduvjete, pokrene PostgreSQL ako ne radi, stvori bazu ako je nema,
+instalira ovisnosti frontenda pri prvom pokretanju, pa digne backend i frontend i pričeka
+da oba stvarno odgovore. Na kraju ispiše adresu i demo login podatke. `Ctrl+C` gasi oboje.
+
+Prije prezentacije klijentu, da demo podaci budu na početnom stanju:
+
+```bash
+./scripts/start-dev.sh --reset
+```
+
+Logovi su u `.dev-logs/` (nisu u Gitu).
+
+### Docker Compose
 
 ```bash
 cp .env.example .env
