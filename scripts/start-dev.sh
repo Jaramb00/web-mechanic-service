@@ -35,7 +35,21 @@ for arg in "$@"; do
 done
 
 say()  { printf '\n\033[1m▸ %s\033[0m\n' "$1"; }
-fail() { printf '\n\033[31m✗ %s\033[0m\n' "$1" >&2; exit 1; }
+
+REPORTED=false
+fail() { REPORTED=true; printf '\n\033[31m✗ %s\033[0m\n' "$1" >&2; exit 1; }
+
+# Mreža sigurnosti. Uz `set -e` svaka neuhvaćena greška gasi skriptu bez poruke,
+# a tihi izlaz je najgora moguća povratna informacija: korisnik ne zna ni je li
+# nešto pošlo po zlu. Ako se to ipak dogodi, barem kažemo gdje.
+on_error() {
+  local code=$?
+  [ "$REPORTED" = true ] && return 0
+  printf '\n\033[31m✗ Skripta je neočekivano prekinuta (redak %s, izlazni kod %s).\033[0m\n' "$1" "$code" >&2
+  printf '  Prijavite ovo s ispisom iznad.\n' >&2
+  return 0
+}
+trap 'on_error $LINENO' ERR
 
 # --- 1. Preduvjeti ---------------------------------------------------------
 say "Provjeravam preduvjete"
@@ -54,10 +68,17 @@ fi
 # Sve što nedostaje prijavljujemo odjednom — inače korisnik instalira jedno po
 # jedno i svaki put ponovno pokreće skriptu.
 MISSING=""
-for cmd in java node npm psql; do
+for cmd in node npm psql; do
   command -v "$cmd" >/dev/null 2>&1 || MISSING="$MISSING $cmd"
 done
 [ -n "$MVN" ] || MISSING="$MISSING maven"
+
+# Javu provjeravamo POKRETANJEM, ne postojanjem naredbe: macOS isporučuje
+# /usr/bin/java kao stub koji postoji i kad nijedan JDK nije instaliran, pa
+# `command -v java` prolazi, a `java -version` padne.
+if ! java -version >/dev/null 2>&1; then
+  MISSING="$MISSING java"
+fi
 
 if [ -n "$MISSING" ]; then
   # Nazivi paketa se razlikuju po sustavu, pa ih ne pogađamo — ispisujemo točnu naredbu.
@@ -95,14 +116,19 @@ fi
 # Verziju vadimo iz navodnika (version "21.0.10"), a ne iz prvog retka: kad je
 # postavljen JAVA_TOOL_OPTIONS ili _JAVA_OPTIONS, JVM prvo ispiše redak
 # "Picked up …" i parsiranje prvog retka javi pogrešnu verziju.
-JAVA_MAJOR="$(java -version 2>&1 | grep -Eo '"[0-9]+' | head -1 | tr -d '"')"
+#
+# `|| true` na kraju je nužan: uz `set -e` i `pipefail` cjevovod koji ništa ne
+# nađe sruši skriptu BEZ IJEDNE PORUKE. Provjera verzije nikad ne smije biti
+# tiši način da se odustane od posla.
+JAVA_MAJOR="$(java -version 2>&1 | grep -Eo '"[0-9]+' | head -1 | tr -d '"' || true)"
 if [ -z "$JAVA_MAJOR" ]; then
-  echo "  Upozorenje: ne mogu pročitati verziju Jave — nastavljam, Maven će javiti ako je prestara."
+  echo "  Upozorenje: ne mogu pročitati verziju Jave — nastavljam, build će javiti ako je prestara."
 elif [ "$JAVA_MAJOR" -lt 21 ]; then
-  fail "Java $JAVA_MAJOR je prestara — potrebna je 21 ili novija."
+  fail "Java $JAVA_MAJOR je prestara — potrebna je 21 ili novija.
+  macOS:  brew install --cask temurin@21"
 fi
 
-NODE_MAJOR="$(node -v | sed -E 's/^v([0-9]+).*/\1/')"
+NODE_MAJOR="$(node -v 2>/dev/null | sed -E 's/^v([0-9]+).*/\1/' || true)"
 if [ -z "$NODE_MAJOR" ]; then
   echo "  Upozorenje: ne mogu pročitati verziju Nodea — nastavljam."
 elif [ "$NODE_MAJOR" -lt 20 ]; then
