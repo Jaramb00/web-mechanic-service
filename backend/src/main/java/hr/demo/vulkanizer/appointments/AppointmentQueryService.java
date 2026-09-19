@@ -62,7 +62,7 @@ public class AppointmentQueryService {
     public Page<AppointmentView> listForStaff(AppointmentStatus status, LocalDate from, LocalDate to, Pageable pageable) {
         Instant fromInstant = from == null ? null : from.atStartOfDay(zone).toInstant();
         Instant toInstant = to == null ? null : to.plusDays(1).atStartOfDay(zone).toInstant();
-        return appointments.findForStaff(status, fromInstant, toInstant, pageable)
+        return appointments.findAll(AppointmentSpecs.forStaff(status, fromInstant, toInstant), pageable)
                 .map(assembler::toViewForStaff);
     }
 }

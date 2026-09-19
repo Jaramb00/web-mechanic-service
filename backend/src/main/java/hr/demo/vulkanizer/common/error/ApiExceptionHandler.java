@@ -15,6 +15,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -88,6 +89,17 @@ public class ApiExceptionHandler {
         log.warn("Narušen integritet podataka", ex);
         return problem(HttpStatus.CONFLICT, "Sukob sa stanjem sustava",
                 "Podatak se kosi s postojećim zapisom.");
+    }
+
+    /**
+     * Nepostojeća ruta je 404, ne 500. Spring ovdje baca NoResourceFoundException,
+     * koja bi inače upala u catch-all ispod i prijavila grešku poslužitelja —
+     * a to pri dijagnozi vodi na krivi trag: tražiš kvar u aplikaciji umjesto
+     * krivo napisanog URL-a.
+     */
+    @ExceptionHandler(NoResourceFoundException.class)
+    public ProblemDetail onNoResource(NoResourceFoundException ex) {
+        return problem(HttpStatus.NOT_FOUND, "Nije pronađeno", "Tražena putanja ne postoji.");
     }
 
     @ExceptionHandler(Exception.class)
