@@ -9,7 +9,8 @@ import { SectionHeader } from '@/components/layout/PortalLayout';
 import { ButtonLink } from '@/components/ui/Button';
 import { AppointmentStatusBadge } from '@/components/ui/Status';
 import { EmptyState, ErrorState, LoadingRows } from '@/components/ui/Feedback';
-import { ArrowRight, Car, Clock } from '@/components/ui/Icon';
+import { ArrowRight } from '@/components/ui/Icon';
+import { EmptyArt } from '@/components/ui/EmptyArt';
 
 export default function CustomerOverview() {
   const { user } = useAuth();
@@ -56,7 +57,7 @@ export default function CustomerOverview() {
               />
             ) : (upcoming?.length ?? 0) === 0 ? (
               <EmptyState
-                icon={<Clock size={36} />}
+                illustration={<EmptyArt kind="appointments" className="h-24 w-24 sm:h-28 sm:w-28" />}
                 title="Nemate zakazanih termina"
                 description="Kad rezervirate termin, pojavit će se ovdje zajedno sa statusom."
                 action={<ButtonLink to="/rezervacija">Rezerviraj termin</ButtonLink>}
@@ -87,7 +88,7 @@ export default function CustomerOverview() {
               <LoadingRows rows={2} />
             ) : (vehicles.data?.length ?? 0) === 0 ? (
               <EmptyState
-                icon={<Car size={36} />}
+                illustration={<EmptyArt kind="vehicles" className="h-24 w-24 sm:h-28 sm:w-28" />}
                 title="Nema upisanih vozila"
                 description="Vozilo je potrebno za rezervaciju termina."
                 action={<ButtonLink to="/moj-racun/vozila">Dodaj vozilo</ButtonLink>}

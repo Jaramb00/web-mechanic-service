@@ -13,7 +13,8 @@ import { reservationStatusLabel } from '@/lib/statusLabels';
 import { Alert, EmptyState, ErrorState, LoadingRows } from '@/components/ui/Feedback';
 import { Pagination } from '@/components/ui/Pagination';
 import { ConfirmDialog } from '@/components/ui/ConfirmDialog';
-import { Box } from '@/components/ui/Icon';
+
+import { EmptyArt } from '@/components/ui/EmptyArt';
 
 const STATUSES: ReservationStatus[] = ['PENDING', 'CONFIRMED', 'FULFILLED', 'CANCELLED'];
 
@@ -102,7 +103,7 @@ export default function WarehouseReservations() {
       ) : isError ? (
         <ErrorState message={errorMessage(error)} onRetry={() => void refetch()} />
       ) : (data?.content.length ?? 0) === 0 ? (
-        <EmptyState icon={<Box size={40} />} title="Nema rezervacija" description="Za zadani status nema zapisa." />
+        <EmptyState illustration={<EmptyArt kind="inventory" />} title="Nema rezervacija" description="Za zadani status nema zapisa." />
       ) : (
         <>
           <DataTable

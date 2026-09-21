@@ -12,7 +12,8 @@ import { EmptyState, ErrorState, LoadingRows } from '@/components/ui/Feedback';
 import { Pagination } from '@/components/ui/Pagination';
 import { SelectField, TextField } from '@/components/ui/Field';
 import { Button } from '@/components/ui/Button';
-import { Clock } from '@/components/ui/Icon';
+
+import { EmptyArt } from '@/components/ui/EmptyArt';
 
 const STATUSES: AppointmentStatus[] = [
   'PENDING',
@@ -108,8 +109,7 @@ export default function AdminAppointments() {
       ) : isError ? (
         <ErrorState message={errorMessage(error)} onRetry={() => void refetch()} />
       ) : (data?.content.length ?? 0) === 0 ? (
-        <EmptyState
-          icon={<Clock size={40} />}
+        <EmptyState illustration={<EmptyArt kind="appointments" />}
           title="Nema termina za zadane uvjete"
           description="Promijenite filtre ili ih poništite da biste vidjeli sve termine."
         />

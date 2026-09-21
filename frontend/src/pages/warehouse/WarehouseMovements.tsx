@@ -8,7 +8,8 @@ import { SectionHeader } from '@/components/layout/PortalLayout';
 import { DataTable, Td, Th, Tr } from '@/components/ui/Table';
 import { EmptyState, ErrorState, LoadingRows } from '@/components/ui/Feedback';
 import { Pagination } from '@/components/ui/Pagination';
-import { Box } from '@/components/ui/Icon';
+
+import { EmptyArt } from '@/components/ui/EmptyArt';
 import { cn } from '@/lib/cn';
 
 const MOVEMENT_LABELS: Record<MovementType, string> = {
@@ -40,7 +41,7 @@ export default function WarehouseMovements() {
       ) : isError ? (
         <ErrorState message={errorMessage(error)} onRetry={() => void refetch()} />
       ) : (data?.content.length ?? 0) === 0 ? (
-        <EmptyState icon={<Box size={40} />} title="Nema zapisa" description="Promet će se pojaviti nakon prve promjene zalihe." />
+        <EmptyState illustration={<EmptyArt kind="inventory" />} title="Nema zapisa" description="Promet će se pojaviti nakon prve promjene zalihe." />
       ) : (
         <>
           <DataTable

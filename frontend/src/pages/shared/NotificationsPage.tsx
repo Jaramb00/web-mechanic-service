@@ -6,7 +6,8 @@ import type { NotificationView, PageResponse } from '@/lib/types';
 import { SectionHeader } from '@/components/layout/PortalLayout';
 import { Button } from '@/components/ui/Button';
 import { EmptyState, ErrorState, LoadingRows } from '@/components/ui/Feedback';
-import { Bell } from '@/components/ui/Icon';
+
+import { EmptyArt } from '@/components/ui/EmptyArt';
 import { cn } from '@/lib/cn';
 
 export default function NotificationsPage() {
@@ -45,8 +46,7 @@ export default function NotificationsPage() {
       ) : isError ? (
         <ErrorState message={errorMessage(error)} onRetry={() => void refetch()} />
       ) : (data?.content.length ?? 0) === 0 ? (
-        <EmptyState
-          icon={<Bell size={40} />}
+        <EmptyState illustration={<EmptyArt kind="notifications" />}
           title="Nema obavijesti"
           description="Kad rezervirate termin ili se promijeni njegov status, obavijest će se pojaviti ovdje."
         />

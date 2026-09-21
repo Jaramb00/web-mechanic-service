@@ -10,7 +10,8 @@ import { SelectField, TextAreaField, TextField } from '@/components/ui/Field';
 import { AppointmentStatusBadge } from '@/components/ui/Status';
 import { appointmentStatusLabel } from '@/lib/statusLabels';
 import { Alert, EmptyState, ErrorState, LoadingRows } from '@/components/ui/Feedback';
-import { ArrowLeft, ArrowRight, Box, Clock, Phone } from '@/components/ui/Icon';
+import { ArrowLeft, ArrowRight, Box, Phone } from '@/components/ui/Icon';
+import { EmptyArt } from '@/components/ui/EmptyArt';
 
 /** Prijelazi koje majstor smije napraviti. Poslužitelj ih provjerava ponovno. */
 const NEXT_STATUS: Partial<Record<AppointmentStatus, AppointmentStatus[]>> = {
@@ -72,8 +73,7 @@ export default function WorkBoard() {
       ) : isError ? (
         <ErrorState message={errorMessage(error)} onRetry={() => void refetch()} />
       ) : (data?.length ?? 0) === 0 ? (
-        <EmptyState
-          icon={<Clock size={40} />}
+        <EmptyState illustration={<EmptyArt kind="appointments" />}
           title="Za ovaj dan nema termina"
           description="Prebacite se na drugi dan ili pričekajte nove rezervacije."
         />

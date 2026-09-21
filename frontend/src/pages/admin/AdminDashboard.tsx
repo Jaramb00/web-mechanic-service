@@ -9,7 +9,8 @@ import { AppointmentStatusBadge } from '@/components/ui/Status';
 import { DataTable, Td, Th, Tr } from '@/components/ui/Table';
 import { EmptyState, ErrorState, LoadingRows, Skeleton } from '@/components/ui/Feedback';
 import { ButtonLink } from '@/components/ui/Button';
-import { AlertTriangle, Clock } from '@/components/ui/Icon';
+import { AlertTriangle } from '@/components/ui/Icon';
+import { EmptyArt } from '@/components/ui/EmptyArt';
 
 export default function AdminDashboard() {
   const { data, isLoading, isError, error, refetch } = useQuery({
@@ -48,8 +49,7 @@ export default function AdminDashboard() {
             {isLoading ? (
               <LoadingRows rows={4} />
             ) : (data?.todaySchedule.length ?? 0) === 0 ? (
-              <EmptyState
-                icon={<Clock size={36} />}
+              <EmptyState illustration={<EmptyArt kind="appointments" />}
                 title="Danas nema zakazanih termina"
                 description="Kad stranke rezerviraju termin, raspored dana pojavit će se ovdje."
               />

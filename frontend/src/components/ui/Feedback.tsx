@@ -84,9 +84,9 @@ export function Alert({
  * Prazno stanje nije greška — objašnjava zašto je prazno i nudi sljedeći korak.
  *
  * `illustration` i `icon` se isključuju: ilustracija ima prednost, a ikona
- * ostaje za mjesta gdje bi slika bila prevelika (uži stupci, dijalozi).
- * Ilustracija je uvijek `alt=""` jer je ukrasna — naslov i opis ispod nje već
- * nose cijelu poruku, pa bi je čitač ekrana inače pročitao dvaput.
+ * ostaje za mjesta gdje bi crtež bio prevelik (uži stupci, dijalozi).
+ * Ilustracija je uvijek `aria-hidden` jer je ukrasna — naslov i opis ispod nje
+ * već nose cijelu poruku, pa bi je čitač ekrana inače pročitao dvaput.
  */
 export function EmptyState({
   title,
@@ -99,20 +99,14 @@ export function EmptyState({
   description: string;
   action?: ReactNode;
   icon?: ReactNode;
-  illustration?: string;
+  illustration?: ReactNode;
 }) {
   return (
     <div className="flex flex-col items-center gap-3 rounded-card border border-dashed border-asphalt-200 bg-white px-6 py-12 text-center">
       {illustration ? (
-        <img
-          src={illustration}
-          alt=""
-          width={160}
-          height={160}
-          loading="lazy"
-          decoding="async"
-          className="mb-1 h-32 w-32 object-contain sm:h-40 sm:w-40"
-        />
+        <span aria-hidden="true" className="mb-1 block">
+          {illustration}
+        </span>
       ) : icon ? (
         <span className="text-asphalt-300">{icon}</span>
       ) : null}

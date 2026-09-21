@@ -19,6 +19,7 @@ import { SelectField, TextAreaField } from '@/components/ui/Field';
 import { SlotBoard, SlotLegend } from '@/components/SlotBoard';
 import { Alert, EmptyState, ErrorState, Skeleton } from '@/components/ui/Feedback';
 import { ArrowRight, Calendar, Car, Check, Clock, Wrench } from '@/components/ui/Icon';
+import { EmptyArt } from '@/components/ui/EmptyArt';
 import { cn } from '@/lib/cn';
 
 /** Odabir preživi preusmjeravanje na prijavu. */
@@ -230,6 +231,7 @@ export function BookingPage() {
             <Skeleton className="h-11 w-full max-w-md" />
           ) : (vehicles?.length ?? 0) === 0 ? (
             <EmptyState
+              illustration={<EmptyArt kind="vehicles" />}
               title="Još nemate upisano vozilo"
               description="Da bismo znali što servisiramo, upišite vozilo u svom računu. Traje manje od minute."
               action={

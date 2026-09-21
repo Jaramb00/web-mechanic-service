@@ -12,6 +12,7 @@ import { TextField } from '@/components/ui/Field';
 import { Alert, EmptyState, ErrorState, LoadingRows } from '@/components/ui/Feedback';
 import { ConfirmDialog } from '@/components/ui/ConfirmDialog';
 import { Car, Plus, Trash } from '@/components/ui/Icon';
+import { EmptyArt } from '@/components/ui/EmptyArt';
 
 const schema = z.object({
   make: z.string().trim().min(1, 'Marka je obavezna.').max(80),
@@ -171,8 +172,7 @@ export default function CustomerVehicles() {
       ) : isError ? (
         <ErrorState message={errorMessage(error)} onRetry={() => void refetch()} />
       ) : (data?.length ?? 0) === 0 ? (
-        <EmptyState
-          icon={<Car size={40} />}
+        <EmptyState illustration={<EmptyArt kind="vehicles" />}
           title="Nemate upisano nijedno vozilo"
           description="Dodajte vozilo da biste mogli rezervirati termin. Podaci se koriste samo za servis."
           action={<Button onClick={() => setAdding(true)}>Dodaj vozilo</Button>}

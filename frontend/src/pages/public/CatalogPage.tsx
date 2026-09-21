@@ -8,7 +8,8 @@ import { Section, SectionTitle } from '@/components/ui/Section';
 import { Button, ButtonLink } from '@/components/ui/Button';
 import { Pagination } from '@/components/ui/Pagination';
 import { Alert, EmptyState, ErrorState, Skeleton } from '@/components/ui/Feedback';
-import { Search, Tire } from '@/components/ui/Icon';
+import { Search } from '@/components/ui/Icon';
+import { EmptyArt } from '@/components/ui/EmptyArt';
 import { ReserveDialog } from '@/features/reservations/ReserveDialog';
 import type { ProductView } from '@/lib/types';
 import { cn } from '@/lib/cn';
@@ -62,7 +63,7 @@ export function CatalogPage() {
             value={search}
             onChange={(event) => setSearch(event.target.value)}
             placeholder="Dimenzija, npr. 205/55 R16 — ili naziv"
-            className="min-h-11 w-full rounded-plate border border-asphalt-200 bg-white pl-10 pr-3 text-[0.9375rem] placeholder:text-asphalt-500 hover:border-asphalt-500 focus:border-midnight-800"
+            className="min-h-11 w-full rounded-control border border-asphalt-200 bg-white pl-10 pr-3 text-[0.9375rem] transition-[border-color,box-shadow] duration-150 ease-out placeholder:text-asphalt-300 hover:border-asphalt-300 focus:border-midnight-800 focus:shadow-plate"
           />
         </div>
         <Button type="submit" variant="secondary">
@@ -98,8 +99,7 @@ export function CatalogPage() {
         ) : isError ? (
           <ErrorState message={errorMessage(error)} onRetry={() => void refetch()} />
         ) : (data?.content.length ?? 0) === 0 ? (
-          <EmptyState
-            icon={<Tire size={40} />}
+          <EmptyState illustration={<EmptyArt kind="inventory" />}
             title="Nema artikala za taj upit"
             description="Pokušajte s drugom dimenzijom ili poništite filtar. Ako tražite nešto određeno, nazovite nas — možemo naručiti."
             action={

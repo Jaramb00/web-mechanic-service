@@ -10,7 +10,8 @@ import { AppointmentStatusBadge } from '@/components/ui/Status';
 import { Alert, EmptyState, ErrorState, LoadingRows } from '@/components/ui/Feedback';
 import { ConfirmDialog } from '@/components/ui/ConfirmDialog';
 import { Pagination } from '@/components/ui/Pagination';
-import { Clock } from '@/components/ui/Icon';
+
+import { EmptyArt } from '@/components/ui/EmptyArt';
 
 export default function CustomerAppointments() {
   const queryClient = useQueryClient();
@@ -58,8 +59,7 @@ export default function CustomerAppointments() {
       ) : isError ? (
         <ErrorState message={errorMessage(error)} onRetry={() => void refetch()} />
       ) : (data?.content.length ?? 0) === 0 ? (
-        <EmptyState
-          icon={<Clock size={40} />}
+        <EmptyState illustration={<EmptyArt kind="appointments" />}
           title="Još nemate nijedan termin"
           description="Kad rezervirate termin, ovdje ćete vidjeti njegov status, vozilo i uslugu."
           action={<ButtonLink to="/rezervacija">Rezerviraj termin</ButtonLink>}

@@ -11,7 +11,8 @@ import { SelectField, TextAreaField, TextField } from '@/components/ui/Field';
 import { DataTable, Td, Th, Tr } from '@/components/ui/Table';
 import { Alert, EmptyState, ErrorState, LoadingRows } from '@/components/ui/Feedback';
 import { Pagination } from '@/components/ui/Pagination';
-import { AlertTriangle, Box, Search } from '@/components/ui/Icon';
+import { AlertTriangle, Search } from '@/components/ui/Icon';
+import { EmptyArt } from '@/components/ui/EmptyArt';
 import { cn } from '@/lib/cn';
 
 type Operation = 'receive' | 'issue' | 'adjust';
@@ -144,7 +145,7 @@ export default function WarehouseStock() {
       ) : isError ? (
         <ErrorState message={errorMessage(error)} onRetry={() => void refetch()} />
       ) : (data?.content.length ?? 0) === 0 ? (
-        <EmptyState icon={<Box size={40} />} title="Nema artikala" description="Promijenite pretragu ili kategoriju." />
+        <EmptyState illustration={<EmptyArt kind="inventory" />} title="Nema artikala" description="Promijenite pretragu ili kategoriju." />
       ) : (
         <>
           <DataTable

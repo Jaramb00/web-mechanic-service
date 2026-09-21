@@ -45,12 +45,12 @@ export function PublicLayout() {
             aria-label={`${site.name} — naslovnica`}
           >
             <BrandMark className="h-9 w-9 text-white" />
-            <span className="display truncate text-xl leading-none text-white sm:text-2xl">
+            <span className="display truncate text-lg leading-none text-white sm:text-xl">
               {site.name}
             </span>
           </Link>
 
-          <nav aria-label="Glavna navigacija" className="ml-auto hidden lg:block">
+          <nav aria-label="Glavna navigacija" className="ml-auto hidden xl:block">
             <ul className="flex items-center gap-1">
               {NAV.map((item) => (
                 <li key={item.to}>
@@ -58,7 +58,7 @@ export function PublicLayout() {
                     to={item.to}
                     className={({ isActive }) =>
                       cn(
-                        'block rounded-pill px-3.5 py-2 text-[0.9375rem] font-semibold no-underline transition-colors duration-150 ease-out',
+                        'block whitespace-nowrap rounded-pill px-3.5 py-2 text-[0.9375rem] font-semibold no-underline transition-colors duration-150 ease-out',
                         isActive
                           ? 'bg-volt-500 text-asphalt-950'
                           : 'text-midnight-100 hover:bg-midnight-700 hover:text-white',
@@ -72,10 +72,10 @@ export function PublicLayout() {
             </ul>
           </nav>
 
-          <div className="ml-auto flex items-center gap-2 lg:ml-0">
+          <div className="ml-auto flex items-center gap-2 xl:ml-0">
             <a
               href={site.contact.phoneHref}
-              className="hidden items-center gap-2 rounded-pill px-3.5 py-2 font-bold text-white no-underline transition-colors duration-150 hover:bg-midnight-700 sm:flex"
+              className="hidden items-center gap-2 whitespace-nowrap rounded-pill px-3.5 py-2 font-bold text-white no-underline transition-colors duration-150 hover:bg-midnight-700 sm:flex"
             >
               <Phone size={18} />
               {site.contact.phone}
@@ -101,7 +101,7 @@ export function PublicLayout() {
               aria-expanded={menuOpen}
               aria-controls="mobilni-izbornik"
               aria-label={menuOpen ? 'Zatvori izbornik' : 'Otvori izbornik'}
-              className="flex min-h-11 min-w-11 items-center justify-center rounded-pill text-white transition-colors duration-150 hover:bg-midnight-700 lg:hidden"
+              className="flex min-h-11 min-w-11 items-center justify-center rounded-pill text-white transition-colors duration-150 hover:bg-midnight-700 xl:hidden"
             >
               {menuOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
@@ -112,7 +112,7 @@ export function PublicLayout() {
           <nav
             id="mobilni-izbornik"
             aria-label="Izbornik"
-            className="border-t-2 border-midnight-950 bg-midnight-900 lg:hidden"
+            className="border-t border-midnight-800 bg-midnight-900 xl:hidden"
           >
             <ul className="mx-auto w-full max-w-6xl px-4 py-2">
               {NAV.map((item) => (

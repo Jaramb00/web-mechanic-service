@@ -11,7 +11,8 @@ import { DataTable, Td, Th, Tr } from '@/components/ui/Table';
 import { Alert, EmptyState, ErrorState, LoadingRows } from '@/components/ui/Feedback';
 import { ConfirmDialog } from '@/components/ui/ConfirmDialog';
 import { Pagination } from '@/components/ui/Pagination';
-import { Box } from '@/components/ui/Icon';
+
+import { EmptyArt } from '@/components/ui/EmptyArt';
 
 export default function CustomerReservations() {
   const queryClient = useQueryClient();
@@ -54,8 +55,7 @@ export default function CustomerReservations() {
       ) : isError ? (
         <ErrorState message={errorMessage(error)} onRetry={() => void refetch()} />
       ) : (data?.content.length ?? 0) === 0 ? (
-        <EmptyState
-          icon={<Box size={40} />}
+        <EmptyState illustration={<EmptyArt kind="inventory" />}
           title="Nemate rezerviranih artikala"
           description="U ponudi možete provjeriti dostupne gume i dijelove te ih rezervirati za preuzimanje u servisu."
           action={<ButtonLink to="/ponuda-guma">Otvori ponudu</ButtonLink>}
