@@ -9,13 +9,20 @@ import { cn } from '@/lib/cn';
  * vezana je uz polje kroz `aria-describedby`, pa je čitač ekrana pročita
  * zajedno s poljem.
  */
+/**
+ * Rub je tanak (1 px) umjesto dvostrukog: obrazac s osam polja u okvirima od
+ * 2 px izgleda kao rešetka, a ne kao niz pitanja. Stanje se čita iz boje ruba
+ * i mekog prstena na fokusu.
+ */
 const CONTROL =
-  'w-full min-h-11 rounded-plate border-2 bg-white px-3 text-[0.9375rem] text-asphalt-950 ' +
-  'placeholder:text-asphalt-500 transition-colors duration-100 ' +
+  'w-full min-h-11 rounded-control border bg-white px-3.5 text-[0.9375rem] text-asphalt-950 ' +
+  'placeholder:text-asphalt-300 transition-[border-color,box-shadow] duration-150 ease-out ' +
   'disabled:bg-asphalt-50 disabled:text-asphalt-500 disabled:cursor-not-allowed';
 
-const CONTROL_OK = 'border-asphalt-300 hover:border-asphalt-500 focus:border-midnight-800';
-const CONTROL_ERROR = 'border-stop-600 hover:border-stop-700 focus:border-stop-700';
+const CONTROL_OK =
+  'border-asphalt-200 hover:border-asphalt-300 focus:border-midnight-800 focus:shadow-plate';
+const CONTROL_ERROR =
+  'border-stop-500 hover:border-stop-600 focus:border-stop-600 focus:shadow-plate';
 
 type FieldShellProps = {
   label: string;

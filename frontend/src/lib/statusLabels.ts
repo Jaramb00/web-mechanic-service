@@ -7,23 +7,23 @@ import type { AppointmentStatus, ReservationStatus } from './types';
  * samo oznake. Oblik je jednako važan kao boja: korisnik koji ne razlikuje boje
  * status prepoznaje po obliku, kao na prometnom znaku.
  */
-export type StatusTone = 'signal' | 'work' | 'go' | 'stop' | 'neutral';
+export type StatusTone = 'midnight' | 'volt' | 'go' | 'stop' | 'neutral';
 export type StatusShape = 'rect' | 'triangle' | 'circle';
 
 type StatusConfig = { label: string; tone: StatusTone; shape: StatusShape };
 
 export const APPOINTMENT_STATUS: Record<AppointmentStatus, StatusConfig> = {
-  PENDING: { label: 'Na čekanju', tone: 'work', shape: 'triangle' },
-  CONFIRMED: { label: 'Potvrđen', tone: 'signal', shape: 'rect' },
-  IN_PROGRESS: { label: 'U tijeku', tone: 'signal', shape: 'rect' },
+  PENDING: { label: 'Na čekanju', tone: 'volt', shape: 'triangle' },
+  CONFIRMED: { label: 'Potvrđen', tone: 'midnight', shape: 'rect' },
+  IN_PROGRESS: { label: 'U tijeku', tone: 'midnight', shape: 'rect' },
   COMPLETED: { label: 'Završen', tone: 'go', shape: 'circle' },
   CANCELLED: { label: 'Otkazan', tone: 'stop', shape: 'circle' },
   NO_SHOW: { label: 'Nije došao', tone: 'stop', shape: 'circle' },
 };
 
 export const RESERVATION_STATUS: Record<ReservationStatus, StatusConfig> = {
-  PENDING: { label: 'Na čekanju', tone: 'work', shape: 'triangle' },
-  CONFIRMED: { label: 'Potvrđena', tone: 'signal', shape: 'rect' },
+  PENDING: { label: 'Na čekanju', tone: 'volt', shape: 'triangle' },
+  CONFIRMED: { label: 'Potvrđena', tone: 'midnight', shape: 'rect' },
   FULFILLED: { label: 'Preuzeto', tone: 'go', shape: 'circle' },
   CANCELLED: { label: 'Otkazana', tone: 'stop', shape: 'circle' },
 };

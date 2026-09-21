@@ -9,21 +9,25 @@ import {
 } from '@/lib/statusLabels';
 
 /**
- * Statusne oznake posuđuju semantiku oblika s ceste:
+ * Statusne oznake zadržavaju semantiku oblika:
  *   pravokutnik = obavijest, trokut = upozorenje, krug = zabrana.
- * Oblik nosi značenje i za korisnike koji ne razlikuju boje.
+ *
+ * Ovo je jedina stvar preuzeta iz starog znakovnog sustava, i to namjerno:
+ * oblik je jedini nositelj značenja za korisnika koji ne razlikuje boje, pa
+ * nije ukras nego pristupačnost. Sama oznaka je sada pilula umjesto ploče —
+ * značenje i dalje nosi znak unutra, ne obris.
  */
 const TONES: Record<Tone, string> = {
-  signal: 'bg-midnight-100 text-midnight-950 border-midnight-800',
-  work: 'bg-volt-100 text-asphalt-950 border-volt-600',
-  go: 'bg-go-100 text-go-700 border-go-600',
-  stop: 'bg-stop-100 text-stop-700 border-stop-600',
-  neutral: 'bg-asphalt-100 text-asphalt-700 border-asphalt-300',
+  midnight: 'bg-midnight-100 text-midnight-950 border-midnight-200',
+  volt: 'bg-volt-100 text-asphalt-950 border-volt-600',
+  go: 'bg-go-100 text-go-700 border-go-300',
+  stop: 'bg-stop-100 text-stop-700 border-stop-300',
+  neutral: 'bg-asphalt-100 text-asphalt-700 border-asphalt-200',
 };
 
 const MARK: Record<Tone, string> = {
-  signal: 'bg-midnight-800',
-  work: 'bg-volt-600',
+  midnight: 'bg-midnight-800',
+  volt: 'bg-volt-600',
   go: 'bg-go-600',
   stop: 'bg-stop-600',
   neutral: 'bg-asphalt-500',
@@ -61,7 +65,7 @@ export function StatusBadge({
   return (
     <span
       className={cn(
-        'inline-flex items-center gap-1.5 rounded-plate border-2 px-2 py-0.5 text-xs font-bold uppercase tracking-wide',
+        'inline-flex items-center gap-1.5 rounded-pill border px-2.5 py-1 text-xs font-bold uppercase tracking-wide',
         TONES[tone],
         className,
       )}

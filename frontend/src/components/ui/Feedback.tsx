@@ -6,24 +6,29 @@ import { Button } from './Button';
 /** Obavijest u tijeku stranice. Ton bira boju i ikonu po istoj semantici kao znakovi. */
 type AlertTone = 'info' | 'warning' | 'error' | 'success';
 
+/**
+ * Boja ruba je sva na lijevoj strani, ne po cijelom obodu: okvir u punoj boji
+ * oko poruke natjecao bi se s primarnim gumbom za pažnju. Traka lijevo daje
+ * isti signal tiše.
+ */
 const ALERT_TONES: Record<AlertTone, { wrap: string; icon: ReactNode; role: 'status' | 'alert' }> = {
   info: {
-    wrap: 'bg-midnight-50 border-midnight-800 text-midnight-950',
+    wrap: 'bg-midnight-50 border-midnight-100 border-l-midnight-800 text-midnight-950',
     icon: <Info size={20} />,
     role: 'status',
   },
   warning: {
-    wrap: 'bg-volt-100 border-volt-600 text-asphalt-950',
+    wrap: 'bg-volt-100 border-volt-300 border-l-volt-600 text-asphalt-950',
     icon: <AlertTriangle size={20} />,
     role: 'status',
   },
   error: {
-    wrap: 'bg-stop-50 border-stop-600 text-stop-700',
+    wrap: 'bg-stop-50 border-stop-100 border-l-stop-600 text-stop-700',
     icon: <Ban size={20} />,
     role: 'alert',
   },
   success: {
-    wrap: 'bg-go-50 border-go-600 text-go-700',
+    wrap: 'bg-go-50 border-go-100 border-l-go-600 text-go-700',
     icon: <Check size={20} />,
     role: 'status',
   },
@@ -55,7 +60,7 @@ export function Alert({
   return (
     <div
       role={config.role}
-      className={cn('flex gap-3 rounded-control border-2 px-4 py-3', config.wrap, className)}
+      className={cn('flex gap-3 rounded-control border border-l-4 px-4 py-3', config.wrap, className)}
     >
       <span
         aria-hidden="true"
@@ -75,21 +80,42 @@ export function Alert({
   );
 }
 
-/** Prazno stanje nije greška — objašnjava zašto je prazno i nudi sljedeći korak. */
+/**
+ * Prazno stanje nije greška — objašnjava zašto je prazno i nudi sljedeći korak.
+ *
+ * `illustration` i `icon` se isključuju: ilustracija ima prednost, a ikona
+ * ostaje za mjesta gdje bi slika bila prevelika (uži stupci, dijalozi).
+ * Ilustracija je uvijek `alt=""` jer je ukrasna — naslov i opis ispod nje već
+ * nose cijelu poruku, pa bi je čitač ekrana inače pročitao dvaput.
+ */
 export function EmptyState({
   title,
   description,
   action,
   icon,
+  illustration,
 }: {
   title: string;
   description: string;
   action?: ReactNode;
   icon?: ReactNode;
+  illustration?: string;
 }) {
   return (
-    <div className="flex flex-col items-center gap-3 rounded-control border-2 border-dashed border-asphalt-300 bg-white px-6 py-12 text-center">
-      {icon ? <span className="text-asphalt-300">{icon}</span> : null}
+    <div className="flex flex-col items-center gap-3 rounded-card border border-dashed border-asphalt-200 bg-white px-6 py-12 text-center">
+      {illustration ? (
+        <img
+          src={illustration}
+          alt=""
+          width={160}
+          height={160}
+          loading="lazy"
+          decoding="async"
+          className="mb-1 h-32 w-32 object-contain sm:h-40 sm:w-40"
+        />
+      ) : icon ? (
+        <span className="text-asphalt-300">{icon}</span>
+      ) : null}
       <h3 className="text-lg font-bold text-asphalt-900">{title}</h3>
       <p className="max-w-prose text-[0.9375rem] text-asphalt-500">{description}</p>
       {action ? <div className="mt-1">{action}</div> : null}

@@ -161,7 +161,7 @@ export default function AdminUsers() {
                   ) : (
                     <span className="flex flex-wrap gap-1">
                       {user.roles.map((role) => (
-                        <StatusBadge key={role} tone={role === 'ADMIN' ? 'signal' : 'neutral'} shape="rect">
+                        <StatusBadge key={role} tone={role === 'ADMIN' ? 'midnight' : 'neutral'} shape="rect">
                           {ROLE_LABELS[role]}
                         </StatusBadge>
                       ))}

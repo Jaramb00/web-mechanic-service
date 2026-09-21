@@ -22,11 +22,16 @@ export function DataTable({
     // `relative` nije ukras: sr-only oznake unutar zaglavlja su apsolutno
     // pozicionirane, pa bez pozicioniranog pretka šire scrollable područje cijele
     // stranice i stvaraju vodoravni prelijev na mobitelu.
-    <div className={cn('relative overflow-x-auto rounded-control border border-asphalt-200 bg-white', className)}>
+    <div
+      className={cn(
+        'relative overflow-x-auto rounded-card border border-asphalt-200 bg-white shadow-plate',
+        className,
+      )}
+    >
       <table className="w-full border-collapse text-left text-[0.9375rem]">
         <caption className="sr-only">{caption}</caption>
         <thead>
-          <tr className="border-b-2 border-asphalt-950 bg-asphalt-50">{head}</tr>
+          <tr className="border-b border-asphalt-200 bg-asphalt-50">{head}</tr>
         </thead>
         <tbody>{children}</tbody>
       </table>
@@ -62,7 +67,12 @@ export function Th({
 
 export function Tr({ children, className }: { children: ReactNode; className?: string }) {
   return (
-    <tr className={cn('border-b border-asphalt-100 last:border-b-0 hover:bg-midnight-50/60', className)}>
+    <tr
+      className={cn(
+        'border-b border-asphalt-100 transition-colors duration-100 last:border-b-0 hover:bg-midnight-50',
+        className,
+      )}
+    >
       {children}
     </tr>
   );

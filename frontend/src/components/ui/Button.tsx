@@ -3,11 +3,15 @@ import { Link } from 'react-router-dom';
 import { cn } from '@/lib/cn';
 
 /**
- * Gumbi slijede semantiku znakovlja:
- *  - `primary` je radno žut, jer znak radova znači „ovdje se nešto poduzima".
- *    Na stranici postoji najviše jedan takav gumb po ekranu.
- *  - `secondary` je signalno plav — obavijest, sporedan put.
+ * Gumbi nose semantiku boje:
+ *  - `primary` je volt — potpis brenda i jedina radnja koja se poduzima sada.
+ *    Na stranici postoji najviše jedan takav gumb po ekranu. Jedini nosi
+ *    akcentni gradijent u cijelom sustavu.
+ *  - `secondary` je mornarski — sporedan put, ali i dalje odluka.
  *  - `danger` je zabranski crven i traži potvrdu prije izvršenja.
+ *
+ * Tekst na volt plohi je UVIJEK asphalt-950. Bijelo na žutom ima kontrast
+ * 1.2:1 i nečitljivo je — zato ta kombinacija ovdje ne postoji.
  *
  * Visina je najmanje 44 px: korisnik često stoji uz auto i tapka palcem.
  */
@@ -16,27 +20,42 @@ type Size = 'md' | 'lg' | 'sm';
 
 const VARIANTS: Record<Variant, string> = {
   primary:
-    'bg-volt-500 text-asphalt-950 hover:bg-volt-400 active:bg-volt-600 border-2 border-asphalt-950 font-bold',
+    'volt-face volt-face-hover text-asphalt-950 font-bold shadow-plate ' +
+    'hover:shadow-raised active:shadow-none',
   secondary:
-    'bg-midnight-800 text-white hover:bg-midnight-700 active:bg-midnight-900 border-2 border-midnight-800 font-semibold',
+    'surface-dark bg-midnight-800 text-white font-semibold shadow-plate ' +
+    'hover:bg-midnight-700 hover:shadow-raised active:bg-midnight-900 active:shadow-none',
   outline:
-    'bg-white text-midnight-900 border-2 border-midnight-800 hover:bg-midnight-50 active:bg-midnight-100 font-semibold',
+    'bg-white text-midnight-900 border border-asphalt-200 font-semibold shadow-plate ' +
+    'hover:border-midnight-500 hover:bg-midnight-50 hover:shadow-raised active:bg-midnight-100 active:shadow-none',
   ghost:
-    'bg-transparent text-asphalt-900 border-2 border-transparent hover:bg-asphalt-100 active:bg-asphalt-200 font-semibold',
+    'bg-transparent text-asphalt-700 font-semibold ' +
+    'hover:bg-asphalt-100 hover:text-asphalt-950 active:bg-asphalt-200',
   danger:
-    'bg-stop-600 text-white hover:bg-stop-500 active:bg-stop-700 border-2 border-stop-700 font-semibold',
+    'bg-stop-600 text-white font-semibold shadow-plate ' +
+    'hover:bg-stop-500 hover:shadow-raised active:bg-stop-700 active:shadow-none',
 };
 
 const SIZES: Record<Size, string> = {
-  sm: 'min-h-9 px-3 text-sm gap-1.5',
-  md: 'min-h-11 px-4 text-[0.9375rem] gap-2',
-  lg: 'min-h-14 px-6 text-lg gap-2.5',
+  sm: 'min-h-9 px-3.5 text-sm gap-1.5',
+  md: 'min-h-11 px-5 text-[0.9375rem] gap-2',
+  lg: 'min-h-14 px-7 text-lg gap-2.5',
 };
 
+/**
+ * Pomak na hover je 1 px, ne 2 kao kod kartica: gumb se često nalazi uz rub
+ * polja za unos, pa veći pomak izgleda kao da raspored poskakuje.
+ *
+ * `disabled` gasi i pomak i sjenu — onemogućen gumb koji se diže na hover
+ * poručuje da je kliktljiv.
+ */
 const BASE =
-  'inline-flex items-center justify-center rounded-plate transition-colors duration-100 ' +
-  'disabled:cursor-not-allowed disabled:opacity-55 disabled:hover:bg-inherit ' +
-  'whitespace-nowrap select-none';
+  'inline-flex items-center justify-center rounded-control select-none whitespace-nowrap ' +
+  'transition-[background-color,background-image,border-color,box-shadow,transform,color] ' +
+  'duration-150 ease-out ' +
+  'hover:-translate-y-px active:translate-y-0 ' +
+  'disabled:cursor-not-allowed disabled:opacity-55 ' +
+  'disabled:shadow-none disabled:hover:translate-y-0 disabled:hover:shadow-none';
 
 type CommonProps = {
   variant?: Variant;
