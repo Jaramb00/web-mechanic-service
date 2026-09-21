@@ -94,14 +94,14 @@ export default function AdminUsers() {
           Pretraži korisnike
         </label>
         <div className="relative min-w-0 flex-1 sm:max-w-md">
-          <Search size={20} className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-ink-500" />
+          <Search size={20} className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-asphalt-500" />
           <input
             id="pretraga-korisnika"
             type="search"
             value={search}
             onChange={(event) => setSearch(event.target.value)}
             placeholder="Ime ili e-mail"
-            className="min-h-11 w-full rounded-plate border-2 border-ink-300 bg-white pl-10 pr-3 text-[0.9375rem] hover:border-ink-500 focus:border-signal-700"
+            className="min-h-11 w-full rounded-plate border-2 border-asphalt-300 bg-white pl-10 pr-3 text-[0.9375rem] hover:border-asphalt-500 focus:border-midnight-800"
           />
         </div>
         <Button type="submit" variant="secondary">Traži</Button>
@@ -130,10 +130,10 @@ export default function AdminUsers() {
             {data?.content.map((user) => (
               <Tr key={user.id}>
                 <Td>
-                  <span className="font-bold text-ink-950">{user.fullName}</span>
-                  <span className="mt-0.5 block text-sm text-ink-500">{user.email}</span>
+                  <span className="font-bold text-asphalt-950">{user.fullName}</span>
+                  <span className="mt-0.5 block text-sm text-asphalt-500">{user.email}</span>
                   {user.phone ? (
-                    <span className="block text-sm tabular-nums text-ink-500">{user.phone}</span>
+                    <span className="block text-sm tabular-nums text-asphalt-500">{user.phone}</span>
                   ) : null}
                 </Td>
                 <Td>
@@ -175,7 +175,7 @@ export default function AdminUsers() {
                     <StatusBadge tone="stop" shape="circle">Neaktivan</StatusBadge>
                   )}
                 </Td>
-                <Td numeric className="whitespace-nowrap text-sm text-ink-500">
+                <Td numeric className="whitespace-nowrap text-sm text-asphalt-500">
                   {formatDate(user.createdAt)}
                 </Td>
                 <Td align="right">

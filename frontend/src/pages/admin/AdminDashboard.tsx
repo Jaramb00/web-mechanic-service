@@ -32,7 +32,7 @@ export default function AdminDashboard() {
         <>
           {/* Brojke stoje u jednoj traci, kao skupina instrumenata — ne kao
               rešetka jednakih kartica, koja bi sugerirala da su jednako važne. */}
-          <div className="on-ink grid grid-cols-2 gap-px overflow-hidden rounded-sign bg-ink-900 sm:grid-cols-3 lg:grid-cols-6">
+          <div className="on-midnight grid grid-cols-2 gap-px overflow-hidden rounded-control bg-asphalt-900 sm:grid-cols-3 lg:grid-cols-6">
             <Metric label="Termini danas" value={data?.appointmentsToday} loading={isLoading} />
             <Metric label="Na čekanju" value={data?.appointmentsPending} loading={isLoading} accent />
             <Metric label="Završeno danas" value={data?.completedToday} loading={isLoading} />
@@ -42,7 +42,7 @@ export default function AdminDashboard() {
           </div>
 
           <section className="mt-6">
-            <h2 className="mb-3 text-lg font-extrabold tracking-tight text-ink-950">
+            <h2 className="mb-3 text-lg font-extrabold tracking-tight text-asphalt-950">
               Raspored za danas
             </h2>
             {isLoading ? (
@@ -73,21 +73,21 @@ export default function AdminDashboard() {
                       {formatTime(appointment.startAt)}–{formatTime(appointment.endAt)}
                     </Td>
                     <Td>
-                      <span className="font-semibold text-ink-950">
+                      <span className="font-semibold text-asphalt-950">
                         {appointment.customerName ?? '—'}
                       </span>
                       {appointment.customerPhone ? (
                         <a
                           href={`tel:${appointment.customerPhone.replace(/\s/g, '')}`}
-                          className="mt-0.5 block text-sm tabular-nums text-signal-700"
+                          className="mt-0.5 block text-sm tabular-nums text-midnight-800"
                         >
                           {appointment.customerPhone}
                         </a>
                       ) : null}
                     </Td>
-                    <Td className="text-ink-700">{appointment.vehicleLabel ?? '—'}</Td>
-                    <Td className="text-ink-700">{appointment.serviceName ?? '—'}</Td>
-                    <Td className="whitespace-nowrap text-ink-700">{appointment.bayName ?? '—'}</Td>
+                    <Td className="text-asphalt-700">{appointment.vehicleLabel ?? '—'}</Td>
+                    <Td className="text-asphalt-700">{appointment.serviceName ?? '—'}</Td>
+                    <Td className="whitespace-nowrap text-asphalt-700">{appointment.bayName ?? '—'}</Td>
                     <Td><AppointmentStatusBadge status={appointment.status} /></Td>
                   </Tr>
                 ))}
@@ -97,15 +97,15 @@ export default function AdminDashboard() {
 
           <section className="mt-8">
             <div className="mb-3 flex items-center justify-between gap-3">
-              <h2 className="text-lg font-extrabold tracking-tight text-ink-950">Niska zaliha</h2>
-              <Link to="/skladiste" className="text-sm font-bold text-signal-700">
+              <h2 className="text-lg font-extrabold tracking-tight text-asphalt-950">Niska zaliha</h2>
+              <Link to="/skladiste" className="text-sm font-bold text-midnight-800">
                 Otvori skladište
               </Link>
             </div>
             {isLoading ? (
               <LoadingRows rows={2} />
             ) : (data?.lowStockItems.length ?? 0) === 0 ? (
-              <p className="rounded-sign border-2 border-go-600 bg-go-50 px-4 py-3 font-semibold text-go-700">
+              <p className="rounded-control border-2 border-go-600 bg-go-50 px-4 py-3 font-semibold text-go-700">
                 Svi artikli su iznad minimalne zalihe.
               </p>
             ) : (
@@ -123,16 +123,16 @@ export default function AdminDashboard() {
                 {data?.lowStockItems.map((product) => (
                   <Tr key={product.id}>
                     <Td>
-                      <span className="flex items-center gap-2 font-semibold text-ink-950">
-                        <AlertTriangle size={16} className="shrink-0 text-work-600" />
+                      <span className="flex items-center gap-2 font-semibold text-asphalt-950">
+                        <AlertTriangle size={16} className="shrink-0 text-volt-600" />
                         {product.name}
                       </span>
-                      <span className="mt-0.5 block text-xs tabular-nums text-ink-500">{product.sku}</span>
+                      <span className="mt-0.5 block text-xs tabular-nums text-asphalt-500">{product.sku}</span>
                     </Td>
                     <Td align="right" numeric className="text-stop-600">
                       {product.availableQuantity}
                     </Td>
-                    <Td align="right" numeric className="text-ink-500">{product.minQuantity}</Td>
+                    <Td align="right" numeric className="text-asphalt-500">{product.minQuantity}</Td>
                     <Td align="right" numeric>{formatPrice(product.salePrice)}</Td>
                   </Tr>
                 ))}
@@ -159,10 +159,10 @@ function Metric({
   warn?: boolean;
 }) {
   return (
-    <div className="bg-ink-950 px-4 py-3.5">
-      <p className="text-xs font-bold uppercase tracking-wide text-ink-300">{label}</p>
+    <div className="bg-asphalt-950 px-4 py-3.5">
+      <p className="text-xs font-bold uppercase tracking-wide text-asphalt-300">{label}</p>
       {loading ? (
-        <Skeleton className="mt-1.5 h-7 w-12 bg-ink-900" />
+        <Skeleton className="mt-1.5 h-7 w-12 bg-asphalt-900" />
       ) : (
         <p
           className={
@@ -170,7 +170,7 @@ function Metric({
             (warn && (value ?? 0) > 0
               ? 'text-stop-500'
               : accent && (value ?? 0) > 0
-                ? 'text-work-500'
+                ? 'text-volt-500'
                 : 'text-white')
           }
         >

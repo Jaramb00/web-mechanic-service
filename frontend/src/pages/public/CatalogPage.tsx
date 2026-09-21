@@ -54,7 +54,7 @@ export function CatalogPage() {
         <div className="relative min-w-0 flex-1">
           <Search
             size={20}
-            className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-ink-500"
+            className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-asphalt-500"
           />
           <input
             id="pretraga-artikala"
@@ -62,7 +62,7 @@ export function CatalogPage() {
             value={search}
             onChange={(event) => setSearch(event.target.value)}
             placeholder="Dimenzija, npr. 205/55 R16 — ili naziv"
-            className="min-h-11 w-full rounded-plate border-2 border-ink-300 bg-white pl-10 pr-3 text-[0.9375rem] placeholder:text-ink-500 hover:border-ink-500 focus:border-signal-700"
+            className="min-h-11 w-full rounded-plate border-2 border-asphalt-300 bg-white pl-10 pr-3 text-[0.9375rem] placeholder:text-asphalt-500 hover:border-asphalt-500 focus:border-midnight-800"
           />
         </div>
         <Button type="submit" variant="secondary">
@@ -184,8 +184,8 @@ function CategoryChip({
       className={cn(
         'min-h-9 rounded-plate border-2 px-3 text-sm font-semibold transition-colors duration-100',
         active
-          ? 'border-ink-950 bg-signal-700 text-white'
-          : 'border-ink-300 bg-white text-ink-700 hover:border-signal-700 hover:text-signal-700',
+          ? 'border-asphalt-950 bg-midnight-800 text-white'
+          : 'border-asphalt-300 bg-white text-asphalt-700 hover:border-midnight-800 hover:text-midnight-800',
       )}
     >
       {children}
@@ -205,24 +205,24 @@ function ProductPlate({
   const soldOut = product.availableQuantity <= 0;
 
   return (
-    <li className="flex flex-col rounded-sign border-2 border-ink-950 bg-white">
+    <li className="flex flex-col rounded-control border-2 border-asphalt-950 bg-white">
       <div className="flex-1 p-4">
-        <p className="text-xs font-bold uppercase tracking-wide text-signal-700">
+        <p className="text-xs font-bold uppercase tracking-wide text-midnight-800">
           {product.categoryName}
         </p>
-        <h3 className="mt-1.5 text-[1.0625rem] font-extrabold leading-snug text-ink-950">
+        <h3 className="mt-1.5 text-[1.0625rem] font-extrabold leading-snug text-asphalt-950">
           {product.name}
         </h3>
-        <p className="mt-1 text-sm text-ink-500">
+        <p className="mt-1 text-sm text-asphalt-500">
           {product.manufacturer ?? '—'}
           {product.tireSize ? ` · ${product.tireSize}` : ''}
         </p>
-        <p className="mt-0.5 text-xs tabular-nums text-ink-300">{product.sku}</p>
+        <p className="mt-0.5 text-xs tabular-nums text-asphalt-300">{product.sku}</p>
       </div>
 
-      <div className="flex items-end justify-between gap-3 border-t-2 border-ink-950 bg-ink-50 p-4">
+      <div className="flex items-end justify-between gap-3 border-t-2 border-asphalt-950 bg-asphalt-50 p-4">
         <div>
-          <p className="text-xl font-extrabold tabular-nums text-ink-950">
+          <p className="text-xl font-extrabold tabular-nums text-asphalt-950">
             {formatPrice(product.salePrice)}
           </p>
           <p

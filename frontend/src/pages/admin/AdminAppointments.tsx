@@ -44,7 +44,7 @@ export default function AdminAppointments() {
       <SectionHeader title="Termini" description="Svi termini uz filtar po statusu i razdoblju." />
 
       <form
-        className="mb-5 grid gap-4 rounded-sign border-2 border-ink-950 bg-white p-4 sm:grid-cols-4"
+        className="mb-5 grid gap-4 rounded-control border-2 border-asphalt-950 bg-white p-4 sm:grid-cols-4"
         onSubmit={(event) => {
           event.preventDefault();
           setPage(0);
@@ -135,10 +135,10 @@ export default function AdminAppointments() {
                 <Td numeric className="whitespace-nowrap">
                   {formatTime(appointment.startAt)}–{formatTime(appointment.endAt)}
                 </Td>
-                <Td className="font-semibold text-ink-950">{appointment.customerName ?? '—'}</Td>
-                <Td className="text-ink-700">{appointment.vehicleLabel ?? '—'}</Td>
-                <Td className="text-ink-700">{appointment.serviceName ?? '—'}</Td>
-                <Td className="whitespace-nowrap text-ink-700">{appointment.bayName ?? '—'}</Td>
+                <Td className="font-semibold text-asphalt-950">{appointment.customerName ?? '—'}</Td>
+                <Td className="text-asphalt-700">{appointment.vehicleLabel ?? '—'}</Td>
+                <Td className="text-asphalt-700">{appointment.serviceName ?? '—'}</Td>
+                <Td className="whitespace-nowrap text-asphalt-700">{appointment.bayName ?? '—'}</Td>
                 <Td><AppointmentStatusBadge status={appointment.status} /></Td>
               </Tr>
             ))}
@@ -156,9 +156,9 @@ export default function AdminAppointments() {
         </>
       )}
 
-      <p className="mt-6 text-sm text-ink-500">
+      <p className="mt-6 text-sm text-asphalt-500">
         Današnji raspored i promjena statusa nalaze se u{' '}
-        <a href="/radionica" className="font-semibold text-signal-700">
+        <a href="/radionica" className="font-semibold text-midnight-800">
           radionici
         </a>
         . Prikazano razdoblje: {from ? formatDate(`${from}T00:00:00Z`) : 'od početka'} –{' '}

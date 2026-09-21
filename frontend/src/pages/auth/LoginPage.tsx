@@ -45,9 +45,9 @@ export function LoginPage() {
     <Section tone="light">
       <div className="mx-auto max-w-md">
         <h1 className="text-2xl font-extrabold tracking-tight sm:text-3xl">Prijava</h1>
-        <p className="mt-2 text-[1.0625rem] text-ink-700">
+        <p className="mt-2 text-[1.0625rem] text-asphalt-700">
           Nemate račun?{' '}
-          <Link to="/registracija" className="font-bold text-signal-700">
+          <Link to="/registracija" className="font-bold text-midnight-800">
             Otvorite ga u minuti
           </Link>
           .
@@ -56,7 +56,7 @@ export function LoginPage() {
         <form
           onSubmit={handleSubmit}
           noValidate
-          className="mt-6 space-y-4 rounded-sign border-2 border-ink-950 bg-white p-5 sm:p-6"
+          className="mt-6 space-y-4 rounded-control border-2 border-asphalt-950 bg-white p-5 sm:p-6"
         >
           {error ? (
             <Alert tone="error" title="Prijava nije uspjela">

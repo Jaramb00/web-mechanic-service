@@ -23,7 +23,7 @@ export function LocationPage() {
         stvarnima u <code className="font-bold">src/config/site.ts</code>.
       </Alert>
 
-      <div className="mt-6 overflow-hidden rounded-sign border-2 border-ink-950">
+      <div className="mt-6 overflow-hidden rounded-control border-2 border-asphalt-950">
         {/* Karta se učitava lijeno: većini posjetitelja treba adresa, ne karta,
             a iframe inače blokira prvo iscrtavanje stranice. */}
         <iframe
@@ -36,12 +36,12 @@ export function LocationPage() {
       </div>
 
       <div className="mt-6 flex flex-wrap items-center gap-3">
-        <p className="text-[1.0625rem] font-bold text-ink-950">{fullAddress}</p>
+        <p className="text-[1.0625rem] font-bold text-asphalt-950">{fullAddress}</p>
         <a
           href={openStreetMapLink}
           target="_blank"
           rel="noreferrer noopener"
-          className="font-semibold text-signal-700"
+          className="font-semibold text-midnight-800"
         >
           Otvori u karti
         </a>

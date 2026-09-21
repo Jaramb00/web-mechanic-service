@@ -113,9 +113,9 @@ export default function AdminServices() {
         <form
           onSubmit={form.handleSubmit((values) => save.mutate(values))}
           noValidate
-          className="mb-6 rounded-sign border-2 border-ink-950 bg-white p-5"
+          className="mb-6 rounded-control border-2 border-asphalt-950 bg-white p-5"
         >
-          <h2 className="text-lg font-extrabold text-ink-950">
+          <h2 className="text-lg font-extrabold text-asphalt-950">
             {editing ? `Izmjena: ${editing.name}` : 'Nova usluga'}
           </h2>
 
@@ -165,10 +165,10 @@ export default function AdminServices() {
             />
           </div>
 
-          <label className="mt-4 flex items-center gap-2.5 text-[0.9375rem] font-semibold text-ink-900">
+          <label className="mt-4 flex items-center gap-2.5 text-[0.9375rem] font-semibold text-asphalt-900">
             <input
               type="checkbox"
-              className="h-5 w-5 rounded-[2px] border-2 border-ink-500"
+              className="h-5 w-5 rounded-[2px] border-2 border-asphalt-500"
               {...form.register('active')}
             />
             Usluga je aktivna i može se rezervirati
@@ -205,9 +205,9 @@ export default function AdminServices() {
           {data?.map((service) => (
             <Tr key={service.id}>
               <Td>
-                <span className="font-bold text-ink-950">{service.name}</span>
+                <span className="font-bold text-asphalt-950">{service.name}</span>
                 {service.description ? (
-                  <span className="mt-0.5 block max-w-[52ch] text-sm text-ink-500">
+                  <span className="mt-0.5 block max-w-[52ch] text-sm text-asphalt-500">
                     {service.description}
                   </span>
                 ) : null}

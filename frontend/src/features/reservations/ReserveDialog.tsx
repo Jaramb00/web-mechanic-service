@@ -74,15 +74,15 @@ export function ReserveDialog({
     <dialog
       ref={ref}
       aria-labelledby="rezervacija-naslov"
-      className="m-auto w-[min(30rem,calc(100vw-2rem))] rounded-sign border-2 border-ink-950 bg-white p-0 backdrop:bg-ink-950/60"
+      className="m-auto w-[min(30rem,calc(100vw-2rem))] rounded-control border-2 border-asphalt-950 bg-white p-0 backdrop:bg-asphalt-950/60"
     >
       {product ? (
         <>
-          <div className="border-b-2 border-ink-950 bg-signal-700 px-5 py-4">
+          <div className="border-b-2 border-asphalt-950 bg-midnight-800 px-5 py-4">
             <h2 id="rezervacija-naslov" className="text-lg font-extrabold text-white">
               {done ? 'Rezervacija je zaprimljena' : 'Rezervacija artikla'}
             </h2>
-            <p className="mt-0.5 text-sm text-signal-100">{product.name}</p>
+            <p className="mt-0.5 text-sm text-midnight-100">{product.name}</p>
           </div>
 
           {done ? (
@@ -91,17 +91,17 @@ export function ReserveDialog({
                 <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-go-600 text-white">
                   <Check size={20} />
                 </span>
-                <p className="text-[0.9375rem] text-ink-700">
-                  Rezervirali ste <strong className="text-ink-950">{done.quantity} kom</strong> ·
-                  ukupno <strong className="text-ink-950">{formatPrice(done.total)}</strong>.
+                <p className="text-[0.9375rem] text-asphalt-700">
+                  Rezervirali ste <strong className="text-asphalt-950">{done.quantity} kom</strong> ·
+                  ukupno <strong className="text-asphalt-950">{formatPrice(done.total)}</strong>.
                   Roba je odvojena za vas i čeka preuzimanje u servisu.
                 </p>
               </div>
             </div>
           ) : (
             <div className="space-y-4 px-5 py-5">
-              <div className="flex items-baseline justify-between border-b border-ink-200 pb-3">
-                <span className="text-sm font-semibold text-ink-500">Cijena po komadu</span>
+              <div className="flex items-baseline justify-between border-b border-asphalt-200 pb-3">
+                <span className="text-sm font-semibold text-asphalt-500">Cijena po komadu</span>
                 <span className="text-lg font-extrabold tabular-nums">
                   {formatPrice(product.salePrice)}
                 </span>
@@ -126,8 +126,8 @@ export function ReserveDialog({
                 onChange={(event) => setNote(event.target.value)}
               />
 
-              <div className="flex items-baseline justify-between border-t-2 border-ink-950 pt-3">
-                <span className="font-bold text-ink-950">Ukupno</span>
+              <div className="flex items-baseline justify-between border-t-2 border-asphalt-950 pt-3">
+                <span className="font-bold text-asphalt-950">Ukupno</span>
                 <span className="text-xl font-extrabold tabular-nums">
                   {formatPrice(product.salePrice * quantity)}
                 </span>
@@ -141,7 +141,7 @@ export function ReserveDialog({
             </div>
           )}
 
-          <div className="flex justify-end gap-2 border-t border-ink-200 bg-ink-50 px-5 py-3">
+          <div className="flex justify-end gap-2 border-t border-asphalt-200 bg-asphalt-50 px-5 py-3">
             <Button variant="ghost" onClick={onClose}>
               {done ? 'Zatvori' : 'Odustani'}
             </Button>

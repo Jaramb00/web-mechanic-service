@@ -11,11 +11,11 @@ import { cn } from '@/lib/cn';
 type Tone = 'signal' | 'work' | 'white' | 'ink' | 'quiet';
 
 const TONES: Record<Tone, string> = {
-  signal: 'bg-signal-700 text-white keyline on-signal',
-  work: 'bg-work-500 text-ink-950 keyline-dark',
-  white: 'bg-white text-ink-950 border border-ink-200',
-  ink: 'bg-ink-950 text-white keyline on-ink',
-  quiet: 'bg-ink-50 text-ink-950 border border-ink-200',
+  signal: 'bg-midnight-800 text-white edge-light on-midnight',
+  work: 'bg-volt-500 text-asphalt-950 edge-light-dark',
+  white: 'bg-white text-asphalt-950 border border-asphalt-200',
+  ink: 'bg-asphalt-950 text-white edge-light on-midnight',
+  quiet: 'bg-asphalt-50 text-asphalt-950 border border-asphalt-200',
 };
 
 export function Plate({
@@ -29,5 +29,5 @@ export function Plate({
   className?: string;
   children: ReactNode;
 }) {
-  return <Tag className={cn('rounded-sign', TONES[tone], className)}>{children}</Tag>;
+  return <Tag className={cn('rounded-control', TONES[tone], className)}>{children}</Tag>;
 }

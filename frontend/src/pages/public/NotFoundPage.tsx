@@ -24,10 +24,10 @@ export function NotFoundPage() {
           <span className="block h-[10px] w-16 rotate-[-45deg] bg-stop-600" />
         </div>
 
-        <h1 className="mt-8 text-3xl font-extrabold tracking-tight text-ink-950">
+        <h1 className="mt-8 text-3xl font-extrabold tracking-tight text-asphalt-950">
           Ovdje nema ničega
         </h1>
-        <p className="mt-3 text-[1.0625rem] leading-relaxed text-ink-700">
+        <p className="mt-3 text-[1.0625rem] leading-relaxed text-asphalt-700">
           Stranica koju tražite ne postoji ili je premještena. Greška 404.
         </p>
 
@@ -38,9 +38,9 @@ export function NotFoundPage() {
           </ButtonLink>
         </div>
 
-        <p className="mt-8 text-[0.9375rem] text-ink-500">
+        <p className="mt-8 text-[0.9375rem] text-asphalt-500">
           Ako ste ovdje završili s naše stranice, javite nam na{' '}
-          <a href={site.contact.phoneHref} className="font-semibold text-signal-700">
+          <a href={site.contact.phoneHref} className="font-semibold text-midnight-800">
             {site.contact.phone}
           </a>
           .

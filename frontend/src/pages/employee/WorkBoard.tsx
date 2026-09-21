@@ -52,7 +52,7 @@ export default function WorkBoard() {
           <ArrowLeft size={18} />
           Prethodni dan
         </Button>
-        <p className="min-w-44 text-center text-lg font-extrabold tabular-nums text-ink-950">
+        <p className="min-w-44 text-center text-lg font-extrabold tabular-nums text-asphalt-950">
           {formatDate(`${date}T12:00:00`)}
         </p>
         <Button
@@ -121,14 +121,14 @@ function WorkCard({
   const transitions = NEXT_STATUS[appointment.status] ?? [];
 
   return (
-    <li className="rounded-sign border-2 border-ink-950 bg-white">
-      <div className="flex flex-wrap items-start justify-between gap-3 border-b-2 border-ink-950 bg-ink-50 px-4 py-3">
+    <li className="rounded-control border-2 border-asphalt-950 bg-white">
+      <div className="flex flex-wrap items-start justify-between gap-3 border-b-2 border-asphalt-950 bg-asphalt-50 px-4 py-3">
         <div>
-          <p className="text-xl font-extrabold tabular-nums text-ink-950">
+          <p className="text-xl font-extrabold tabular-nums text-asphalt-950">
             {formatTime(appointment.startAt)}–{formatTime(appointment.endAt)}
-            <span className="ml-3 text-base font-semibold text-ink-500">{appointment.bayName}</span>
+            <span className="ml-3 text-base font-semibold text-asphalt-500">{appointment.bayName}</span>
           </p>
-          <p className="mt-0.5 font-semibold text-ink-700">{appointment.serviceName}</p>
+          <p className="mt-0.5 font-semibold text-asphalt-700">{appointment.serviceName}</p>
         </div>
         <AppointmentStatusBadge status={appointment.status} />
       </div>
@@ -136,13 +136,13 @@ function WorkCard({
       <div className="grid gap-4 px-4 py-4 lg:grid-cols-2">
         <dl className="space-y-2.5 text-[0.9375rem]">
           <div>
-            <dt className="text-sm font-semibold text-ink-500">Stranka</dt>
-            <dd className="font-bold text-ink-950">{appointment.customerName ?? '—'}</dd>
+            <dt className="text-sm font-semibold text-asphalt-500">Stranka</dt>
+            <dd className="font-bold text-asphalt-950">{appointment.customerName ?? '—'}</dd>
             {appointment.customerPhone ? (
               <dd>
                 <a
                   href={`tel:${appointment.customerPhone.replace(/\s/g, '')}`}
-                  className="inline-flex items-center gap-1.5 font-semibold tabular-nums text-signal-700"
+                  className="inline-flex items-center gap-1.5 font-semibold tabular-nums text-midnight-800"
                 >
                   <Phone size={16} />
                   {appointment.customerPhone}
@@ -151,16 +151,16 @@ function WorkCard({
             ) : null}
           </div>
           <div>
-            <dt className="text-sm font-semibold text-ink-500">Vozilo</dt>
-            <dd className="font-bold text-ink-950">{appointment.vehicleLabel ?? '—'}</dd>
+            <dt className="text-sm font-semibold text-asphalt-500">Vozilo</dt>
+            <dd className="font-bold text-asphalt-950">{appointment.vehicleLabel ?? '—'}</dd>
             {appointment.vehicleTireSize ? (
-              <dd className="tabular-nums text-ink-700">Gume: {appointment.vehicleTireSize}</dd>
+              <dd className="tabular-nums text-asphalt-700">Gume: {appointment.vehicleTireSize}</dd>
             ) : null}
           </div>
           {appointment.customerNote ? (
             <div>
-              <dt className="text-sm font-semibold text-ink-500">Napomena stranke</dt>
-              <dd className="text-ink-900">{appointment.customerNote}</dd>
+              <dt className="text-sm font-semibold text-asphalt-500">Napomena stranke</dt>
+              <dd className="text-asphalt-900">{appointment.customerNote}</dd>
             </div>
           ) : null}
         </dl>
@@ -195,7 +195,7 @@ function WorkCard({
       ) : null}
 
       {transitions.length > 0 ? (
-        <div className="flex flex-wrap gap-2 border-t border-ink-200 bg-ink-50 px-4 py-3">
+        <div className="flex flex-wrap gap-2 border-t border-asphalt-200 bg-asphalt-50 px-4 py-3">
           {transitions.map((status) => (
             <Button
               key={status}
@@ -256,9 +256,9 @@ function UsedItems({
   });
 
   return (
-    <div className="border-t border-ink-200 px-4 py-4">
+    <div className="border-t border-asphalt-200 px-4 py-4">
       <div className="flex flex-wrap items-center justify-between gap-2">
-        <h3 className="flex items-center gap-2 text-sm font-bold uppercase tracking-wide text-ink-700">
+        <h3 className="flex items-center gap-2 text-sm font-bold uppercase tracking-wide text-asphalt-700">
           <Box size={16} />
           Utrošeno
         </h3>
@@ -270,12 +270,12 @@ function UsedItems({
       </div>
 
       {appointment.items.length > 0 ? (
-        <ul className="mt-3 divide-y divide-ink-100">
+        <ul className="mt-3 divide-y divide-asphalt-100">
           {appointment.items.map((item) => (
             <li key={item.id} className="flex items-center justify-between gap-3 py-2 text-[0.9375rem]">
-              <span className="min-w-0 text-ink-900">
+              <span className="min-w-0 text-asphalt-900">
                 {item.description}
-                <span className="text-ink-500"> × {item.quantity}</span>
+                <span className="text-asphalt-500"> × {item.quantity}</span>
               </span>
               <span className="flex shrink-0 items-center gap-3">
                 <span className="font-bold tabular-nums">{formatPrice(item.lineTotal)}</span>
@@ -290,17 +290,17 @@ function UsedItems({
               </span>
             </li>
           ))}
-          <li className="flex justify-between border-t-2 border-ink-950 py-2 font-extrabold">
+          <li className="flex justify-between border-t-2 border-asphalt-950 py-2 font-extrabold">
             <span>Ukupno</span>
             <span className="tabular-nums">{formatPrice(appointment.itemsTotal)}</span>
           </li>
         </ul>
       ) : (
-        <p className="mt-2 text-sm text-ink-500">Još nije evidentiran nikakav utrošak.</p>
+        <p className="mt-2 text-sm text-asphalt-500">Još nije evidentiran nikakav utrošak.</p>
       )}
 
       {open ? (
-        <div className="mt-4 rounded-plate border-2 border-ink-300 bg-ink-50 p-4">
+        <div className="mt-4 rounded-plate border-2 border-asphalt-300 bg-asphalt-50 p-4">
           {addItem.isError ? (
             <Alert tone="error" title="Stavka nije dodana" className="mb-3">
               {errorMessage(addItem.error)}

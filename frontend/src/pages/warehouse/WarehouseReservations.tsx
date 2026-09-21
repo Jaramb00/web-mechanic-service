@@ -121,20 +121,20 @@ export default function WarehouseReservations() {
           >
             {data?.content.map((reservation) => (
               <Tr key={reservation.id}>
-                <Td className="font-semibold text-ink-950">{reservation.customerName ?? '—'}</Td>
+                <Td className="font-semibold text-asphalt-950">{reservation.customerName ?? '—'}</Td>
                 <Td>
-                  <span className="text-ink-950">{reservation.productName}</span>
-                  <span className="mt-0.5 block text-xs tabular-nums text-ink-500">
+                  <span className="text-asphalt-950">{reservation.productName}</span>
+                  <span className="mt-0.5 block text-xs tabular-nums text-asphalt-500">
                     {reservation.productSku}
                   </span>
                   {reservation.pickupNote ? (
-                    <span className="mt-1 block text-sm text-ink-500">{reservation.pickupNote}</span>
+                    <span className="mt-1 block text-sm text-asphalt-500">{reservation.pickupNote}</span>
                   ) : null}
                 </Td>
                 <Td align="right" numeric>{reservation.quantity}</Td>
                 <Td align="right" numeric>{formatPrice(reservation.total)}</Td>
                 <Td><ReservationStatusBadge status={reservation.status} /></Td>
-                <Td numeric className="whitespace-nowrap text-sm text-ink-500">
+                <Td numeric className="whitespace-nowrap text-sm text-asphalt-500">
                   {formatDateTime(reservation.createdAt)}
                 </Td>
                 <Td align="right">

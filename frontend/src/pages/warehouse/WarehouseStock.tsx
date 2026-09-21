@@ -85,7 +85,7 @@ export default function WarehouseStock() {
         title="Zaliha"
         description="Količine se mijenjaju isključivo kroz ove radnje — svaka ostavlja zapis u knjizi prometa."
         action={
-          <Link to="/skladiste/promet" className="font-semibold text-signal-700">
+          <Link to="/skladiste/promet" className="font-semibold text-midnight-800">
             Povijest prometa
           </Link>
         }
@@ -106,14 +106,14 @@ export default function WarehouseStock() {
           <label htmlFor="pretraga-zalihe" className="sr-only">
             Pretraži artikle
           </label>
-          <Search size={20} className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-ink-500" />
+          <Search size={20} className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-asphalt-500" />
           <input
             id="pretraga-zalihe"
             type="search"
             value={search}
             onChange={(event) => setSearch(event.target.value)}
             placeholder="Naziv, šifra ili dimenzija"
-            className="min-h-11 w-full rounded-plate border-2 border-ink-300 bg-white pl-10 pr-3 text-[0.9375rem] hover:border-ink-500 focus:border-signal-700"
+            className="min-h-11 w-full rounded-plate border-2 border-asphalt-300 bg-white pl-10 pr-3 text-[0.9375rem] hover:border-asphalt-500 focus:border-midnight-800"
           />
         </div>
         <div className="w-full sm:w-52">
@@ -163,21 +163,21 @@ export default function WarehouseStock() {
             }
           >
             {data?.content.map((product) => (
-              <Tr key={product.id} className={product.lowStock ? 'bg-work-100/60' : undefined}>
+              <Tr key={product.id} className={product.lowStock ? 'bg-volt-100/60' : undefined}>
                 <Td>
-                  <span className="flex items-center gap-2 font-bold text-ink-950">
+                  <span className="flex items-center gap-2 font-bold text-asphalt-950">
                     {product.lowStock ? (
-                      <AlertTriangle size={16} className="shrink-0 text-work-600" />
+                      <AlertTriangle size={16} className="shrink-0 text-volt-600" />
                     ) : null}
                     {product.name}
                   </span>
-                  <span className="mt-0.5 block text-xs tabular-nums text-ink-500">
+                  <span className="mt-0.5 block text-xs tabular-nums text-asphalt-500">
                     {product.sku}
                     {product.tireSize ? ` · ${product.tireSize}` : ''}
                   </span>
                 </Td>
                 <Td align="right" numeric>{product.physicalQuantity}</Td>
-                <Td align="right" numeric className="text-ink-500">{product.reservedQuantity}</Td>
+                <Td align="right" numeric className="text-asphalt-500">{product.reservedQuantity}</Td>
                 <Td
                   align="right"
                   numeric
@@ -185,8 +185,8 @@ export default function WarehouseStock() {
                 >
                   {product.availableQuantity}
                 </Td>
-                <Td align="right" numeric className="text-ink-500">{product.minQuantity}</Td>
-                <Td align="right" numeric className="text-ink-500">{formatPrice(product.purchasePrice)}</Td>
+                <Td align="right" numeric className="text-asphalt-500">{product.minQuantity}</Td>
+                <Td align="right" numeric className="text-asphalt-500">{formatPrice(product.purchasePrice)}</Td>
                 <Td align="right" numeric>{formatPrice(product.salePrice)}</Td>
                 <Td align="right">
                   <div className="flex justify-end gap-1">
@@ -218,12 +218,12 @@ export default function WarehouseStock() {
       )}
 
       {active ? (
-        <section className="fixed inset-x-0 bottom-0 z-30 border-t-4 border-ink-950 bg-white p-4 shadow-[0_-8px_24px_rgba(13,17,23,0.12)]">
+        <section className="fixed inset-x-0 bottom-0 z-30 border-t-4 border-asphalt-950 bg-white p-4 shadow-[0_-8px_24px_rgba(13,17,23,0.12)]">
           <div className="mx-auto w-full max-w-3xl">
-            <h2 className="text-lg font-extrabold text-ink-950">
+            <h2 className="text-lg font-extrabold text-asphalt-950">
               {OPERATION_LABELS[operation]} — {active.name}
             </h2>
-            <p className="mt-0.5 text-sm tabular-nums text-ink-500">
+            <p className="mt-0.5 text-sm tabular-nums text-asphalt-500">
               Trenutno: {active.physicalQuantity} kom, rezervirano {active.reservedQuantity} kom
             </p>
 

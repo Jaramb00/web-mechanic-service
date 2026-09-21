@@ -10,11 +10,11 @@ import { cn } from '@/lib/cn';
  * zajedno s poljem.
  */
 const CONTROL =
-  'w-full min-h-11 rounded-plate border-2 bg-white px-3 text-[0.9375rem] text-ink-950 ' +
-  'placeholder:text-ink-500 transition-colors duration-100 ' +
-  'disabled:bg-ink-50 disabled:text-ink-500 disabled:cursor-not-allowed';
+  'w-full min-h-11 rounded-plate border-2 bg-white px-3 text-[0.9375rem] text-asphalt-950 ' +
+  'placeholder:text-asphalt-500 transition-colors duration-100 ' +
+  'disabled:bg-asphalt-50 disabled:text-asphalt-500 disabled:cursor-not-allowed';
 
-const CONTROL_OK = 'border-ink-300 hover:border-ink-500 focus:border-signal-700';
+const CONTROL_OK = 'border-asphalt-300 hover:border-asphalt-500 focus:border-midnight-800';
 const CONTROL_ERROR = 'border-stop-600 hover:border-stop-700 focus:border-stop-700';
 
 type FieldShellProps = {
@@ -33,7 +33,7 @@ export function Field({ label, error, hint, required, children }: FieldShellProp
 
   return (
     <div className="flex flex-col gap-1.5">
-      <label htmlFor={id} className="text-sm font-semibold text-ink-900">
+      <label htmlFor={id} className="text-sm font-semibold text-asphalt-900">
         {label}
         {required ? (
           <span className="ml-1 text-stop-600" aria-hidden="true">
@@ -42,7 +42,7 @@ export function Field({ label, error, hint, required, children }: FieldShellProp
         ) : null}
       </label>
       {hint ? (
-        <p id={hintId} className="text-sm text-ink-500">
+        <p id={hintId} className="text-sm text-asphalt-500">
           {hint}
         </p>
       ) : null}

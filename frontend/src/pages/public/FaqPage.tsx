@@ -60,17 +60,17 @@ export function FaqPage() {
         Česta pitanja
       </SectionTitle>
 
-      <div className="mt-8 divide-y-2 divide-ink-200 border-y-2 border-ink-950">
+      <div className="mt-8 divide-y-2 divide-asphalt-200 border-y-2 border-asphalt-950">
         {FAQ.map((item) => (
           <details key={item.question} className="group">
-            <summary className="flex cursor-pointer list-none items-center justify-between gap-4 py-4 text-[1.0625rem] font-bold text-ink-950 marker:content-none hover:text-signal-700">
+            <summary className="flex cursor-pointer list-none items-center justify-between gap-4 py-4 text-[1.0625rem] font-bold text-asphalt-950 marker:content-none hover:text-midnight-800">
               {item.question}
               <ChevronDown
                 size={22}
-                className="shrink-0 text-signal-700 transition-transform duration-100 group-open:rotate-180"
+                className="shrink-0 text-midnight-800 transition-transform duration-100 group-open:rotate-180"
               />
             </summary>
-            <p className="max-w-[68ch] pb-5 leading-relaxed text-ink-700">{item.answer}</p>
+            <p className="max-w-[68ch] pb-5 leading-relaxed text-asphalt-700">{item.answer}</p>
           </details>
         ))}
       </div>

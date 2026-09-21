@@ -56,27 +56,27 @@ export default function NotificationsPage() {
             <li
               key={notification.id}
               className={cn(
-                'rounded-sign border-2 bg-white px-4 py-3',
-                notification.readAt === null ? 'border-signal-700' : 'border-ink-200',
+                'rounded-control border-2 bg-white px-4 py-3',
+                notification.readAt === null ? 'border-midnight-800' : 'border-asphalt-200',
               )}
             >
               <div className="flex flex-wrap items-baseline justify-between gap-2">
-                <h2 className="font-extrabold text-ink-950">
+                <h2 className="font-extrabold text-asphalt-950">
                   {notification.title}
                   {notification.readAt === null ? (
-                    <span className="ml-2 align-middle text-xs font-bold uppercase text-signal-700">
+                    <span className="ml-2 align-middle text-xs font-bold uppercase text-midnight-800">
                       novo
                     </span>
                   ) : null}
                 </h2>
                 <time
                   dateTime={notification.createdAt}
-                  className="text-sm tabular-nums text-ink-500"
+                  className="text-sm tabular-nums text-asphalt-500"
                 >
                   {formatDateTime(notification.createdAt)}
                 </time>
               </div>
-              <p className="mt-1 max-w-[68ch] text-[0.9375rem] text-ink-700">{notification.body}</p>
+              <p className="mt-1 max-w-[68ch] text-[0.9375rem] text-asphalt-700">{notification.body}</p>
             </li>
           ))}
         </ul>

@@ -62,14 +62,14 @@ export default function CustomerOverview() {
                 action={<ButtonLink to="/rezervacija">Rezerviraj termin</ButtonLink>}
               />
             ) : (
-              <ul className="divide-y divide-ink-100">
+              <ul className="divide-y divide-asphalt-100">
                 {upcoming!.map((appointment) => (
                   <li key={appointment.id} className="flex flex-wrap items-center gap-x-4 gap-y-2 py-3">
                     <div className="min-w-0 flex-1">
-                      <p className="font-extrabold tabular-nums text-ink-950">
+                      <p className="font-extrabold tabular-nums text-asphalt-950">
                         {formatSlotLabel(appointment.startAt)}
                       </p>
-                      <p className="mt-0.5 text-sm text-ink-500">
+                      <p className="mt-0.5 text-sm text-asphalt-500">
                         {appointment.serviceName} · {appointment.vehicleLabel}
                       </p>
                     </div>
@@ -93,13 +93,13 @@ export default function CustomerOverview() {
                 action={<ButtonLink to="/moj-racun/vozila">Dodaj vozilo</ButtonLink>}
               />
             ) : (
-              <ul className="divide-y divide-ink-100">
+              <ul className="divide-y divide-asphalt-100">
                 {vehicles.data?.map((vehicle) => (
                   <li key={vehicle.id} className="py-2.5">
-                    <p className="font-bold text-ink-950">
+                    <p className="font-bold text-asphalt-950">
                       {vehicle.make} {vehicle.model}
                     </p>
-                    <p className="text-sm tabular-nums text-ink-500">
+                    <p className="text-sm tabular-nums text-asphalt-500">
                       {vehicle.registration}
                       {vehicle.tireSize ? ` · ${vehicle.tireSize}` : ''}
                     </p>
@@ -113,19 +113,19 @@ export default function CustomerOverview() {
             {reservations.isLoading ? (
               <LoadingRows rows={2} />
             ) : (reservations.data?.content.length ?? 0) === 0 ? (
-              <p className="py-2 text-[0.9375rem] text-ink-500">
+              <p className="py-2 text-[0.9375rem] text-asphalt-500">
                 Nemate rezerviranih artikala.{' '}
-                <Link to="/ponuda-guma" className="font-semibold text-signal-700">
+                <Link to="/ponuda-guma" className="font-semibold text-midnight-800">
                   Pogledajte ponudu
                 </Link>
                 .
               </p>
             ) : (
-              <ul className="divide-y divide-ink-100">
+              <ul className="divide-y divide-asphalt-100">
                 {reservations.data?.content.slice(0, 4).map((reservation) => (
                   <li key={reservation.id} className="py-2.5">
-                    <p className="font-bold text-ink-950">{reservation.productName}</p>
-                    <p className="text-sm tabular-nums text-ink-500">{reservation.quantity} kom</p>
+                    <p className="font-bold text-asphalt-950">{reservation.productName}</p>
+                    <p className="text-sm tabular-nums text-asphalt-500">{reservation.quantity} kom</p>
                   </li>
                 ))}
               </ul>
@@ -147,10 +147,10 @@ function Panel({
   children: React.ReactNode;
 }) {
   return (
-    <section className="rounded-sign border-2 border-ink-950 bg-white">
-      <div className="flex items-center justify-between border-b-2 border-ink-950 bg-ink-50 px-4 py-2.5">
-        <h2 className="text-sm font-bold uppercase tracking-wide text-ink-700">{title}</h2>
-        <Link to={to} className="text-sm font-bold text-signal-700">
+    <section className="rounded-control border-2 border-asphalt-950 bg-white">
+      <div className="flex items-center justify-between border-b-2 border-asphalt-950 bg-asphalt-50 px-4 py-2.5">
+        <h2 className="text-sm font-bold uppercase tracking-wide text-asphalt-700">{title}</h2>
+        <Link to={to} className="text-sm font-bold text-midnight-800">
           Sve
         </Link>
       </div>

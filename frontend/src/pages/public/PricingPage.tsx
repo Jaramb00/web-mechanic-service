@@ -46,14 +46,14 @@ export function PricingPage() {
             {services?.map((service) => (
               <Tr key={service.id}>
                 <Td>
-                  <span className="font-bold text-ink-950">{service.name}</span>
+                  <span className="font-bold text-asphalt-950">{service.name}</span>
                   {service.description ? (
-                    <span className="mt-0.5 block max-w-[60ch] text-sm text-ink-500">
+                    <span className="mt-0.5 block max-w-[60ch] text-sm text-asphalt-500">
                       {service.description}
                     </span>
                   ) : null}
                 </Td>
-                <Td align="right" numeric className="whitespace-nowrap text-ink-700">
+                <Td align="right" numeric className="whitespace-nowrap text-asphalt-700">
                   {service.durationMinutes} min
                 </Td>
                 <Td align="right" numeric className="whitespace-nowrap text-lg">
@@ -65,7 +65,7 @@ export function PricingPage() {
         )}
       </div>
 
-      <p className="mt-6 max-w-[68ch] text-[0.9375rem] text-ink-500">
+      <p className="mt-6 max-w-[68ch] text-[0.9375rem] text-asphalt-500">
         Cijene su izražene u eurima s uključenim PDV-om. Cjenik je informativan i podložan
         promjeni; mjerodavan je iznos dogovoren prije izvođenja usluge.
       </p>

@@ -20,7 +20,7 @@ export function Pagination({
 }) {
   if (totalPages <= 1) {
     return (
-      <p className="text-sm text-ink-500">
+      <p className="text-sm text-asphalt-500">
         Ukupno {totalElements} {label}.
       </p>
     );
@@ -28,8 +28,8 @@ export function Pagination({
 
   return (
     <nav className="flex flex-wrap items-center justify-between gap-3" aria-label="Stranice rezultata">
-      <p className="text-sm text-ink-500">
-        Stranica <strong className="text-ink-900">{page + 1}</strong> od {totalPages} · ukupno{' '}
+      <p className="text-sm text-asphalt-500">
+        Stranica <strong className="text-asphalt-900">{page + 1}</strong> od {totalPages} · ukupno{' '}
         {totalElements} {label}
       </p>
       <div className="flex gap-2">

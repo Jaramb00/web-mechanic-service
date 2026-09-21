@@ -58,14 +58,14 @@ export default function WarehouseMovements() {
           >
             {data?.content.map((movement) => (
               <Tr key={movement.id}>
-                <Td numeric className="whitespace-nowrap text-sm text-ink-500">
+                <Td numeric className="whitespace-nowrap text-sm text-asphalt-500">
                   {formatDateTime(movement.createdAt)}
                 </Td>
                 <Td>
-                  <span className="font-semibold text-ink-950">{movement.productName ?? '—'}</span>
-                  <span className="mt-0.5 block text-xs tabular-nums text-ink-500">{movement.productSku}</span>
+                  <span className="font-semibold text-asphalt-950">{movement.productName ?? '—'}</span>
+                  <span className="mt-0.5 block text-xs tabular-nums text-asphalt-500">{movement.productSku}</span>
                 </Td>
-                <Td className="whitespace-nowrap text-ink-700">
+                <Td className="whitespace-nowrap text-asphalt-700">
                   {MOVEMENT_LABELS[movement.movementType]}
                 </Td>
                 <Td align="right" numeric className={cn(deltaClass(movement.deltaPhysical))}>
@@ -74,7 +74,7 @@ export default function WarehouseMovements() {
                 <Td align="right" numeric className={cn(deltaClass(movement.deltaReserved))}>
                   {formatDelta(movement.deltaReserved)}
                 </Td>
-                <Td className="max-w-[28ch] text-sm text-ink-500">{movement.note ?? '—'}</Td>
+                <Td className="max-w-[28ch] text-sm text-asphalt-500">{movement.note ?? '—'}</Td>
               </Tr>
             ))}
           </DataTable>
@@ -100,6 +100,6 @@ function formatDelta(value: number): string {
 }
 
 function deltaClass(value: number): string {
-  if (value === 0) return 'text-ink-300';
+  if (value === 0) return 'text-asphalt-300';
   return value > 0 ? 'text-go-600' : 'text-stop-600';
 }

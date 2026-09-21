@@ -68,13 +68,13 @@ export default function CustomerAppointments() {
         <>
           <ul className="space-y-4">
             {data?.content.map((appointment) => (
-              <li key={appointment.id} className="rounded-sign border-2 border-ink-950 bg-white">
-                <div className="flex flex-wrap items-start justify-between gap-3 border-b border-ink-200 px-4 py-3">
+              <li key={appointment.id} className="rounded-control border-2 border-asphalt-950 bg-white">
+                <div className="flex flex-wrap items-start justify-between gap-3 border-b border-asphalt-200 px-4 py-3">
                   <div>
-                    <p className="text-lg font-extrabold tabular-nums text-ink-950">
+                    <p className="text-lg font-extrabold tabular-nums text-asphalt-950">
                       {formatSlotLabel(appointment.startAt)}
                     </p>
-                    <p className="mt-0.5 text-sm text-ink-500">
+                    <p className="mt-0.5 text-sm text-asphalt-500">
                       {appointment.serviceName} · {appointment.vehicleLabel}
                       {appointment.bayName ? ` · ${appointment.bayName}` : ''}
                     </p>
@@ -86,26 +86,26 @@ export default function CustomerAppointments() {
                   <dl className="space-y-3 px-4 py-3 text-[0.9375rem]">
                     {appointment.customerNote ? (
                       <div>
-                        <dt className="text-sm font-semibold text-ink-500">Vaša napomena</dt>
-                        <dd className="text-ink-900">{appointment.customerNote}</dd>
+                        <dt className="text-sm font-semibold text-asphalt-500">Vaša napomena</dt>
+                        <dd className="text-asphalt-900">{appointment.customerNote}</dd>
                       </div>
                     ) : null}
                     {appointment.mechanicNote ? (
                       <div>
-                        <dt className="text-sm font-semibold text-ink-500">Napomena servisa</dt>
-                        <dd className="text-ink-900">{appointment.mechanicNote}</dd>
+                        <dt className="text-sm font-semibold text-asphalt-500">Napomena servisa</dt>
+                        <dd className="text-asphalt-900">{appointment.mechanicNote}</dd>
                       </div>
                     ) : null}
                     {appointment.items.length > 0 ? (
                       <div>
-                        <dt className="text-sm font-semibold text-ink-500">Obavljeno i utrošeno</dt>
+                        <dt className="text-sm font-semibold text-asphalt-500">Obavljeno i utrošeno</dt>
                         <dd>
-                          <ul className="mt-1 divide-y divide-ink-100">
+                          <ul className="mt-1 divide-y divide-asphalt-100">
                             {appointment.items.map((item) => (
                               <li key={item.id} className="flex justify-between gap-4 py-1.5">
-                                <span className="text-ink-900">
+                                <span className="text-asphalt-900">
                                   {item.description}
-                                  <span className="text-ink-500"> × {item.quantity}</span>
+                                  <span className="text-asphalt-500"> × {item.quantity}</span>
                                 </span>
                                 <span className="font-bold tabular-nums">
                                   {formatPrice(item.lineTotal)}
@@ -113,7 +113,7 @@ export default function CustomerAppointments() {
                               </li>
                             ))}
                           </ul>
-                          <p className="mt-2 flex justify-between border-t-2 border-ink-950 pt-2 font-extrabold">
+                          <p className="mt-2 flex justify-between border-t-2 border-asphalt-950 pt-2 font-extrabold">
                             <span>Ukupno</span>
                             <span className="tabular-nums">{formatPrice(appointment.itemsTotal)}</span>
                           </p>
@@ -124,7 +124,7 @@ export default function CustomerAppointments() {
                 ) : null}
 
                 {appointment.cancellable ? (
-                  <div className="border-t border-ink-200 bg-ink-50 px-4 py-2.5">
+                  <div className="border-t border-asphalt-200 bg-asphalt-50 px-4 py-2.5">
                     <Button variant="ghost" size="sm" onClick={() => setToCancel(appointment)}>
                       Otkaži termin
                     </Button>

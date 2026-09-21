@@ -1,80 +1,109 @@
 @import 'tailwindcss';
 
 /* ===========================================================================
-   VIZUALNI SUSTAV — prometno znakovlje
+   VIZUALNI SUSTAV — „radionica noću"
    ---------------------------------------------------------------------------
-   Boja je isključivo semantička, nikad ukrasna:
-     signal (plava)  = obavijest, orijentacija, identitet
-     work   (žuta)   = radnja koja se poduzima SADA (samo primarni gumb)
-     stop   (crvena) = zabrana, greška, destruktivna radnja
-     go     (zelena) = slobodno, potvrđeno, uspjeh
-     ink    (asfalt) = tekst, linije, podloge
+   Svijet nije javni prometni znak nego unutrašnjost radionice: duboka tamna
+   ploha, jedno oštro žuto svjetlo, guma kao materijal. Motorsport grafika.
+
+   Tri boje nose sve:
+     volt     (#FFED00) = potpis brenda, radnja, aktivno stanje
+     midnight (#13233F) = dubina, autoritet, tamne plohe
+     asphalt            = tekst, linije, svijetle podloge
+
+   Uz njih dva semafora koja se ne smiju stopiti s brendom:
+     stop (crvena) = greška, zabrana, destruktivno
+     go   (zelena) = slobodno, potvrđeno
 
    KLIJENT: za promjenu u vlastiti brand dovoljno je izmijeniti vrijednosti
-   u ovom bloku. Nijedna komponenta ne sadrži hardkodiranu boju.
+   u @theme bloku. Nijedna komponenta ne sadrži hardkodiranu boju.
    =========================================================================== */
 @theme {
   --font-sans: 'Archivo', ui-sans-serif, system-ui, sans-serif;
 
-  /* Signalno plava — informativna ploha. Nosi cijele plohe, ne akcente. */
-  --color-signal-50: #eff6fd;
-  --color-signal-100: #d7e8f8;
-  --color-signal-200: #aecff1;
-  --color-signal-500: #1470c8;
-  --color-signal-600: #0e5ca8;
-  --color-signal-700: #0b4c8c;
-  --color-signal-800: #0a3e7d;
-  --color-signal-900: #072d5e;
+  /* --- VOLT — potpis. Uzet točno s tiska na majici (#FFED00). -------------
+     PAŽNJA: volt-500 na bijelom ima kontrast 1.1:1 i kao tekst je
+     neupotrebljiv. Smije biti ploha s tamnim tekstom na sebi, veliki
+     grafički element, ili tekst na midnight podlozi. Nikad tekst na svijetlom
+     — za to postoji volt-700. */
+  --color-volt-100: #fffccc;
+  --color-volt-300: #fff799;
+  --color-volt-400: #fff34d;
+  --color-volt-500: #ffed00;
+  --color-volt-600: #e5d400;
+  --color-volt-700: #6b6300;
 
-  /* Radno žuta — znak radova. Jedina boja primarne radnje. */
-  --color-work-100: #fff3cc;
-  --color-work-300: #ffe08a;
-  --color-work-400: #ffd64d;
-  --color-work-500: #ffc400;
-  --color-work-600: #e0a800;
-  --color-work-700: #b88a00;
+  /* --- MIDNIGHT — dubina. midnight-800 je mornarska s kape s reference. ---
+     Nosi cijele plohe od ruba do ruba, ne akcente. */
+  --color-midnight-50: #eef2f9;
+  --color-midnight-100: #dce5f5;
+  --color-midnight-200: #b9c9e8;
+  --color-midnight-500: #35558c;
+  --color-midnight-700: #1d3358;
+  --color-midnight-800: #13233f;
+  --color-midnight-900: #0c1424;
+  --color-midnight-950: #070c18;
 
-  /* Zabranska crvena */
-  --color-stop-50: #fdf0f1;
-  --color-stop-100: #fbe0e3;
-  --color-stop-500: #cc1122;
-  --color-stop-600: #b3121f;
-  --color-stop-700: #8f0e18;
+  /* --- ASPHALT — neutrali s hladnim, plavkastim odsjajem. ----------------
+     Stari sustav je sivu držao namjerno neutralnom; ovdje asfalt pripada
+     istom svijetu kao midnight, pa nosi njegovu primjesu. */
+  --color-asphalt-50: #f6f7f9;
+  --color-asphalt-100: #eaecf1;
+  --color-asphalt-200: #d6dae3;
+  --color-asphalt-300: #aeb5c4;
+  --color-asphalt-500: #646d7e;
+  --color-asphalt-700: #3a4150;
+  --color-asphalt-900: #171b24;
+  --color-asphalt-950: #0b0e13;
 
-  /* Dopusna zelena */
-  --color-go-50: #eef8f2;
-  --color-go-100: #def2e6;
-  --color-go-500: #1e8a4c;
-  --color-go-600: #17683a;
-  --color-go-700: #11512d;
+  /* --- STOP — greška i zabrana. -----------------------------------------
+     stop-300 postoji samo zato što crvena na tamnoj plohi mora biti
+     svjetlija da zadrži kontrast; stop-600 tamo pada ispod AA. */
+  --color-stop-50: #fdf1f2;
+  --color-stop-100: #fbdde0;
+  --color-stop-300: #ff9aa4;
+  --color-stop-500: #d81f32;
+  --color-stop-600: #b3111f;
+  --color-stop-700: #8c0c18;
 
-  /* Asfalt — namjerno neutralno siv, bez plave ili tople primjese:
-     plavo-crna podloga je zadana paleta, a ne materijal ovog svijeta. */
-  --color-ink-50: #f4f4f4;
-  --color-ink-100: #e6e6e6;
-  --color-ink-200: #d0d0d0;
-  --color-ink-300: #adadad;
-  --color-ink-500: #6a6a6a;
-  --color-ink-700: #3a3a3a;
-  --color-ink-900: #1f1f1f;
-  --color-ink-950: #161616;
+  /* --- GO — slobodno i potvrđeno. Isti razlog za go-300. ----------------- */
+  --color-go-50: #edf9f1;
+  --color-go-100: #d3f0de;
+  --color-go-300: #5fd894;
+  --color-go-500: #12904a;
+  --color-go-600: #0e7239;
+  --color-go-700: #0a592c;
 
-  /* Znakovi imaju male, dosljedne radijuse — ne mekane kartice. */
+  /* --- Oblik ------------------------------------------------------------
+     Gustoća podataka traži mirnoću: tablice i značke ostaju oštre, plohe
+     koje se dodiruju postaju mekše. */
   --radius-plate: 0.25rem;
-  --radius-sign: 0.5rem;
+  --radius-control: 0.625rem;
+  --radius-card: 1rem;
+  --radius-pill: 999px;
 
-  /* Jedina dopuštena dubina: ploha odignuta od podloge, s pomakom i blurom.
-     Nikad obojani halo bez pomaka. */
-  --shadow-plate: 0 1px 2px rgb(22 22 22 / 0.08), 0 4px 12px rgb(22 22 22 / 0.06);
-  --shadow-raised: 0 2px 4px rgb(22 22 22 / 0.10), 0 12px 28px rgb(22 22 22 / 0.10);
+  /* --- Dubina -----------------------------------------------------------
+     Sjena je uvijek dvoslojna: uska kontaktna + široka meka. Nikad obojani
+     halo bez pomaka. */
+  --shadow-plate: 0 1px 2px rgb(11 14 19 / 0.06), 0 2px 8px -2px rgb(11 14 19 / 0.08);
+  --shadow-raised: 0 2px 4px rgb(11 14 19 / 0.08), 0 12px 28px -8px rgb(11 14 19 / 0.16);
+  --shadow-float: 0 4px 8px rgb(11 14 19 / 0.10), 0 24px 48px -12px rgb(11 14 19 / 0.28);
 
-  --ease-sign: linear;
+  /* --- Pokret -----------------------------------------------------------
+     Jedna krivulja za ulaz (brz start, mekano slijetanje) i jedna linearna
+     za stvari koje se ne smiju doimati „živima" (trake napretka). */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
 }
 
 /* --- Pismo: self-hostano, bez third-party CDN-a ---------------------------
    Razlog nije samo brzina: učitavanje fonta s tuđe domene šalje IP adresu
    posjetitelja trećoj strani, što je za stranicu s hrvatskom politikom
-   privatnosti nepotreban rizik. */
+   privatnosti nepotreban rizik.
+
+   Archivo je varijabilan po težini (100–900) I po širini (62–125%), pa se
+   teški kondenzirani verzali s reference dobivaju iz datoteke koja je već
+   ovdje — bez ijednog dodatnog zahtjeva. */
 @font-face {
   font-family: 'Archivo';
   font-style: normal;
@@ -98,13 +127,37 @@
     U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
+/* Kurziv nosi SAMO displejne naslove, pa je podskup svjesno sužen na znakove
+   koji se u njima pojavljuju (ASCII + hrvatski dijakritici + interpunkcija).
+   Puni rez bio bi 195 kB; ovako je 62 kB. Ako naslov ikad zatreba znak izvan
+   ovog skupa, preglednik pada na uspravni rez — vidljivo, ali ne slomljeno. */
+@font-face {
+  font-family: 'Archivo Display';
+  font-style: italic;
+  font-weight: 100 900;
+  font-stretch: 62% 125%;
+  font-display: swap;
+  src: url('/fonts/archivo-italic-display-ext.woff2') format('woff2');
+  unicode-range: U+010C-010D, U+0106-0107, U+0110-0111, U+0160-0161, U+017D-017E;
+}
+@font-face {
+  font-family: 'Archivo Display';
+  font-style: italic;
+  font-weight: 100 900;
+  font-stretch: 62% 125%;
+  font-display: swap;
+  src: url('/fonts/archivo-italic-display.woff2') format('woff2');
+  unicode-range: U+0020-007E, U+00B0, U+00B7, U+00D7, U+2013-2014, U+2018-201E,
+    U+2026, U+20AC;
+}
+
 @layer base {
   :root {
     color-scheme: light;
     /* Rubne površine preglednika također nose dizajn. */
-    accent-color: var(--color-signal-700);
-    caret-color: var(--color-signal-700);
-    scrollbar-color: var(--color-ink-300) var(--color-ink-50);
+    accent-color: var(--color-midnight-800);
+    caret-color: var(--color-midnight-800);
+    scrollbar-color: var(--color-asphalt-300) var(--color-asphalt-100);
   }
 
   html {
@@ -113,8 +166,8 @@
   }
 
   body {
-    background-color: var(--color-ink-50);
-    color: var(--color-ink-950);
+    background-color: var(--color-asphalt-50);
+    color: var(--color-asphalt-950);
     font-family: var(--font-sans);
     font-synthesis-weight: none;
     text-rendering: optimizeLegibility;
@@ -132,21 +185,20 @@
   }
 
   ::selection {
-    background-color: var(--color-work-500);
-    color: var(--color-ink-950);
+    background-color: var(--color-volt-500);
+    color: var(--color-asphalt-950);
   }
 
   /* Fokus je na cesti pitanje sigurnosti, ovdje pitanje pristupačnosti:
      uvijek vidljiv, uvijek isti, nikad uklonjen. */
   :focus-visible {
-    outline: 3px solid var(--color-signal-700);
+    outline: 3px solid var(--color-midnight-800);
     outline-offset: 2px;
     border-radius: 2px;
   }
-  /* Na plavoj plohi plavi prsten ne bi bio vidljiv. */
-  .on-signal :focus-visible,
-  .on-ink :focus-visible {
-    outline-color: var(--color-work-500);
+  /* Na tamnoj plohi mornarski prsten ne bi bio vidljiv. */
+  .on-midnight :focus-visible {
+    outline-color: var(--color-volt-500);
   }
 
   a {
@@ -154,38 +206,70 @@
     text-decoration-thickness: from-font;
   }
 
-  /* Podloga stranice je asfalt; sekcije same određuju svoju plohu. */
   ::-webkit-scrollbar {
     width: 12px;
     height: 12px;
   }
   ::-webkit-scrollbar-track {
-    background: var(--color-ink-50);
+    background: var(--color-asphalt-100);
   }
   ::-webkit-scrollbar-thumb {
-    background: var(--color-ink-300);
-    border: 3px solid var(--color-ink-50);
-    border-radius: 999px;
+    background: var(--color-asphalt-300);
+    border: 3px solid var(--color-asphalt-100);
+    border-radius: var(--radius-pill);
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: var(--color-ink-500);
+    background: var(--color-asphalt-500);
   }
 }
 
 @layer components {
-  /* Naslov na ploči: zbijen po osi širine, kao naziv odredišta na znaku. */
+  /* DISPLEJNI NASLOV — teški kondenzirani kurzivni verzali.
+     Ovo je tipografski potpis preuzet s tiska na majici. Namjerno samo za
+     naslove: u tekstu bi kosi verzali ubili čitljivost, a hrvatski dijakritici
+     na malim veličinama postaju kaša. */
+  .display {
+    font-family: 'Archivo Display', var(--font-sans);
+    font-style: italic;
+    font-weight: 800;
+    font-stretch: 75%;
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+    line-height: 0.95;
+  }
+
+  /* Naslov sekcije: isto pismo, uspravno i šire — nosi hijerarhiju bez vike. */
   .plate-title {
     font-stretch: 87.5%;
     letter-spacing: -0.015em;
   }
 
-  /* POTPISNI DETALJ: uvučena bijela kontura, kao na stvarnom prometnom znaku.
-     Ne crta se kao border nego kao unutarnja sjena, pa ne pomiče raspored. */
-  .keyline {
-    box-shadow: inset 0 0 0 2px rgb(255 255 255 / 0.9);
+  /* POTPISNI DETALJ: rub svjetla.
+     Svjetlo u radionici pada odozgo i hvata gornji brid plohe. Crta se kao
+     unutarnja sjena, ne kao border, pa ne pomiče raspored. */
+  .edge-light {
+    box-shadow:
+      inset 0 1px 0 rgb(255 237 0 / 0.22),
+      inset 0 0 0 1px rgb(255 255 255 / 0.07);
   }
-  .keyline-dark {
-    box-shadow: inset 0 0 0 2px var(--color-ink-950);
+  /* Na žutoj plohi svjetlo je tamno — inače se izgubi. */
+  .edge-light-dark {
+    box-shadow: inset 0 1px 0 rgb(11 14 19 / 0.18);
+  }
+
+  /* REFLEKTOR — jedini veliki gradijent u sustavu.
+     Radna lampa uperena u plohu: toplo žuto gore lijevo, dubina prema dolje. */
+  .spotlight {
+    background-color: var(--color-midnight-900);
+    background-image:
+      radial-gradient(60rem 40rem at 15% -10%, rgb(255 237 0 / 0.16), transparent 60%),
+      radial-gradient(40rem 30rem at 95% 110%, rgb(53 85 140 / 0.45), transparent 65%);
+  }
+
+  /* Suptilna dubina na tamnim karticama — 3%, taman toliko da ploha ne bude
+     mrtva. Više od toga i sustav počinje izgledati kao predložak. */
+  .surface-dark {
+    background-image: linear-gradient(180deg, rgb(255 255 255 / 0.04), transparent 40%);
   }
 
   /* Zauzet termin se ne skriva — šrafira se, kao prekriženi znak.
@@ -195,12 +279,42 @@
       45deg,
       transparent,
       transparent 4px,
-      var(--color-ink-200) 4px,
-      var(--color-ink-200) 5px
+      var(--color-asphalt-200) 4px,
+      var(--color-asphalt-200) 5px
     );
+  }
+
+  /* Podizanje plohe na hover. Nikad skaliranje: tekst bi se zamutio, a
+     susjedne plohe bi se pomaknule. */
+  .lift {
+    transition:
+      transform 180ms var(--ease-out),
+      box-shadow 180ms var(--ease-out),
+      border-color 180ms var(--ease-out);
+  }
+  .lift:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-raised);
+  }
+
+  /* ULAZ U KADAR — postavlja se preko IntersectionObservera (useReveal).
+     Bez biblioteke: dvije klase i jedna tranzicija. */
+  .reveal {
+    opacity: 0;
+    transform: translateY(12px);
+    transition:
+      opacity 420ms var(--ease-out),
+      transform 420ms var(--ease-out);
+  }
+  .reveal-in {
+    opacity: 1;
+    transform: none;
   }
 }
 
+/* Korisnik koji je isključio animacije dobiva sve odmah i na mjestu —
+   uključujući elemente koji čekaju IntersectionObserver, da sadržaj nikad
+   ne ostane nevidljiv ako se promatrač ne pokrene. */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -209,5 +323,13 @@
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
+  }
+
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+  .lift:hover {
+    transform: none;
   }
 }

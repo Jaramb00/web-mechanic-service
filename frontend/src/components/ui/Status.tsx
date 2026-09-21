@@ -14,19 +14,19 @@ import {
  * Oblik nosi značenje i za korisnike koji ne razlikuju boje.
  */
 const TONES: Record<Tone, string> = {
-  signal: 'bg-signal-100 text-signal-900 border-signal-700',
-  work: 'bg-work-100 text-ink-950 border-work-600',
+  signal: 'bg-midnight-100 text-midnight-950 border-midnight-800',
+  work: 'bg-volt-100 text-asphalt-950 border-volt-600',
   go: 'bg-go-100 text-go-700 border-go-600',
   stop: 'bg-stop-100 text-stop-700 border-stop-600',
-  neutral: 'bg-ink-100 text-ink-700 border-ink-300',
+  neutral: 'bg-asphalt-100 text-asphalt-700 border-asphalt-300',
 };
 
 const MARK: Record<Tone, string> = {
-  signal: 'bg-signal-700',
-  work: 'bg-work-600',
+  signal: 'bg-midnight-800',
+  work: 'bg-volt-600',
   go: 'bg-go-600',
   stop: 'bg-stop-600',
-  neutral: 'bg-ink-500',
+  neutral: 'bg-asphalt-500',
 };
 
 function ShapeMark({ shape, tone }: { shape: Shape; tone: Tone }) {

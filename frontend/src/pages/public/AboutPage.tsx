@@ -25,9 +25,9 @@ export function AboutPage() {
         stvarnu priču servisa.
       </Alert>
 
-      <div className="mt-8 max-w-[68ch] space-y-5 text-[1.0625rem] leading-relaxed text-ink-700">
+      <div className="mt-8 max-w-[68ch] space-y-5 text-[1.0625rem] leading-relaxed text-asphalt-700">
         <p>
-          <strong className="text-ink-950">{site.name}</strong> je vulkanizerski servis na
+          <strong className="text-asphalt-950">{site.name}</strong> je vulkanizerski servis na
           adresi {fullAddress}. Radimo na osobnim vozilima: sezonska zamjena guma,
           montaža i demontaža, balansiranje, popravak i krpanje guma te sezonsko čuvanje
           kompleta.

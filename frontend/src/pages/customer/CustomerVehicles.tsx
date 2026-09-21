@@ -106,9 +106,9 @@ export default function CustomerVehicles() {
         <form
           onSubmit={handleSubmit((values) => create.mutate(values))}
           noValidate
-          className="mb-6 rounded-sign border-2 border-ink-950 bg-white p-5"
+          className="mb-6 rounded-control border-2 border-asphalt-950 bg-white p-5"
         >
-          <h2 className="text-lg font-extrabold text-ink-950">Novo vozilo</h2>
+          <h2 className="text-lg font-extrabold text-asphalt-950">Novo vozilo</h2>
 
           {create.isError ? (
             <Alert tone="error" title="Vozilo nije spremljeno" className="mt-4">
@@ -180,36 +180,36 @@ export default function CustomerVehicles() {
       ) : (
         <ul className="grid gap-4 sm:grid-cols-2">
           {data?.map((vehicle) => (
-            <li key={vehicle.id} className="rounded-sign border-2 border-ink-950 bg-white">
+            <li key={vehicle.id} className="rounded-control border-2 border-asphalt-950 bg-white">
               <div className="flex items-start gap-3 p-4">
-                <span className="mt-0.5 text-signal-700">
+                <span className="mt-0.5 text-midnight-800">
                   <Car size={22} />
                 </span>
                 <div className="min-w-0 flex-1">
-                  <h3 className="text-[1.0625rem] font-extrabold text-ink-950">
+                  <h3 className="text-[1.0625rem] font-extrabold text-asphalt-950">
                     {vehicle.make} {vehicle.model}
                   </h3>
                   <dl className="mt-2 space-y-0.5 text-sm">
                     <div className="flex gap-2">
-                      <dt className="text-ink-500">Registracija:</dt>
-                      <dd className="font-bold tabular-nums text-ink-900">{vehicle.registration}</dd>
+                      <dt className="text-asphalt-500">Registracija:</dt>
+                      <dd className="font-bold tabular-nums text-asphalt-900">{vehicle.registration}</dd>
                     </div>
                     {vehicle.modelYear ? (
                       <div className="flex gap-2">
-                        <dt className="text-ink-500">Godina:</dt>
-                        <dd className="tabular-nums text-ink-900">{vehicle.modelYear}</dd>
+                        <dt className="text-asphalt-500">Godina:</dt>
+                        <dd className="tabular-nums text-asphalt-900">{vehicle.modelYear}</dd>
                       </div>
                     ) : null}
                     {vehicle.tireSize ? (
                       <div className="flex gap-2">
-                        <dt className="text-ink-500">Gume:</dt>
-                        <dd className="tabular-nums text-ink-900">{vehicle.tireSize}</dd>
+                        <dt className="text-asphalt-500">Gume:</dt>
+                        <dd className="tabular-nums text-asphalt-900">{vehicle.tireSize}</dd>
                       </div>
                     ) : null}
                   </dl>
                 </div>
               </div>
-              <div className="border-t border-ink-200 bg-ink-50 px-4 py-2">
+              <div className="border-t border-asphalt-200 bg-asphalt-50 px-4 py-2">
                 <Button variant="ghost" size="sm" onClick={() => setToDelete(vehicle)}>
                   <Trash size={16} />
                   Obriši

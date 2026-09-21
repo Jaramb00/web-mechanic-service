@@ -27,49 +27,49 @@ export function ContactPage() {
       </SectionTitle>
 
       <div className="mt-8 grid gap-6 lg:grid-cols-2">
-        <div className="rounded-sign border-2 border-ink-950 bg-white">
-          <h2 className="border-b-2 border-ink-950 bg-ink-50 px-4 py-3 text-sm font-bold uppercase tracking-wide text-ink-700">
+        <div className="rounded-control border-2 border-asphalt-950 bg-white">
+          <h2 className="border-b-2 border-asphalt-950 bg-asphalt-50 px-4 py-3 text-sm font-bold uppercase tracking-wide text-asphalt-700">
             Podaci za kontakt
           </h2>
-          <dl className="divide-y divide-ink-100">
+          <dl className="divide-y divide-asphalt-100">
             <div className="flex items-start gap-3 px-4 py-4">
-              <Phone size={20} className="mt-0.5 shrink-0 text-signal-700" />
+              <Phone size={20} className="mt-0.5 shrink-0 text-midnight-800" />
               <div>
-                <dt className="text-sm font-semibold text-ink-500">Telefon</dt>
+                <dt className="text-sm font-semibold text-asphalt-500">Telefon</dt>
                 <dd className="text-lg font-bold">
-                  <a href={site.contact.phoneHref} className="text-ink-950 no-underline hover:underline">
+                  <a href={site.contact.phoneHref} className="text-asphalt-950 no-underline hover:underline">
                     {site.contact.phone}
                   </a>
                 </dd>
               </div>
             </div>
             <div className="flex items-start gap-3 px-4 py-4">
-              <MapPin size={20} className="mt-0.5 shrink-0 text-signal-700" />
+              <MapPin size={20} className="mt-0.5 shrink-0 text-midnight-800" />
               <div>
-                <dt className="text-sm font-semibold text-ink-500">Adresa</dt>
-                <dd className="font-bold text-ink-950">{fullAddress}</dd>
-                <dd className="mt-1 text-[0.9375rem] text-ink-700">{site.address.directions}</dd>
+                <dt className="text-sm font-semibold text-asphalt-500">Adresa</dt>
+                <dd className="font-bold text-asphalt-950">{fullAddress}</dd>
+                <dd className="mt-1 text-[0.9375rem] text-asphalt-700">{site.address.directions}</dd>
               </div>
             </div>
             <div className="px-4 py-4">
-              <dt className="text-sm font-semibold text-ink-500">E-mail</dt>
+              <dt className="text-sm font-semibold text-asphalt-500">E-mail</dt>
               <dd className="font-bold">
-                <a href={`mailto:${site.contact.email}`} className="text-signal-700">
+                <a href={`mailto:${site.contact.email}`} className="text-midnight-800">
                   {site.contact.email}
                 </a>
               </dd>
             </div>
             <div className="px-4 py-4">
-              <dt className="text-sm font-semibold text-ink-500">Tvrtka</dt>
-              <dd className="text-ink-950">
+              <dt className="text-sm font-semibold text-asphalt-500">Tvrtka</dt>
+              <dd className="text-asphalt-950">
                 {site.legalName} · OIB {site.oib}
               </dd>
             </div>
           </dl>
         </div>
 
-        <div className="rounded-sign border-2 border-ink-950 bg-white">
-          <h2 className="border-b-2 border-ink-950 bg-ink-50 px-4 py-3 text-sm font-bold uppercase tracking-wide text-ink-700">
+        <div className="rounded-control border-2 border-asphalt-950 bg-white">
+          <h2 className="border-b-2 border-asphalt-950 bg-asphalt-50 px-4 py-3 text-sm font-bold uppercase tracking-wide text-asphalt-700">
             Radno vrijeme
           </h2>
           {isLoading ? (
@@ -79,11 +79,11 @@ export function ContactPage() {
               ))}
             </div>
           ) : (
-            <dl className="divide-y divide-ink-100">
+            <dl className="divide-y divide-asphalt-100">
               {hours?.map((entry) => (
                 <div key={entry.dayOfWeek} className="flex items-baseline justify-between px-4 py-2.5">
-                  <dt className="font-semibold capitalize text-ink-900">{weekdayName(entry.dayOfWeek)}</dt>
-                  <dd className={entry.closed ? 'text-ink-500' : 'font-bold tabular-nums text-ink-950'}>
+                  <dt className="font-semibold capitalize text-asphalt-900">{weekdayName(entry.dayOfWeek)}</dt>
+                  <dd className={entry.closed ? 'text-asphalt-500' : 'font-bold tabular-nums text-asphalt-950'}>
                     {entry.closed
                       ? 'Zatvoreno'
                       : `${trimSeconds(entry.openTime)} – ${trimSeconds(entry.closeTime)}`}

@@ -9,17 +9,17 @@ export function Section({
   as: Tag = 'section',
   labelledBy,
 }: {
-  tone?: 'light' | 'white' | 'signal' | 'ink';
+  tone?: 'light' | 'white' | 'midnight' | 'deep';
   className?: string;
   children: ReactNode;
   as?: 'section' | 'div';
   labelledBy?: string;
 }) {
   const tones = {
-    light: 'bg-ink-50 text-ink-950',
-    white: 'bg-white text-ink-950',
-    signal: 'on-signal bg-signal-700 text-white',
-    ink: 'on-ink bg-ink-950 text-white',
+    light: 'bg-asphalt-50 text-asphalt-950',
+    white: 'bg-white text-asphalt-950',
+    midnight: 'on-midnight bg-midnight-800 text-white',
+    deep: 'on-midnight surface-dark bg-midnight-950 text-white',
   } as const;
 
   return (
@@ -31,6 +31,11 @@ export function Section({
 
 /**
  * Naslov sekcije. Bez nadnaslova iznad njega — naslov nosi vlastitu težinu.
+ *
+ * Nosi displejni rez (teški kondenzirani kurzivni verzali) — tipografski
+ * potpis sustava. Namjerno staje ovdje i ne ide dublje: u tekstu bi kosi
+ * verzali ubili čitljivost, a hrvatski dijakritici bi se na malim veličinama
+ * slijepili.
  *
  * `level` postoji zato što svaka stranica mora imati točno jedan H1: prva
  * sekcija stranice nosi H1, sve sljedeće H2. Bez toga čitači ekrana i tražilice
@@ -55,15 +60,15 @@ export function SectionTitle({
       <Heading
         id={id}
         className={cn(
-          'text-balance font-extrabold tracking-tight',
-          level === 1 ? 'text-2xl sm:text-4xl' : 'text-2xl sm:text-3xl',
-          invert ? 'text-white' : 'text-ink-950',
+          'display text-balance',
+          level === 1 ? 'text-3xl sm:text-5xl' : 'text-[1.75rem] sm:text-4xl',
+          invert ? 'text-white' : 'text-asphalt-950',
         )}
       >
         {children}
       </Heading>
       {description ? (
-        <p className={cn('mt-3 text-[1.0625rem] leading-relaxed', invert ? 'text-signal-100' : 'text-ink-700')}>
+        <p className={cn('mt-3 text-[1.0625rem] leading-relaxed', invert ? 'text-midnight-100' : 'text-asphalt-700')}>
           {description}
         </p>
       ) : null}

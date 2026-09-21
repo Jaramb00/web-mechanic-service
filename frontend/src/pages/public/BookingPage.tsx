@@ -127,14 +127,14 @@ export function BookingPage() {
   }
 
   return (
-    <Section tone="ink" labelledBy="naslov-rezervacija">
+    <Section tone="deep" labelledBy="naslov-rezervacija">
       <h1
         id="naslov-rezervacija"
         className="plate-title text-2xl font-extrabold text-white sm:text-4xl"
       >
         Rezervacija termina
       </h1>
-      <p className="mt-3 max-w-[60ch] text-[1.0625rem] leading-relaxed text-ink-200">
+      <p className="mt-3 max-w-[60ch] text-[1.0625rem] leading-relaxed text-asphalt-200">
         Odaberite uslugu i dan, pa uzmite termin koji vam odgovara. Prijava je potrebna tek
         na kraju — odabir se neće izgubiti.
       </p>
@@ -204,7 +204,7 @@ export function BookingPage() {
                 onSelect={setSlot}
                 label={`Slobodni termini za ${formatDate(date)}`}
               />
-              <div className="mt-5 border-t border-ink-200 pt-4">
+              <div className="mt-5 border-t border-asphalt-200 pt-4">
                 <SlotLegend />
               </div>
             </>
@@ -265,8 +265,8 @@ export function BookingPage() {
         </Step>
       </div>
 
-      <div className="keyline mt-8 rounded-sign bg-white p-5 sm:p-6">
-        <h2 className="text-lg font-extrabold text-ink-950">Sažetak</h2>
+      <div className="edge-light mt-8 rounded-control bg-white p-5 sm:p-6">
+        <h2 className="text-lg font-extrabold text-asphalt-950">Sažetak</h2>
         <dl className="mt-4 grid gap-x-8 gap-y-3 sm:grid-cols-2">
           <SummaryRow term="Usluga" value={selectedService?.name ?? '—'} />
           <SummaryRow
@@ -308,7 +308,7 @@ export function BookingPage() {
         </div>
 
         {!slot ? (
-          <p className="mt-3 text-sm text-ink-500">Odaberite termin da biste mogli potvrditi.</p>
+          <p className="mt-3 text-sm text-asphalt-500">Odaberite termin da biste mogli potvrditi.</p>
         ) : null}
       </div>
     </Section>
@@ -327,17 +327,17 @@ function Step({
   children: React.ReactNode;
 }) {
   return (
-    <section className="overflow-hidden rounded-sign bg-white">
+    <section className="overflow-hidden rounded-control bg-white">
       {/* Zaglavlje koraka je plava ploha s uvučenom bijelom konturom — isti
           potpisni detalj kao na naslovnici, samo u gušćem registru. */}
-      <h2 className="keyline on-signal flex items-center gap-3 bg-signal-700 px-4 py-3.5 sm:px-5">
+      <h2 className="edge-light on-midnight flex items-center gap-3 bg-midnight-800 px-4 py-3.5 sm:px-5">
         <span
           aria-hidden="true"
-          className="flex h-8 w-8 shrink-0 items-center justify-center rounded-plate bg-work-500 text-sm font-extrabold tabular-nums text-ink-950"
+          className="flex h-8 w-8 shrink-0 items-center justify-center rounded-plate bg-volt-500 text-sm font-extrabold tabular-nums text-asphalt-950"
         >
           {number}
         </span>
-        <span className="text-signal-100">{icon}</span>
+        <span className="text-midnight-100">{icon}</span>
         <span className="text-[1.0625rem] font-extrabold text-white">{title}</span>
       </h2>
       <div className="p-4 sm:p-5">{children}</div>
@@ -347,9 +347,9 @@ function Step({
 
 function SummaryRow({ term, value }: { term: string; value: string }) {
   return (
-    <div className="flex items-baseline justify-between gap-4 border-b border-ink-100 pb-2">
-      <dt className="text-sm font-semibold text-ink-500">{term}</dt>
-      <dd className="text-right font-bold text-ink-950">{value}</dd>
+    <div className="flex items-baseline justify-between gap-4 border-b border-asphalt-100 pb-2">
+      <dt className="text-sm font-semibold text-asphalt-500">{term}</dt>
+      <dd className="text-right font-bold text-asphalt-950">{value}</dd>
     </div>
   );
 }
@@ -394,7 +394,7 @@ function DayPicker({ selected, onSelect }: { selected: string; onSelect: (date: 
             <div
               key={day}
               aria-hidden="true"
-              className="hatched flex min-h-16 min-w-16 shrink-0 flex-col items-center justify-center rounded-plate border-2 border-ink-200 bg-ink-50 px-2 text-ink-300"
+              className="hatched flex min-h-16 min-w-16 shrink-0 flex-col items-center justify-center rounded-plate border-2 border-asphalt-200 bg-asphalt-50 px-2 text-asphalt-300"
             >
               <span className="text-xs font-bold uppercase">{label}</span>
               <span className="text-lg font-extrabold tabular-nums line-through decoration-2">
@@ -413,8 +413,8 @@ function DayPicker({ selected, onSelect }: { selected: string; onSelect: (date: 
             className={cn(
               'flex min-h-16 min-w-16 shrink-0 flex-col items-center justify-center rounded-plate border-2 px-2 transition-colors duration-100',
               isSelected
-                ? 'border-ink-950 bg-work-500 text-ink-950'
-                : 'border-ink-300 bg-white text-ink-900 hover:border-signal-700 hover:bg-signal-50',
+                ? 'border-asphalt-950 bg-volt-500 text-asphalt-950'
+                : 'border-asphalt-300 bg-white text-asphalt-900 hover:border-midnight-800 hover:bg-midnight-50',
             )}
           >
             <span className="text-xs font-bold uppercase">{label}</span>
@@ -436,9 +436,9 @@ function BookingConfirmation({
   onNew: () => void;
 }) {
   return (
-    <Section tone="ink">
+    <Section tone="deep">
       <div className="mx-auto max-w-[60ch]">
-        <div className="keyline rounded-sign bg-white">
+        <div className="edge-light rounded-control bg-white">
           <div className="flex items-center gap-3 border-b-2 border-go-600 bg-go-50 px-5 py-4">
             <span
               aria-hidden="true"
@@ -449,14 +449,14 @@ function BookingConfirmation({
             <h1 className="text-xl font-extrabold text-go-700">Termin je rezerviran</h1>
           </div>
 
-          <dl className="divide-y divide-ink-100">
+          <dl className="divide-y divide-asphalt-100">
             <ConfirmRow term="Termin" value={formatSlotLabel(appointment.startAt)} />
             <ConfirmRow term="Usluga" value={appointment.serviceName ?? '—'} />
             <ConfirmRow term="Vozilo" value={appointment.vehicleLabel ?? '—'} />
             <ConfirmRow term="Radno mjesto" value={appointment.bayName ?? '—'} />
           </dl>
 
-          <div className="border-t border-ink-200 bg-ink-50 px-5 py-4 text-[0.9375rem] text-ink-700">
+          <div className="border-t border-asphalt-200 bg-asphalt-50 px-5 py-4 text-[0.9375rem] text-asphalt-700">
             Termin je zaprimljen i čeka potvrdu servisa. O promjeni statusa obavijestit ćemo
             vas u vašem računu.
           </div>
@@ -479,8 +479,8 @@ function BookingConfirmation({
 function ConfirmRow({ term, value }: { term: string; value: string }) {
   return (
     <div className="flex items-baseline justify-between gap-4 px-5 py-3">
-      <dt className="text-sm font-semibold text-ink-500">{term}</dt>
-      <dd className="text-right font-bold text-ink-950">{value}</dd>
+      <dt className="text-sm font-semibold text-asphalt-500">{term}</dt>
+      <dd className="text-right font-bold text-asphalt-950">{value}</dd>
     </div>
   );
 }

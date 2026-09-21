@@ -38,7 +38,7 @@ export function TireStoragePage() {
 
   return (
     <>
-      <Section tone="signal" labelledBy="naslov-hotel">
+      <Section tone="midnight" labelledBy="naslov-hotel">
         <SectionTitle
           id="naslov-hotel"
         level={1}
@@ -49,7 +49,7 @@ export function TireStoragePage() {
         </SectionTitle>
 
         {storage ? (
-          <p className="mt-8 inline-block rounded-sign bg-work-500 px-5 py-3 text-xl font-extrabold tabular-nums text-ink-950 keyline-dark">
+          <p className="mt-8 inline-block rounded-control bg-volt-500 px-5 py-3 text-xl font-extrabold tabular-nums text-asphalt-950 edge-light-dark">
             {formatPrice(storage.price)} po sezoni
           </p>
         ) : null}
@@ -60,18 +60,18 @@ export function TireStoragePage() {
 
         {/* Redoslijed nosi informaciju — korak 3 nema smisla prije koraka 1 — pa su
             koraci numerirani. */}
-        <ol className="mt-8 space-y-px overflow-hidden rounded-sign border-2 border-ink-950">
+        <ol className="mt-8 space-y-px overflow-hidden rounded-control border-2 border-asphalt-950">
           {STEPS.map((step, index) => (
             <li key={step.title} className="flex gap-4 bg-white px-4 py-5 sm:gap-6 sm:px-6">
               <span
                 aria-hidden="true"
-                className="flex h-10 w-10 shrink-0 items-center justify-center rounded-plate bg-signal-700 text-lg font-extrabold tabular-nums text-white"
+                className="flex h-10 w-10 shrink-0 items-center justify-center rounded-plate bg-midnight-800 text-lg font-extrabold tabular-nums text-white"
               >
                 {index + 1}
               </span>
               <div className="min-w-0">
-                <h3 className="text-[1.0625rem] font-bold text-ink-950">{step.title}</h3>
-                <p className="mt-1.5 max-w-[68ch] leading-relaxed text-ink-700">{step.body}</p>
+                <h3 className="text-[1.0625rem] font-bold text-asphalt-950">{step.title}</h3>
+                <p className="mt-1.5 max-w-[68ch] leading-relaxed text-asphalt-700">{step.body}</p>
               </div>
             </li>
           ))}

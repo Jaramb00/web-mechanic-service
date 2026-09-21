@@ -8,12 +8,12 @@ type AlertTone = 'info' | 'warning' | 'error' | 'success';
 
 const ALERT_TONES: Record<AlertTone, { wrap: string; icon: ReactNode; role: 'status' | 'alert' }> = {
   info: {
-    wrap: 'bg-signal-50 border-signal-700 text-signal-900',
+    wrap: 'bg-midnight-50 border-midnight-800 text-midnight-950',
     icon: <Info size={20} />,
     role: 'status',
   },
   warning: {
-    wrap: 'bg-work-100 border-work-600 text-ink-950',
+    wrap: 'bg-volt-100 border-volt-600 text-asphalt-950',
     icon: <AlertTriangle size={20} />,
     role: 'status',
   },
@@ -34,8 +34,8 @@ const ALERT_TONES: Record<AlertTone, { wrap: string; icon: ReactNode; role: 'sta
  * Pravokutnik obavještava, trokut upozorava, krug zabranjuje ili potvrđuje.
  */
 const ALERT_MARK: Record<AlertTone, string> = {
-  info: 'rounded-[2px] bg-signal-700 text-white',
-  warning: 'bg-work-500 text-ink-950 [clip-path:polygon(50%_0,100%_100%,0_100%)]',
+  info: 'rounded-[2px] bg-midnight-800 text-white',
+  warning: 'bg-volt-500 text-asphalt-950 [clip-path:polygon(50%_0,100%_100%,0_100%)]',
   error: 'rounded-full bg-stop-600 text-white',
   success: 'rounded-full bg-go-600 text-white',
 };
@@ -55,7 +55,7 @@ export function Alert({
   return (
     <div
       role={config.role}
-      className={cn('flex gap-3 rounded-sign border-2 px-4 py-3', config.wrap, className)}
+      className={cn('flex gap-3 rounded-control border-2 px-4 py-3', config.wrap, className)}
     >
       <span
         aria-hidden="true"
@@ -88,10 +88,10 @@ export function EmptyState({
   icon?: ReactNode;
 }) {
   return (
-    <div className="flex flex-col items-center gap-3 rounded-sign border-2 border-dashed border-ink-300 bg-white px-6 py-12 text-center">
-      {icon ? <span className="text-ink-300">{icon}</span> : null}
-      <h3 className="text-lg font-bold text-ink-900">{title}</h3>
-      <p className="max-w-prose text-[0.9375rem] text-ink-500">{description}</p>
+    <div className="flex flex-col items-center gap-3 rounded-control border-2 border-dashed border-asphalt-300 bg-white px-6 py-12 text-center">
+      {icon ? <span className="text-asphalt-300">{icon}</span> : null}
+      <h3 className="text-lg font-bold text-asphalt-900">{title}</h3>
+      <p className="max-w-prose text-[0.9375rem] text-asphalt-500">{description}</p>
       {action ? <div className="mt-1">{action}</div> : null}
     </div>
   );
@@ -124,7 +124,7 @@ export function Skeleton({ className }: { className?: string }) {
   return (
     <div
       aria-hidden="true"
-      className={cn('animate-pulse rounded-plate bg-ink-100', className)}
+      className={cn('animate-pulse rounded-plate bg-asphalt-100', className)}
     />
   );
 }

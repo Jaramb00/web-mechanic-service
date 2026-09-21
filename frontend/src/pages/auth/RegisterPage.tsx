@@ -76,9 +76,9 @@ export function RegisterPage() {
     <Section tone="light">
       <div className="mx-auto max-w-md">
         <h1 className="text-2xl font-extrabold tracking-tight sm:text-3xl">Otvaranje računa</h1>
-        <p className="mt-2 text-[1.0625rem] text-ink-700">
+        <p className="mt-2 text-[1.0625rem] text-asphalt-700">
           Već imate račun?{' '}
-          <Link to="/prijava" className="font-bold text-signal-700">
+          <Link to="/prijava" className="font-bold text-midnight-800">
             Prijavite se
           </Link>
           .
@@ -87,7 +87,7 @@ export function RegisterPage() {
         <form
           onSubmit={handleSubmit(onSubmit)}
           noValidate
-          className="relative mt-6 space-y-4 rounded-sign border-2 border-ink-950 bg-white p-5 sm:p-6"
+          className="relative mt-6 space-y-4 rounded-control border-2 border-asphalt-950 bg-white p-5 sm:p-6"
         >
           {serverError ? (
             <Alert tone="error" title="Račun nije otvoren">
@@ -137,13 +137,13 @@ export function RegisterPage() {
             Otvori račun
           </Button>
 
-          <p className="text-sm text-ink-500">
+          <p className="text-sm text-asphalt-500">
             Otvaranjem računa prihvaćate{' '}
-            <Link to="/uvjeti" className="font-semibold text-signal-700">
+            <Link to="/uvjeti" className="font-semibold text-midnight-800">
               uvjete korištenja
             </Link>{' '}
             i{' '}
-            <Link to="/privatnost" className="font-semibold text-signal-700">
+            <Link to="/privatnost" className="font-semibold text-midnight-800">
               politiku privatnosti
             </Link>
             .

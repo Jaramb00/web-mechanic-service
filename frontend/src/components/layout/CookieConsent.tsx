@@ -24,24 +24,24 @@ export function CookieConsent() {
     <div
       role="dialog"
       aria-labelledby="kolacici-naslov"
-      className="fixed inset-x-0 bottom-0 z-40 border-t-4 border-work-500 bg-ink-950 px-4 py-4 text-white"
+      className="fixed inset-x-0 bottom-0 z-40 border-t-4 border-volt-500 bg-asphalt-950 px-4 py-4 text-white"
     >
       <div className="mx-auto flex w-full max-w-6xl flex-col gap-4 lg:flex-row lg:items-center">
         <div className="min-w-0 flex-1">
           <h2 id="kolacici-naslov" className="text-base font-bold">
             Kolačići
           </h2>
-          <p className="mt-1 max-w-prose text-sm text-ink-200">
+          <p className="mt-1 max-w-prose text-sm text-asphalt-200">
             Koristimo samo kolačiće nužne za rad prijave i rezervacije. Mjerenje posjeta
             uključujemo isključivo uz vaš pristanak. Više u{' '}
-            <Link to="/privatnost" className="font-semibold text-work-400 underline">
+            <Link to="/privatnost" className="font-semibold text-volt-400 underline">
               politici privatnosti
             </Link>
             .
           </p>
         </div>
         <div className="flex shrink-0 gap-2">
-          <Button variant="ghost" className="text-white hover:bg-ink-900" onClick={() => decide('rejected')}>
+          <Button variant="ghost" className="text-white hover:bg-asphalt-900" onClick={() => decide('rejected')}>
             Samo nužni
           </Button>
           <Button onClick={() => decide('accepted')}>Prihvaćam sve</Button>

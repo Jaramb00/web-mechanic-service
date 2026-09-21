@@ -49,44 +49,44 @@ function Hero() {
   const { data: nextSlot, isLoading } = useNextSlot();
 
   return (
-    <section className="on-ink bg-ink-950 text-white" aria-labelledby="naslov-pocetna">
+    <section className="on-midnight bg-midnight-950 text-white" aria-labelledby="naslov-pocetna">
       <div className="mx-auto w-full max-w-6xl px-4 pb-10 pt-10 sm:pt-14">
-        <div className="keyline rounded-sign bg-signal-700 p-6 sm:p-10">
+        <div className="spotlight edge-light rounded-card p-6 sm:p-10">
           <h1
             id="naslov-pocetna"
-            className="plate-title text-balance text-[clamp(2rem,6vw,3.5rem)] font-extrabold leading-[1.05] text-white"
+            className="display text-balance text-[clamp(2.5rem,8vw,5rem)] text-white"
           >
             {site.name}
           </h1>
 
           {/* Znak slaže odredište i radnju jedno uz drugo; slaganje jedno ispod
               drugog ostaje samo za uski ekran. */}
-          <div className="mt-8 grid gap-6 border-t-2 border-signal-500 pt-6 lg:grid-cols-[1fr_auto] lg:items-end lg:gap-10">
+          <div className="mt-8 grid gap-6 border-t-2 border-midnight-500 pt-6 lg:grid-cols-[1fr_auto] lg:items-end lg:gap-10">
             <div className="min-w-0">
               {isLoading ? (
                 <div className="flex flex-col gap-3">
-                  <Skeleton className="h-4 w-44 bg-signal-600" />
-                  <Skeleton className="h-12 w-72 bg-signal-600" />
+                  <Skeleton className="h-4 w-44 bg-midnight-700" />
+                  <Skeleton className="h-12 w-72 bg-midnight-700" />
                 </div>
               ) : nextSlot ? (
                 <>
-                  <p className="text-sm font-bold uppercase tracking-[0.18em] text-work-400">
+                  <p className="text-sm font-bold uppercase tracking-[0.18em] text-volt-400">
                     Prvi slobodan termin
                   </p>
                   <p className="plate-title mt-2 text-[clamp(1.75rem,5vw,3rem)] font-extrabold leading-none text-white">
                     {formatSlotLabel(nextSlot.startAt)}
                   </p>
-                  <p className="mt-2 text-[0.9375rem] text-signal-100">
+                  <p className="mt-2 text-[0.9375rem] text-midnight-100">
                     za uslugu „{nextSlot.serviceName}" · još {nextSlot.freeBays}{' '}
                     {nextSlot.freeBays === 1 ? 'slobodno mjesto' : 'slobodna mjesta'} u tom terminu
                   </p>
                 </>
               ) : (
                 <>
-                  <p className="text-sm font-bold uppercase tracking-[0.18em] text-work-400">
+                  <p className="text-sm font-bold uppercase tracking-[0.18em] text-volt-400">
                     Trenutno nema slobodnih termina
                   </p>
-                  <p className="mt-2 max-w-[55ch] text-[1.0625rem] leading-relaxed text-signal-100">
+                  <p className="mt-2 max-w-[55ch] text-[1.0625rem] leading-relaxed text-midnight-100">
                     U sezoni se popuni sve. Nazovite nas — često se oslobodi termin zbog otkazivanja.
                   </p>
                 </>
@@ -100,7 +100,7 @@ function Hero() {
               </ButtonLink>
               <a
                 href={site.contact.phoneHref}
-                className="inline-flex min-h-14 items-center justify-center gap-2.5 rounded-plate border-2 border-white px-6 text-lg font-bold text-white no-underline transition-colors duration-100 hover:bg-signal-600"
+                className="inline-flex min-h-14 items-center justify-center gap-2.5 rounded-plate border-2 border-white px-6 text-lg font-bold text-white no-underline transition-colors duration-100 hover:bg-midnight-700"
               >
                 <Phone size={20} />
                 {site.contact.phone}
@@ -125,7 +125,7 @@ function FactStrip() {
   const todayHours = hours?.find((entry) => entry.dayOfWeek === today);
 
   return (
-    <dl className="mt-6 grid gap-px overflow-hidden rounded-sign bg-ink-900 sm:grid-cols-3">
+    <dl className="mt-6 grid gap-px overflow-hidden rounded-control bg-asphalt-900 sm:grid-cols-3">
       <Fact icon={<Clock size={18} />} term="Danas">
         {todayHours
           ? todayHours.closed
@@ -134,7 +134,7 @@ function FactStrip() {
           : '—'}
       </Fact>
       <Fact icon={<MapPin size={18} />} term="Adresa">
-        <Link to="/lokacija" className="text-white underline decoration-work-500 decoration-2">
+        <Link to="/lokacija" className="text-white underline decoration-volt-500 decoration-2">
           {fullAddress}
         </Link>
       </Fact>
@@ -149,10 +149,10 @@ function FactStrip() {
 
 function Fact({ icon, term, children }: { icon: React.ReactNode; term: string; children: React.ReactNode }) {
   return (
-    <div className="flex items-start gap-3 bg-ink-950 px-4 py-4">
-      <span className="mt-0.5 text-work-500">{icon}</span>
+    <div className="flex items-start gap-3 bg-asphalt-950 px-4 py-4">
+      <span className="mt-0.5 text-volt-500">{icon}</span>
       <div className="min-w-0">
-        <dt className="text-xs font-bold uppercase tracking-wide text-ink-300">{term}</dt>
+        <dt className="text-xs font-bold uppercase tracking-wide text-asphalt-300">{term}</dt>
         <dd className="mt-0.5 font-semibold text-white">{children}</dd>
       </div>
     </div>
@@ -176,27 +176,27 @@ function ServicesOverview() {
         Što radimo
       </SectionTitle>
 
-      <div className="mt-8 overflow-hidden rounded-sign border-2 border-ink-950">
+      <div className="mt-8 overflow-hidden rounded-control border-2 border-asphalt-950">
         {isLoading ? (
-          <div className="flex flex-col gap-px bg-ink-100">
+          <div className="flex flex-col gap-px bg-asphalt-100">
             {Array.from({ length: 5 }, (_, index) => (
               <Skeleton key={index} className="h-16 rounded-none" />
             ))}
           </div>
         ) : (
-          <ul className="divide-y divide-ink-200">
+          <ul className="divide-y divide-asphalt-200">
             {shown.map((service) => (
               <li
                 key={service.id}
                 className="flex flex-wrap items-baseline gap-x-4 gap-y-1 bg-white px-4 py-4 sm:px-5"
               >
-                <span className="min-w-0 flex-1 text-[1.0625rem] font-bold text-ink-950">
+                <span className="min-w-0 flex-1 text-[1.0625rem] font-bold text-asphalt-950">
                   {service.name}
                 </span>
-                <span className="text-sm tabular-nums text-ink-500">
+                <span className="text-sm tabular-nums text-asphalt-500">
                   {service.durationMinutes} min
                 </span>
-                <span className="w-28 text-right text-[1.0625rem] font-extrabold tabular-nums text-ink-950">
+                <span className="w-28 text-right text-[1.0625rem] font-extrabold tabular-nums text-asphalt-950">
                   {formatPrice(service.price)}
                 </span>
               </li>
@@ -220,7 +220,7 @@ function ServicesOverview() {
 
 function TireStorageTeaser() {
   return (
-    <Section tone="signal" labelledBy="naslov-hotel">
+    <Section tone="midnight" labelledBy="naslov-hotel">
       <div className="grid gap-8 lg:grid-cols-[1.1fr_1fr] lg:gap-14">
         <div>
           <SectionTitle
@@ -238,15 +238,15 @@ function TireStorageTeaser() {
           </div>
         </div>
 
-        <ul className="keyline space-y-px rounded-sign bg-signal-800 p-1">
+        <ul className="edge-light space-y-px rounded-control bg-midnight-900 p-1">
           {[
             'Gume peremo prije spremanja i pregledamo dubinu profila',
             'Čuvaju se u zatvorenom prostoru, složene po pravilima struke',
             'Označene su na vaše ime i vozilo, s registracijom',
             'Kad dođete na zamjenu, već su spremne — ne čekate',
           ].map((item) => (
-            <li key={item} className="flex gap-3 bg-signal-700 px-4 py-3.5 text-[0.9375rem] text-white">
-              <span aria-hidden="true" className="mt-1.5 h-2 w-2 shrink-0 bg-work-500" />
+            <li key={item} className="flex gap-3 bg-midnight-800 px-4 py-3.5 text-[0.9375rem] text-white">
+              <span aria-hidden="true" className="mt-1.5 h-2 w-2 shrink-0 bg-volt-500" />
               {item}
             </li>
           ))}
@@ -291,7 +291,7 @@ function SlotPreview() {
         ))}
       </div>
 
-      <div className="mt-6 rounded-sign border-2 border-ink-950 bg-white px-4 py-3">
+      <div className="mt-6 rounded-control border-2 border-asphalt-950 bg-white px-4 py-3">
         <SlotLegend />
       </div>
 
@@ -320,9 +320,9 @@ function DayColumn({
   const freeCount = day?.slots.filter((slot) => slot.available).length ?? 0;
 
   return (
-    <div className="rounded-sign border-2 border-ink-950 bg-white">
-      <div className="flex items-baseline justify-between gap-2 border-b-2 border-ink-950 bg-ink-50 px-4 py-2.5">
-        <h3 className="font-extrabold capitalize text-ink-950">
+    <div className="rounded-control border-2 border-asphalt-950 bg-white">
+      <div className="flex items-baseline justify-between gap-2 border-b-2 border-asphalt-950 bg-asphalt-50 px-4 py-2.5">
+        <h3 className="font-extrabold capitalize text-asphalt-950">
           {isToday ? 'danas' : `${formatWeekdayShort(`${date}T12:00:00`)} ${formatDayMonth(`${date}T12:00:00`)}`}
         </h3>
         {/* Zatvoreno i popunjeno nisu isto: zatvoreno je raspored, popunjeno je
@@ -330,7 +330,7 @@ function DayColumn({
         <span
           className={
             'text-sm font-bold tabular-nums ' +
-            (day?.closed ? 'text-ink-500' : freeCount > 0 ? 'text-go-600' : 'text-stop-600')
+            (day?.closed ? 'text-asphalt-500' : freeCount > 0 ? 'text-go-600' : 'text-stop-600')
           }
         >
           {isLoading ? '' : day?.closed ? 'zatvoreno' : freeCount > 0 ? `${freeCount} slobodno` : 'popunjeno'}
@@ -345,7 +345,7 @@ function DayColumn({
             ))}
           </div>
         ) : !day || day.closed || day.slots.length === 0 ? (
-          <p className="px-1 py-3 text-[0.9375rem] text-ink-500">
+          <p className="px-1 py-3 text-[0.9375rem] text-asphalt-500">
             {day?.note ?? 'Za taj dan više nema termina.'}
           </p>
         ) : (
@@ -372,14 +372,14 @@ function VisitUs() {
             Gdje smo i kad radimo
           </SectionTitle>
           <address className="mt-6 not-italic">
-            <p className="text-[1.0625rem] font-bold text-ink-950">{fullAddress}</p>
+            <p className="text-[1.0625rem] font-bold text-asphalt-950">{fullAddress}</p>
             <p className="mt-2">
-              <a href={site.contact.phoneHref} className="font-semibold text-signal-700">
+              <a href={site.contact.phoneHref} className="font-semibold text-midnight-800">
                 {site.contact.phone}
               </a>
             </p>
             <p className="mt-1">
-              <a href={`mailto:${site.contact.email}`} className="font-semibold text-signal-700">
+              <a href={`mailto:${site.contact.email}`} className="font-semibold text-midnight-800">
                 {site.contact.email}
               </a>
             </p>
@@ -391,8 +391,8 @@ function VisitUs() {
           </div>
         </div>
 
-        <div className="rounded-sign border-2 border-ink-950 bg-white">
-          <h3 className="border-b-2 border-ink-950 bg-ink-50 px-4 py-3 text-sm font-bold uppercase tracking-wide text-ink-700">
+        <div className="rounded-control border-2 border-asphalt-950 bg-white">
+          <h3 className="border-b-2 border-asphalt-950 bg-asphalt-50 px-4 py-3 text-sm font-bold uppercase tracking-wide text-asphalt-700">
             Radno vrijeme
           </h3>
           {isLoading ? (
@@ -402,15 +402,15 @@ function VisitUs() {
               ))}
             </div>
           ) : (
-            <dl className="divide-y divide-ink-100">
+            <dl className="divide-y divide-asphalt-100">
               {hours?.map((entry) => (
                 <div key={entry.dayOfWeek} className="flex items-baseline justify-between px-4 py-2.5">
-                  <dt className="font-semibold capitalize text-ink-900">{weekdayName(entry.dayOfWeek)}</dt>
+                  <dt className="font-semibold capitalize text-asphalt-900">{weekdayName(entry.dayOfWeek)}</dt>
                   <dd
                     className={
                       entry.closed
-                        ? 'font-semibold text-ink-500'
-                        : 'font-bold tabular-nums text-ink-950'
+                        ? 'font-semibold text-asphalt-500'
+                        : 'font-bold tabular-nums text-asphalt-950'
                     }
                   >
                     {entry.closed

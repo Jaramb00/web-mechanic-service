@@ -17,18 +17,18 @@ export function DemoAccounts() {
   if (!IS_DEMO) return null;
 
   return (
-    <aside className="mt-6 rounded-sign border-2 border-work-600 bg-work-100 p-4">
-      <h2 className="text-sm font-extrabold uppercase tracking-wide text-ink-950">
+    <aside className="mt-6 rounded-control border-2 border-volt-600 bg-volt-100 p-4">
+      <h2 className="text-sm font-extrabold uppercase tracking-wide text-asphalt-950">
         Demo pristup
       </h2>
-      <p className="mt-1 text-sm text-ink-700">
+      <p className="mt-1 text-sm text-asphalt-700">
         Lozinka za sve račune: <code className="font-bold">Demo1234!</code>
       </p>
-      <ul className="mt-3 divide-y divide-work-600/40">
+      <ul className="mt-3 divide-y divide-volt-600/40">
         {ACCOUNTS.map((account) => (
           <li key={account.email} className="flex items-baseline justify-between gap-3 py-1.5 text-sm">
-            <span className="font-semibold text-ink-950">{account.role}</span>
-            <code className="text-ink-700">{account.email}</code>
+            <span className="font-semibold text-asphalt-950">{account.role}</span>
+            <code className="text-asphalt-700">{account.email}</code>
           </li>
         ))}
       </ul>

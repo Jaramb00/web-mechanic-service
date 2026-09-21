@@ -56,19 +56,19 @@ export function ConfirmDialog({
     <dialog
       ref={ref}
       aria-labelledby="confirm-title"
-      className="m-auto w-[min(32rem,calc(100vw-2rem))] rounded-sign border-2 border-ink-950 bg-white p-0 backdrop:bg-ink-950/60"
+      className="m-auto w-[min(32rem,calc(100vw-2rem))] rounded-control border-2 border-asphalt-950 bg-white p-0 backdrop:bg-asphalt-950/60"
     >
-      <div className="flex gap-3 border-b-2 border-ink-950 bg-work-500 px-5 py-4">
-        <AlertTriangle size={22} className="mt-0.5 shrink-0 text-ink-950" />
-        <h2 id="confirm-title" className="text-lg font-bold text-ink-950">
+      <div className="flex gap-3 border-b-2 border-asphalt-950 bg-volt-500 px-5 py-4">
+        <AlertTriangle size={22} className="mt-0.5 shrink-0 text-asphalt-950" />
+        <h2 id="confirm-title" className="text-lg font-bold text-asphalt-950">
           {title}
         </h2>
       </div>
       <div className="px-5 py-4">
-        <p className="text-[0.9375rem] text-ink-700">{description}</p>
+        <p className="text-[0.9375rem] text-asphalt-700">{description}</p>
         {children}
       </div>
-      <div className="flex flex-wrap justify-end gap-2 border-t border-ink-200 bg-ink-50 px-5 py-3">
+      <div className="flex flex-wrap justify-end gap-2 border-t border-asphalt-200 bg-asphalt-50 px-5 py-3">
         <Button variant="ghost" onClick={onCancel} disabled={loading}>
           {cancelLabel}
         </Button>

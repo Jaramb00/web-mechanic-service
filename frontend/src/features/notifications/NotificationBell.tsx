@@ -22,12 +22,12 @@ export function NotificationBell() {
   return (
     <Link
       to="/obavijesti"
-      className="relative flex min-h-11 min-w-11 items-center justify-center rounded-plate text-white no-underline hover:bg-ink-900"
+      className="relative flex min-h-11 min-w-11 items-center justify-center rounded-plate text-white no-underline hover:bg-asphalt-900"
       aria-label={count > 0 ? `Obavijesti, ${count} nepročitanih` : 'Obavijesti'}
     >
       <Bell size={22} />
       {count > 0 ? (
-        <span className="absolute right-1 top-1 min-w-5 rounded-full bg-work-500 px-1 text-center text-xs font-bold leading-5 text-ink-950">
+        <span className="absolute right-1 top-1 min-w-5 rounded-full bg-volt-500 px-1 text-center text-xs font-bold leading-5 text-asphalt-950">
           {count > 9 ? '9+' : count}
         </span>
       ) : null}

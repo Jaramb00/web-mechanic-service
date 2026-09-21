@@ -12,8 +12,8 @@
 export const IS_DEMO = true;
 
 export const site = {
-  /** TODO(klijent): stvarni naziv servisa. */
-  name: 'Vulkanizerski servis',
+  /** Stvarni naziv servisa — potvrdio klijent. */
+  name: 'Vulkanizer Željko',
   legalName: 'Naziv obrta d.o.o.',
   /** TODO(klijent): OIB. */
   oib: '00000000000',

@@ -36,21 +36,21 @@ export function ServicesPage() {
             {services?.map((service) => (
               <li
                 key={service.id}
-                className="rounded-sign border-2 border-ink-950 bg-white p-5 sm:flex sm:items-start sm:gap-6"
+                className="rounded-control border-2 border-asphalt-950 bg-white p-5 sm:flex sm:items-start sm:gap-6"
               >
                 <div className="min-w-0 flex-1">
-                  <h3 className="text-lg font-extrabold text-ink-950">{service.name}</h3>
+                  <h3 className="text-lg font-extrabold text-asphalt-950">{service.name}</h3>
                   {service.description ? (
-                    <p className="mt-2 max-w-[68ch] text-[1.0625rem] leading-relaxed text-ink-700">
+                    <p className="mt-2 max-w-[68ch] text-[1.0625rem] leading-relaxed text-asphalt-700">
                       {service.description}
                     </p>
                   ) : null}
                 </div>
-                <div className="mt-4 flex shrink-0 items-center gap-6 border-t border-ink-200 pt-4 sm:mt-0 sm:flex-col sm:items-end sm:gap-1 sm:border-l sm:border-t-0 sm:pl-6 sm:pt-0">
-                  <p className="text-2xl font-extrabold tabular-nums text-ink-950">
+                <div className="mt-4 flex shrink-0 items-center gap-6 border-t border-asphalt-200 pt-4 sm:mt-0 sm:flex-col sm:items-end sm:gap-1 sm:border-l sm:border-t-0 sm:pl-6 sm:pt-0">
+                  <p className="text-2xl font-extrabold tabular-nums text-asphalt-950">
                     {formatPrice(service.price)}
                   </p>
-                  <p className="text-sm tabular-nums text-ink-500">{service.durationMinutes} min</p>
+                  <p className="text-sm tabular-nums text-asphalt-500">{service.durationMinutes} min</p>
                 </div>
               </li>
             ))}

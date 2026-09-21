@@ -22,11 +22,11 @@ export function DataTable({
     // `relative` nije ukras: sr-only oznake unutar zaglavlja su apsolutno
     // pozicionirane, pa bez pozicioniranog pretka šire scrollable područje cijele
     // stranice i stvaraju vodoravni prelijev na mobitelu.
-    <div className={cn('relative overflow-x-auto rounded-sign border border-ink-200 bg-white', className)}>
+    <div className={cn('relative overflow-x-auto rounded-control border border-asphalt-200 bg-white', className)}>
       <table className="w-full border-collapse text-left text-[0.9375rem]">
         <caption className="sr-only">{caption}</caption>
         <thead>
-          <tr className="border-b-2 border-ink-950 bg-ink-50">{head}</tr>
+          <tr className="border-b-2 border-asphalt-950 bg-asphalt-50">{head}</tr>
         </thead>
         <tbody>{children}</tbody>
       </table>
@@ -49,7 +49,7 @@ export function Th({
     <th
       scope={scope}
       className={cn(
-        'px-3 py-2.5 text-xs font-bold uppercase tracking-wide text-ink-700',
+        'px-3 py-2.5 text-xs font-bold uppercase tracking-wide text-asphalt-700',
         align === 'right' && 'text-right',
         align === 'center' && 'text-center',
         className,
@@ -62,7 +62,7 @@ export function Th({
 
 export function Tr({ children, className }: { children: ReactNode; className?: string }) {
   return (
-    <tr className={cn('border-b border-ink-100 last:border-b-0 hover:bg-signal-50/60', className)}>
+    <tr className={cn('border-b border-asphalt-100 last:border-b-0 hover:bg-midnight-50/60', className)}>
       {children}
     </tr>
   );

@@ -150,8 +150,8 @@ function SlotCell({
           'flex flex-col items-center justify-center rounded-plate border-2 font-bold',
           size,
           slot.available
-            ? 'border-go-600 bg-white text-ink-950 border-t-[5px]'
-            : 'hatched border-ink-200 bg-ink-50 text-ink-500',
+            ? 'border-go-600 bg-white text-asphalt-950 border-t-[5px]'
+            : 'hatched border-asphalt-200 bg-asphalt-50 text-asphalt-500',
         )}
       >
         <span>{time}</span>
@@ -165,7 +165,7 @@ function SlotCell({
       <div
         aria-hidden="true"
         className={cn(
-          'hatched flex items-center justify-center rounded-plate border-2 border-ink-200 bg-ink-50 font-bold text-ink-300',
+          'hatched flex items-center justify-center rounded-plate border-2 border-asphalt-200 bg-asphalt-50 font-bold text-asphalt-300',
           size,
         )}
       >
@@ -187,8 +187,8 @@ function SlotCell({
         'flex flex-col items-center justify-center rounded-plate border-2 font-bold transition-colors duration-100',
         size,
         isSelected
-          ? 'border-ink-950 bg-work-500 text-ink-950'
-          : 'border-go-600 border-t-[5px] bg-white text-ink-950 hover:bg-go-50',
+          ? 'border-asphalt-950 bg-volt-500 text-asphalt-950'
+          : 'border-go-600 border-t-[5px] bg-white text-asphalt-950 hover:bg-go-50',
       )}
     >
       <span>{time}</span>
@@ -203,17 +203,17 @@ function SlotCell({
 /** Legenda uz tablu — bez nje šrafura nije samoobjašnjiva. */
 export function SlotLegend() {
   return (
-    <ul className="flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-ink-700">
+    <ul className="flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-asphalt-700">
       <li className="flex items-center gap-2">
         <span aria-hidden="true" className="h-4 w-6 rounded-[2px] border-2 border-t-[5px] border-go-600 bg-white" />
         Slobodno
       </li>
       <li className="flex items-center gap-2">
-        <span aria-hidden="true" className="hatched h-4 w-6 rounded-[2px] border-2 border-ink-200 bg-ink-50" />
+        <span aria-hidden="true" className="hatched h-4 w-6 rounded-[2px] border-2 border-asphalt-200 bg-asphalt-50" />
         Zauzeto
       </li>
       <li className="flex items-center gap-2">
-        <span aria-hidden="true" className="h-4 w-6 rounded-[2px] border-2 border-ink-950 bg-work-500" />
+        <span aria-hidden="true" className="h-4 w-6 rounded-[2px] border-2 border-asphalt-950 bg-volt-500" />
         Vaš odabir
       </li>
     </ul>

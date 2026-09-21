@@ -78,18 +78,18 @@ export default function CustomerReservations() {
             {data?.content.map((reservation) => (
               <Tr key={reservation.id}>
                 <Td>
-                  <span className="font-bold text-ink-950">{reservation.productName}</span>
-                  <span className="mt-0.5 block text-xs tabular-nums text-ink-500">
+                  <span className="font-bold text-asphalt-950">{reservation.productName}</span>
+                  <span className="mt-0.5 block text-xs tabular-nums text-asphalt-500">
                     {reservation.productSku}
                   </span>
                   {reservation.pickupNote ? (
-                    <span className="mt-1 block text-sm text-ink-500">{reservation.pickupNote}</span>
+                    <span className="mt-1 block text-sm text-asphalt-500">{reservation.pickupNote}</span>
                   ) : null}
                 </Td>
                 <Td align="right" numeric>{reservation.quantity}</Td>
                 <Td align="right" numeric>{formatPrice(reservation.total)}</Td>
                 <Td><ReservationStatusBadge status={reservation.status} /></Td>
-                <Td className="whitespace-nowrap text-sm tabular-nums text-ink-500">
+                <Td className="whitespace-nowrap text-sm tabular-nums text-asphalt-500">
                   {formatDateTime(reservation.createdAt)}
                 </Td>
                 <Td align="right">

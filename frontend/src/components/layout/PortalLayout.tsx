@@ -26,37 +26,37 @@ export function PortalLayout({ title, nav }: { title: string; nav: PortalNavItem
   }
 
   return (
-    <div className="flex min-h-screen flex-col bg-ink-50">
+    <div className="flex min-h-screen flex-col bg-asphalt-50">
       <a
         href="#portal-sadrzaj"
-        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-plate focus:bg-work-500 focus:px-4 focus:py-2 focus:font-bold focus:text-ink-950"
+        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-plate focus:bg-volt-500 focus:px-4 focus:py-2 focus:font-bold focus:text-asphalt-950"
       >
         Prijeđi na sadržaj
       </a>
 
       <DemoRibbon />
 
-      <header className="on-ink border-b-4 border-work-500 bg-ink-950 text-white">
+      <header className="on-midnight border-b-4 border-volt-500 bg-asphalt-950 text-white">
         <div className="mx-auto flex w-full max-w-7xl flex-wrap items-center gap-x-4 gap-y-2 px-4 py-3">
-          <Link to="/" className="text-sm font-bold text-ink-300 no-underline hover:text-white">
+          <Link to="/" className="text-sm font-bold text-asphalt-300 no-underline hover:text-white">
             {site.name}
           </Link>
-          <span aria-hidden="true" className="text-ink-500">
+          <span aria-hidden="true" className="text-asphalt-500">
             /
           </span>
           <h1 className="text-lg font-extrabold tracking-tight">{title}</h1>
 
           <div className="ml-auto flex items-center gap-3">
             <NotificationBell />
-            <span className="hidden text-sm text-ink-300 sm:inline">{user?.fullName}</span>
-            <Button variant="ghost" size="sm" className="text-white hover:bg-ink-900" onClick={handleLogout}>
+            <span className="hidden text-sm text-asphalt-300 sm:inline">{user?.fullName}</span>
+            <Button variant="ghost" size="sm" className="text-white hover:bg-asphalt-900" onClick={handleLogout}>
               <Logout size={18} />
               Odjava
             </Button>
           </div>
         </div>
 
-        <nav aria-label="Navigacija portala" className="border-t border-ink-900">
+        <nav aria-label="Navigacija portala" className="border-t border-asphalt-900">
           <ul className="mx-auto flex w-full max-w-7xl gap-1 overflow-x-auto px-2">
             {nav.map((item) => (
               <li key={item.to} className="shrink-0">
@@ -67,8 +67,8 @@ export function PortalLayout({ title, nav }: { title: string; nav: PortalNavItem
                     cn(
                       'block whitespace-nowrap border-b-4 px-3 py-3 text-sm font-semibold no-underline transition-colors duration-100',
                       isActive
-                        ? 'border-work-500 text-white'
-                        : 'border-transparent text-ink-300 hover:text-white',
+                        ? 'border-volt-500 text-white'
+                        : 'border-transparent text-asphalt-300 hover:text-white',
                     )
                   }
                 >
@@ -100,8 +100,8 @@ export function SectionHeader({
   return (
     <div className="mb-5 flex flex-wrap items-end justify-between gap-3">
       <div>
-        <h2 className="text-xl font-extrabold tracking-tight text-ink-950">{title}</h2>
-        {description ? <p className="mt-1 text-[0.9375rem] text-ink-500">{description}</p> : null}
+        <h2 className="text-xl font-extrabold tracking-tight text-asphalt-950">{title}</h2>
+        {description ? <p className="mt-1 text-[0.9375rem] text-asphalt-500">{description}</p> : null}
       </div>
       {action}
     </div>
