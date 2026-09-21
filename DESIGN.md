@@ -5,71 +5,206 @@ Sve navedeno stvarno postoji u `frontend/src`.
 
 ## Svijet
 
-**Hrvatsko prometno znakovlje, uzeto kao gramatika a ne kao ukras.**
+**Radionica noću.** Duboka tamna ploha, jedno oštro žuto svjetlo, guma kao materijal.
+Motorsport grafika, ne korporativni SaaS.
 
-Vozač te znakove čita svaki dan i zna ih pročitati u pokretu, po suncu i po kiši. Sustav
-posuđuje njihova pravila: boja ima značenje, oblik ima značenje, ploha je ravna, a rub
-ploče nosi uvučenu bijelu konturu.
+Paleta nije izabrana nego **izmjerena**: žuta `#FFED00` i mornarska `#13233F` očitane su
+iz tiska koji je dao klijent. Bijela podloga nosi 73% te grafike, pa je i ovdje stranica
+svijetla, a tamne plohe su događaj — hero, zaglavlje, podnožje, „Hotel za gume".
 
-Ono što taj izbor **isključuje**: tamni hero s fotografijom gume i narančastim gumbom,
-rešetka jednakih kartica „ikona + naslov + tekst", gradijenti, staklo, meke sjene i
-nadnaslovi iznad naslova.
+Ono što taj izbor **isključuje**: šarene gradijente, staklo, rešetku jednakih kartica
+„ikona + naslov + tekst", nadnaslove iznad naslova, i bilo koju boju koja ne nosi značenje.
+
+> Prethodni sustav bio je „prometno znakovlje" — ravne plohe, uvučena bijela kontura,
+> debeli crni rubovi. Zamijenjen je u cijelosti. Jedino što je preživjelo je **semantika
+> oblika** kod statusa, i to namjerno: opisana je niže.
 
 ---
 
 ## Boja
 
 Definirana u `src/styles/theme.css`, blok `@theme`. **Jedino mjesto** koje klijent mijenja
-da preuzme vlastiti brand — nijedna komponenta ne sadrži hardkodiranu boju.
+da preuzme vlastiti brand — nijedna komponenta ne sadrži hardkodiranu boju, što je
+provjerljivo s `grep -rn '#[0-9a-fA-F]\{6\}' frontend/src --include=*.tsx`.
 
-Boja je **isključivo semantička**. Ništa ne dobiva boju zato što je lijepa.
-
-| Uloga | Token | Vrijednost | Kad se koristi |
+| Uloga | Token | Vrijednost | Gdje |
 |---|---|---|---|
-| Obavijest, orijentacija, identitet | `signal-700` | `#0b4c8c` | zaglavlje, informativne plohe, zaglavlja koraka |
-| **Radnja koja se poduzima sada** | `work-500` | `#ffc400` | **samo** primarni gumb i odabrani termin |
-| Zabrana, greška, destruktivna radnja | `stop-600` | `#b3121f` | poruke o greškama, potvrde brisanja |
-| Slobodno, potvrđeno, uspjeh | `go-500/600` | `#1e8a4c` | slobodni termini, uspješne radnje |
-| Asfalt (tekst, linije, podloge) | `ink-50…950` | `#f4f4f4 … #161616` | tipografija, rubovi, tamne podloge |
+| Potpis brenda, radnja, aktivno stanje | `volt-500` | `#FFED00` | primarni gumb, aktivna navigacija, luk svjetla, naglasci na tamnom |
+| Dubina, autoritet | `midnight-800` | `#13233F` | plohe sekcija, sekundarni gumb |
+| Najdublja ploha | `midnight-950` | `#070C18` | hero, zaglavlje portala, podnožje |
+| Tekst, linije, svijetle podloge | `asphalt-50…950` | `#F6F7F9 … #0B0E13` | tipografija, rubovi, podloga stranice |
+| Greška, zabrana | `stop-600` | `#B3111F` | poruke o greškama, destruktivne radnje |
+| Slobodno, potvrđeno | `go-500/600` | `#12904A` | slobodni termini, uspjeh |
 
-Asfaltna skala je **neutralno siva, bez plave ili tople primjese**. Plavo-crna podloga je
-zadana paleta, ne materijal ovog svijeta.
+Asfaltna skala nosi **hladnu, plavkastu primjesu** — pripada istom svijetu kao midnight.
 
-**Strategija:** *Committed*. Signalna plava nosi cijele plohe od ruba do ruba (zaglavlje,
-hero, sekcija „Hotel za gume", zaglavlja koraka rezervacije), a ne raspršene akcente.
-Žuta zauzima malu površinu uz najveću uočljivost — kao znak radova na cesti.
+**Strategija:** *Committed*. Mornarska nosi cijele plohe od ruba do ruba. Žuta zauzima
+malu površinu uz najveću uočljivost.
 
-Kontrast je provjeren na WCAG AA u svim stanjima, uključujući focus i disabled.
+### Zabranjene kombinacije
+
+Izračunate, ne procijenjene (`scripts/build-og-image.py` čita iste tokene):
+
+| Kombinacija | Kontrast | Umjesto toga |
+|---|---|---|
+| `volt-500` kao tekst na bijelom | **1.21:1** | `volt-700` (6.16:1) |
+| Bijeli tekst na `volt-500` plohi | **1.21:1** | `asphalt-950` (15.98:1) |
+| `stop-600` / `go-600` na tamnoj plohi | **2.25 / 2.60:1** | `stop-300` / `go-300` (7.77 / 8.76:1) |
+
+Zato `volt-700`, `stop-300` i `go-300` postoje — nisu ukras ljestvice nego nadomjestak.
+Žuta smije biti **ploha s tamnim tekstom**, veliki grafički element, ili tekst na
+mornarskom. Nikad tekst na svijetlom.
+
+---
+
+## Tipografija
+
+Archivo, self-hostan iz `public/fonts`, bez third-party CDN-a. Razlog nije samo brzina:
+učitavanje pisma s tuđe domene šalje IP adresu posjetitelja trećoj strani, što je za
+stranicu s hrvatskom politikom privatnosti nepotreban rizik.
+
+Archivo je varijabilan **i po težini (100–900) i po širini (62–125%)**, pa se teški
+kondenzirani verzali dobivaju iz datoteke koja je ionako učitana.
+
+| Uloga | Postavka | Klasa |
+|---|---|---|
+| Displejni naslov | italic, `wght 800`, `wdth 75%`, verzali, `ls -0.02em` | `.display` |
+| Naslov ploče | uspravno, `wdth 87.5%`, `ls -0.015em` | `.plate-title` |
+| Tekst | `wght 400`, `wdth 100%` | zadano |
+
+`.display` nosi naslove sekcija, hero, naziv u zaglavlju i podnožju — i **staje tamo**.
+U tekstu bi kosi verzali ubili čitljivost, a hrvatski dijakritici bi se na malim
+veličinama slijepili.
+
+Kurziv je zaseban rez (`Archivo Display`), svjesno sužen na znakove koji se u naslovima
+stvarno pojavljuju: ASCII + `ČčĆćĐđŠšŽž` + interpunkcija. **62 kB umjesto 195 kB.** Ako
+naslov ikad zatreba znak izvan tog skupa, preglednik pada na uspravni rez — vidljivo, ali
+ne slomljeno.
+
+Brojke su svugdje tablične (`font-variant-numeric: tabular-nums`): dimenzije, cijene,
+vremena i količine moraju se dati usporediti pogledom niz stupac.
 
 ---
 
 ## Oblik
 
-Oblik nosi značenje jednako kao boja — za korisnika koji ne razlikuje boje to je jedini
-nositelj značenja.
+Gustoća podataka traži mirnoću, pa radijus raste s površinom, a ne svugdje jednako.
+
+| Token | Vrijednost | Gdje |
+|---|---|---|
+| `radius-plate` | `0.25rem` | sitni znakovi: ćelije termina, brojevi koraka, kosturi učitavanja |
+| `radius-control` | `0.625rem` | gumbi, polja, poruke |
+| `radius-card` | `1rem` | kartice, tablice, hero, prazna stanja |
+| `radius-pill` | `999px` | statusne oznake, navigacija |
+
+### Semantika oblika kod statusa
+
+Jedino preneseno iz starog sustava, jer nije ukras nego **pristupačnost**: za korisnika
+koji ne razlikuje boje oblik je jedini nositelj značenja.
 
 | Oblik | Značenje | Gdje |
 |---|---|---|
-| Pravokutnik | obavještava | statusi `CONFIRMED`, `IN_PROGRESS`; poruke `info` |
-| Trokut | upozorava | status `PENDING`; poruke `warning` |
-| Krug | zabranjuje ili zatvara | statusi `CANCELLED`, `NO_SHOW`, `COMPLETED`; poruke `error`, `success` |
+| Pravokutnik | obavještava | `CONFIRMED`, `IN_PROGRESS`; poruke `info` |
+| Trokut | upozorava | `PENDING`; poruke `warning` |
+| Krug | zabranjuje ili zatvara | `CANCELLED`, `NO_SHOW`, `COMPLETED`; poruke `error`, `success` |
 
-Implementacija: `src/lib/statusLabels.ts` (mapa), `src/components/ui/Status.tsx` (oznake),
-`src/components/ui/Feedback.tsx` (poruke).
+Implementacija: `src/lib/statusLabels.ts`, `src/components/ui/Status.tsx`,
+`src/components/ui/Feedback.tsx`. Sama oznaka je pilula; značenje nosi znak unutra, ne obris.
 
 ---
 
-## Potpisni detalj: uvučena bijela kontura
+## Potpisni detalj: rub svjetla
 
 ```css
-.keyline { box-shadow: inset 0 0 0 2px rgb(255 255 255 / 0.9); }
+.edge-light {
+  box-shadow:
+    inset 0 1px 0 rgb(255 237 0 / 0.22),
+    inset 0 0 0 1px rgb(255 255 255 / 0.07);
+}
 ```
 
-Kao na stvarnom znaku. Crta se kao **unutarnja sjena, ne kao border**, pa ne pomiče
-raspored. Nosi je svaka plava ili tamna ploha: hero, zaglavlja koraka rezervacije, sažetak,
-potvrda rezervacije.
+Svjetlo u radionici pada odozgo i hvata gornji brid plohe. Crta se kao **unutarnja sjena,
+ne kao border**, pa ne pomiče raspored. Parnjak `.edge-light-dark` radi isto na žutoj plohi.
 
-Parnjak `.keyline-dark` radi isto na žutoj plohi.
+Isti potez je **znak marke** (`BrandMark.tsx`): guma s boka i žuti luk koji joj hvata
+gornji lijevi brid. Tijelo je `currentColor` pa se boji iz konteksta — bijelo na tamnom,
+mornarsko na svijetlom — bez ijedne varijante komponente. Ista geometrija ponavlja se na
+tri mjesta i **mijenja se na sva tri zajedno**: `BrandMark.tsx`, `public/favicon.svg`,
+`scripts/build-og-image.py`.
+
+---
+
+## Gradijenti
+
+Tri, i ne više.
+
+| Klasa | Što radi | Gdje |
+|---|---|---|
+| `.spotlight` | radna lampa: žuto gore lijevo, dubina dolje desno | hero |
+| `.surface-dark` | 4% bjeline na vrhu, da tamna ploha ne bude mrtva | tamne kartice, sekundarni gumb |
+| `.volt-face` | lice primarnog gumba, `volt-400 → volt-600` | **samo** primarni gumb |
+
+Akcentni gradijent ostaje unutar žute obitelji. Prijelaz u narančastu uveo bi četvrtu boju
+i razbio pravilo da sustav nose tri.
+
+---
+
+## Pokret
+
+Jedna krivulja: `--ease-out: cubic-bezier(0.16, 1, 0.3, 1)` — brz start, mekano slijetanje.
+Ona **nadjačava** Tailwindov `ease-out`, pa je dovoljno napisati `ease-out`.
+
+- **Podizanje plohe:** `.lift` diže plohu 2 px i pojačava sjenu; nosi je kartica artikla u
+  katalogu, jedina prava interaktivna kartica u sustavu. Gumb ima vlastiti, manji pomak od
+  1 px jer često stoji uz polje za unos, gdje veći pomak izgleda kao da raspored poskakuje.
+  Nikad skaliranje — tekst bi se zamutio, a susjedne plohe pomaknule.
+- **Ulaz u kadar:** `.reveal` / `.reveal-in` preko `useReveal` (`src/lib/reveal.ts`).
+  IntersectionObserver i dvije CSS klase umjesto ~30 kB animacijske biblioteke.
+
+`reveal` je **opcija sekcije, ne zadano ponašanje**: alat koji netko gleda cijeli radni
+dan ne smije se otkrivati pri svakom scrollu. Uključen je samo na marketinškim
+stranicama, i nikad na prvoj sekciji — ona je već u kadru pa bi samo zatreperila.
+
+Jedini ozbiljan kvar animacije je da sadržaj **ostane nevidljiv**. Tri puta koja to
+sprječavaju pokriva `src/lib/reveal.test.tsx`: nema IntersectionObservera → odmah vidljivo;
+`prefers-reduced-motion` → odmah vidljivo, promatrač se ne pokreće; ušlo u kadar →
+otkriveno i **prestaje se pratiti**, jer ponovno skrivanje pri scrollu prema gore smeta
+čitanju.
+
+---
+
+## Ilustracije
+
+`src/components/ui/EmptyArt.tsx` — četiri crteža praznih stanja (termini, vozila, zaliha,
+obavijesti), pisani u SVG-u, ne generirani kao slike:
+
+- boje dolaze iz `currentColor` i volt tokena, pa prate temu umjesto da su zamrznute u pikselima;
+- ~1 kB po komadu umjesto ~150 kB, bez mrežnog zahtjeva i bez skoka rasporeda;
+- oštri na svakoj gustoći piksela.
+
+Svi su `aria-hidden`: poruku nose naslov i opis ispod. `EmptyState` uz `illustration`
+prima i `icon` — za mjesta gdje bi crtež bio prevelik (uži stupci, dijalozi).
+
+Gume su crtane kao **valjci** (bočni plašt + gornja elipsa), s ispunom i redom crtanja
+odozdo prema gore. Bez toga se donje vide kroz gornje i stog se čita kao hrpa tanjura.
+
+---
+
+## Slika za dijeljenje linka
+
+`og:image` mora biti **raster**: Facebook, WhatsApp, Viber, LinkedIn ni X ne prikazuju SVG.
+Isto vrijedi za `apple-touch-icon`, koji iOS ne prihvaća kao SVG.
+
+Zato `scripts/build-og-image.py`, a ne ručno nacrtana slika: naziv servisa je podatak koji
+klijent mijenja, pa slika mora moći nastati ponovno. Skripta čita naziv iz `site.ts` i
+boje iz `theme.css`.
+
+```bash
+pip install pillow fonttools brotli
+python3 scripts/build-og-image.py
+```
+
+**Pokrenuti je nakon svake promjene naziva servisa ili tokena boje.**
 
 ---
 
@@ -78,132 +213,21 @@ Parnjak `.keyline-dark` radi isto na žutoj plohi.
 ```css
 .hatched {
   background-image: repeating-linear-gradient(45deg, transparent, transparent 4px,
-                    var(--color-ink-200) 4px, var(--color-ink-200) 5px);
+                    var(--color-asphalt-200) 4px, var(--color-asphalt-200) 5px);
 }
 ```
 
-Zauzeti termin se **ne skriva** nego šrafira i precrtava, kao prekriženi znak. U sezoni je
-vidljiva popunjenost dio poruke: posjetitelj mora vidjeti da mjesta nestaju.
-
-Isti tretman nose i neradni dani u traci dana — dan na koji se ne može doći ne smije
-izgledati kao da se može odabrati.
+Zauzeti termin se **ne skriva** nego šrafira i precrtava. U sezoni je vidljiva popunjenost
+dio poruke: posjetitelj mora vidjeti da mjesta nestaju. Isti tretman nose neradni dani u
+traci dana — dan na koji se ne može doći ne smije izgledati kao da se može odabrati.
 
 ---
 
-## Tipografija
+## Podaci o klijentu
 
-**Archivo**, varijabilno pismo, jedna obitelj za cijelo sučelje.
+Naziv servisa je stvaran. **Sve ostalo je placeholder** s `TODO(klijent)` oznakom u
+`src/config/site.ts`: OIB, adresa, telefon, e-mail, koordinate, broj radnih mjesta, domena.
+Ne izmišljati ih.
 
-- **Self-hostano** (`public/fonts/*.woff2`, 176 kB za oba podskupa). Razlog nije samo
-  brzina: učitavanje pisma s tuđe domene šalje IP adresu posjetitelja trećoj strani, što je
-  za stranicu s politikom privatnosti nepotreban rizik.
-- Podskupovi `latin` i `latin-ext` s odvojenim `unicode-range` — hrvatski dijakritici se
-  učitavaju samo kad zatrebaju.
-- **Os širine se koristi**, ne samo deklarira: `.plate-title` zbija naslov na `87.5%`, kao
-  naziv odredišta na znaku koji mora stati u ploču fiksne širine.
-- **Tablične znamenke posvuda** (`font-variant-numeric: tabular-nums` na `body`, `input`,
-  `select`, `textarea`, `button`). Dimenzije, cijene, vremena i količine moraju se dati
-  usporediti pogledom niz stupac.
-
-Mjera retka u tekstu za čitanje ograničena je na ~68 znakova (`LegalBody`, opisi sekcija).
-
----
-
-## Komponente
-
-| Komponenta | Uloga | Datoteka |
-|---|---|---|
-| `SlotBoard` | **potpisna interakcija** — tabla termina | `components/SlotBoard.tsx` |
-| `Plate` | osnovna ploha (`signal` / `work` / `white` / `ink` / `quiet`) | `components/ui/Plate.tsx` |
-| `Button` / `ButtonLink` | `primary` žuti, `secondary` plavi, `outline`, `ghost`, `danger` | `components/ui/Button.tsx` |
-| `DataTable` | linirana tabla s tabličnim znamenkama | `components/ui/Table.tsx` |
-| `Field` / `TextField` / `SelectField` | polja s vidljivom oznakom i vezanom greškom | `components/ui/Field.tsx` |
-| `Alert` / `EmptyState` / `ErrorState` / `Skeleton` | stanja sučelja | `components/ui/Feedback.tsx` |
-| `StatusBadge` | status s oblikom i bojom | `components/ui/Status.tsx` |
-| `ConfirmDialog` | potvrda destruktivne radnje, izvorni `<dialog>` | `components/ui/ConfirmDialog.tsx` |
-| Ikone | vlastiti set, mreža 24×24, jedan potez 1.75 | `components/ui/Icon.tsx` |
-
-Ikone su **crtane**, ne emoji ni unicode znakovi, i dijele jednu debljinu poteza.
-
-### Tabla termina
-
-Slobodan termin je bijela pločica sa **zelenom gornjom linijom** (5 px). Zauzeti je
-šrafiran i precrtan. Odabrani se prevrće u **žuto s crnim tekstom**.
-
-Ista komponenta u dvije gustoće: `compact` na naslovnici (tri dana, samo za čitanje) i
-`full` u trećem koraku rezervacije (odabirno).
-
-Upravlja se i tipkovnicom, kao mreža: strelice pomiču fokus **samo po slobodnim
-terminima** (roving tabindex), Home i End skaču na prvi i zadnji. Zauzeti termini ostaju
-vidljivi, ali izvan reda za fokus.
-
----
-
-## Raspored
-
-- Kontejner javne stranice: `max-w-6xl`, portala `max-w-7xl`, bočni razmak 16 px.
-- Razmak po skali od 4 px (Tailwind), `gap-px` za linirane skupine.
-- Radijusi: `--radius-plate` 4 px, `--radius-sign` 8 px. Znakovi imaju male, dosljedne
-  radijuse — ne mekane kartice.
-- **Dubina:** samo dvije sjene (`--shadow-plate`, `--shadow-raised`), obje s pomakom **i**
-  zamućenjem. Obojani halo bez pomaka je ukras i ne postoji u sustavu.
-- Meta za dodir najmanje 44 px (`min-h-11` na gumbima i poljima).
-
----
-
-## Motion
-
-**120 ms, linearno.** Znakovi se ne njišu.
-
-Jedina autorska gesta je **prevrtanje pločice termina**: promjena boje bez skaliranja,
-oštro kao promjena znaka na cesti. Sve ostalo su prijelazi boje na hover i focus.
-
-`prefers-reduced-motion: reduce` gasi sve prijelaze i animacije.
-
----
-
-## Rubne površine preglednika
-
-Dijelovi koje se lako zaboravi, a nose zadane vrijednosti koje ne pripadaju nijednom
-sustavu — ovdje su tematizirani iz palete:
-
-- označavanje teksta (`::selection`) — žuta podloga, crni tekst;
-- kursor za unos (`caret-color`) i `accent-color` — signalno plava;
-- klizač (`scrollbar-color` i `::-webkit-scrollbar`) — asfaltna skala;
-- **focus prsten**: 3 px signalno plavi s odmakom 2 px, a na plavoj i tamnoj plohi žuti,
-  jer plavi prsten na plavoj plohi ne bi bio vidljiv. Nikad se ne uklanja.
-
----
-
-## Modovi površina
-
-| Mod | Površine | Pravilo |
-|---|---|---|
-| **Persuade** | naslovnica, usluge, cjenik, hotel za gume, ponuda, kontakt, lokacija, o nama, FAQ | prvi ekran nosi činjenicu i jednu radnju |
-| **Operate** | rezervacija, svi portali | skenabilnost i stanje ispred izražajnosti; svijet se nasljeđuje u gušćem registru |
-| **Read** | privatnost, uvjeti, 404 | mjera retka i struktura ispred svega |
-
-Rezervacija je *Operate*, ali nosi isti svijet: asfaltna podloga, bijele ploče na njoj,
-plava zaglavlja koraka s uvučenom konturom.
-
----
-
-## Što je svjesno izostavljeno
-
-- **Tamna tema.** Znakovni sustav je fiksan par tinte i podloge; tamna varijanta nije
-  njegova gramatika. Nije u opsegu demoa.
-- **Fotografije.** Svijet je građen tako da mu ne trebaju — znak je hero. Klijent nema
-  fotografije radionice, a izmišljati ih ne dolazi u obzir.
-- **Animacije pri ulasku u vidno polje.** Ne nose informaciju i usporavaju prvi dojam.
-
----
-
-## Za klijenta: kako preuzeti vlastiti brand
-
-1. Zamijenite vrijednosti u `@theme` bloku u `src/styles/theme.css`. Sve ostalo se povuče
-   samo.
-2. Zamijenite pismo u istom bloku (`--font-sans`) i datoteke u `public/fonts/`.
-3. Zamijenite podatke o servisu u `src/config/site.ts`.
-
-Semantiku boja (plava = obavijest, žuta = radnja, crvena = zabrana, zelena = dopušteno)
-vrijedi zadržati i s drugim tonovima — ona nosi značenje, ne samo izgled.
+Pravne stranice su placeholder tekst s vidljivom oznakom da ih mora pregledati pravnik —
+ne tvrditi pravnu usklađenost.

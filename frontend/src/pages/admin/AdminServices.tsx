@@ -168,7 +168,7 @@ export default function AdminServices() {
           <label className="mt-4 flex items-center gap-2.5 text-[0.9375rem] font-semibold text-asphalt-900">
             <input
               type="checkbox"
-              className="h-5 w-5 rounded-[2px] border-2 border-asphalt-500"
+              className="h-5 w-5 rounded-[2px] border border-asphalt-300"
               {...form.register('active')}
             />
             Usluga je aktivna i može se rezervirati

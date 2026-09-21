@@ -127,8 +127,26 @@ mjesta sljedećeg jutra, da se na tabli termina vidi zauzeto stanje.
 ## Frontend
 
 React 19 + Vite + Tailwind 4 (CSS-first `@theme` u `src/styles/theme.css`), TanStack
-Query, React Hook Form + Zod. Vizualni sustav je „prometno znakovlje" — pravila su u
-`DESIGN.md`, tokeni u `theme.css`. Ne uvoditi boje ni radijuse mimo tokena.
+Query, React Hook Form + Zod. Vizualni sustav je „radionica noću" — pravila su u
+`DESIGN.md`, tokeni u `theme.css`. Ne uvoditi boje ni radijuse mimo tokena; da nijedna
+komponenta ne sadrži boju provjerava se s
+`grep -rn '#[0-9a-fA-F]\{6\}' frontend/src --include=*.tsx` (mora biti prazno).
+
+Tri stvari koje se lako nehotice prekrše:
+
+- **Žuta nije boja za tekst.** `volt-500` na bijelom ima kontrast 1.21:1. Smije biti
+  ploha s tamnim tekstom na sebi ili tekst na mornarskoj podlozi. Za žuti tekst na
+  svijetlom postoji `volt-700`. Isto vrijedi obrnuto: na žutom gumbu tekst je uvijek
+  `asphalt-950`, nikad bijeli.
+- **Znak marke živi na tri mjesta** i mijenja se na sva tri zajedno:
+  `components/ui/BrandMark.tsx`, `public/favicon.svg`, `scripts/build-og-image.py`.
+- **`og-image.png` se generira, ne crta.** Nakon promjene naziva servisa ili tokena
+  boje pokrenuti `python3 scripts/build-og-image.py`. Mora ostati raster — Facebook,
+  WhatsApp, Viber i LinkedIn ne prikazuju SVG kao og:image.
+
+Animacije ulaza (`.reveal` / `useReveal`) uključuju se po sekciji, nikad globalno:
+portali su alat koji se gleda cijeli dan. Jedini ozbiljan kvar je da sadržaj ostane
+nevidljiv, pa `src/lib/reveal.test.tsx` pokriva sva tri zamjenska puta.
 
 Dev poslužitelj posreduje `/api` na `localhost:8080`, pa frontend i API dijele origin
 i cookie radi bez CORS-a — isto kao u produkciji iza nginxa.

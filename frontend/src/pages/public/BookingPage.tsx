@@ -131,7 +131,7 @@ export function BookingPage() {
     <Section tone="deep" labelledBy="naslov-rezervacija">
       <h1
         id="naslov-rezervacija"
-        className="plate-title text-2xl font-extrabold text-white sm:text-4xl"
+        className="display text-3xl text-white sm:text-5xl"
       >
         Rezervacija termina
       </h1>

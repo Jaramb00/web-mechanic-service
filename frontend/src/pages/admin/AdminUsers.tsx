@@ -101,7 +101,7 @@ export default function AdminUsers() {
             value={search}
             onChange={(event) => setSearch(event.target.value)}
             placeholder="Ime ili e-mail"
-            className="min-h-11 w-full rounded-plate border border-asphalt-200 bg-white pl-10 pr-3 text-[0.9375rem] hover:border-asphalt-500 focus:border-midnight-800"
+            className="min-h-11 w-full rounded-control border border-asphalt-200 bg-white pl-10 pr-3 text-[0.9375rem] hover:border-asphalt-500 focus:border-midnight-800"
           />
         </div>
         <Button type="submit" variant="secondary">Traži</Button>

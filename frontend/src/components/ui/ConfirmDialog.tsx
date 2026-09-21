@@ -58,7 +58,7 @@ export function ConfirmDialog({
       aria-labelledby="confirm-title"
       className="m-auto w-[min(32rem,calc(100vw-2rem))] rounded-card border border-asphalt-200 shadow-plate bg-white p-0 backdrop:bg-asphalt-950/60"
     >
-      <div className="flex gap-3 border-b-2 border-asphalt-950 bg-volt-500 px-5 py-4">
+      <div className="flex gap-3 border-b border-asphalt-200 bg-volt-500 px-5 py-4">
         <AlertTriangle size={22} className="mt-0.5 shrink-0 text-asphalt-950" />
         <h2 id="confirm-title" className="text-lg font-bold text-asphalt-950">
           {title}

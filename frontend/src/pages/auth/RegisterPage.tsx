@@ -75,7 +75,7 @@ export function RegisterPage() {
   return (
     <Section tone="light">
       <div className="mx-auto max-w-md">
-        <h1 className="text-2xl font-extrabold tracking-tight sm:text-3xl">Otvaranje računa</h1>
+        <h1 className="display text-3xl sm:text-4xl">Otvaranje računa</h1>
         <p className="mt-2 text-[1.0625rem] text-asphalt-700">
           Već imate račun?{' '}
           <Link to="/prijava" className="font-bold text-midnight-800">

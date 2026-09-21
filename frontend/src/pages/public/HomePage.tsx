@@ -168,7 +168,7 @@ function ServicesOverview() {
   const shown = services?.slice(0, 6) ?? [];
 
   return (
-    <Section tone="white" labelledBy="naslov-usluge">
+    <Section reveal tone="white" labelledBy="naslov-usluge">
       <SectionTitle
         id="naslov-usluge"
         description="Cijene su okvirne i ovise o dimenziji gume i stanju vozila. Točan iznos dogovaramo prije početka rada."
@@ -220,7 +220,7 @@ function ServicesOverview() {
 
 function TireStorageTeaser() {
   return (
-    <Section tone="midnight" labelledBy="naslov-hotel">
+    <Section reveal tone="midnight" labelledBy="naslov-hotel">
       <div className="grid gap-8 lg:grid-cols-[1.1fr_1fr] lg:gap-14">
         <div>
           <SectionTitle
@@ -273,7 +273,7 @@ function SlotPreview() {
   const days = [0, 1, 2].map((offset) => toIsoDate(addDays(firstDate, offset)));
 
   return (
-    <Section tone="light" labelledBy="naslov-termini">
+    <Section reveal tone="light" labelledBy="naslov-termini">
       <SectionTitle
         id="naslov-termini"
         description={
@@ -321,7 +321,7 @@ function DayColumn({
 
   return (
     <div className="rounded-card border border-asphalt-200 shadow-plate bg-white">
-      <div className="flex items-baseline justify-between gap-2 border-b-2 border-asphalt-950 bg-asphalt-50 px-4 py-2.5">
+      <div className="flex items-baseline justify-between gap-2 border-b border-asphalt-200 bg-asphalt-50 px-4 py-2.5">
         <h3 className="font-extrabold capitalize text-asphalt-950">
           {isToday ? 'danas' : `${formatWeekdayShort(`${date}T12:00:00`)} ${formatDayMonth(`${date}T12:00:00`)}`}
         </h3>
@@ -365,7 +365,7 @@ function VisitUs() {
   const { data: hours, isLoading } = useWorkingHours();
 
   return (
-    <Section tone="white" labelledBy="naslov-dolazak">
+    <Section reveal tone="white" labelledBy="naslov-dolazak">
       <div className="grid gap-10 lg:grid-cols-2">
         <div>
           <SectionTitle id="naslov-dolazak" description={site.address.directions}>
@@ -392,7 +392,7 @@ function VisitUs() {
         </div>
 
         <div className="rounded-card border border-asphalt-200 shadow-plate bg-white">
-          <h3 className="border-b-2 border-asphalt-950 bg-asphalt-50 px-4 py-3 text-sm font-bold uppercase tracking-wide text-asphalt-700">
+          <h3 className="border-b border-asphalt-200 bg-asphalt-50 px-4 py-3 text-sm font-bold uppercase tracking-wide text-asphalt-700">
             Radno vrijeme
           </h3>
           {isLoading ? (

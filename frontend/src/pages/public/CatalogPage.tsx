@@ -182,7 +182,7 @@ function CategoryChip({
       onClick={onClick}
       aria-pressed={active}
       className={cn(
-        'min-h-9 rounded-plate border-2 px-3 text-sm font-semibold transition-colors duration-100',
+        'min-h-9 rounded-pill border px-3.5 text-sm font-semibold transition-colors duration-150 ease-out',
         active
           ? 'border-asphalt-950 bg-midnight-800 text-white'
           : 'border-asphalt-300 bg-white text-asphalt-700 hover:border-midnight-800 hover:text-midnight-800',
@@ -205,7 +205,7 @@ function ProductPlate({
   const soldOut = product.availableQuantity <= 0;
 
   return (
-    <li className="flex flex-col rounded-card border border-asphalt-200 shadow-plate bg-white">
+    <li className="lift flex flex-col rounded-card border border-asphalt-200 bg-white shadow-plate">
       <div className="flex-1 p-4">
         <p className="text-xs font-bold uppercase tracking-wide text-midnight-800">
           {product.categoryName}
@@ -220,7 +220,7 @@ function ProductPlate({
         <p className="mt-0.5 text-xs tabular-nums text-asphalt-300">{product.sku}</p>
       </div>
 
-      <div className="flex items-end justify-between gap-3 border-t-2 border-asphalt-950 bg-asphalt-50 p-4">
+      <div className="flex items-end justify-between gap-3 border-t border-asphalt-200 bg-asphalt-50 p-4">
         <div>
           <p className="text-xl font-extrabold tabular-nums text-asphalt-950">
             {formatPrice(product.salePrice)}

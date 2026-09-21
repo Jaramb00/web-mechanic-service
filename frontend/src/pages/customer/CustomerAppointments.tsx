@@ -113,7 +113,7 @@ export default function CustomerAppointments() {
                               </li>
                             ))}
                           </ul>
-                          <p className="mt-2 flex justify-between border-t-2 border-asphalt-950 pt-2 font-extrabold">
+                          <p className="mt-2 flex justify-between border-t border-asphalt-200 pt-2 font-extrabold">
                             <span>Ukupno</span>
                             <span className="tabular-nums">{formatPrice(appointment.itemsTotal)}</span>
                           </p>

@@ -122,7 +122,7 @@ function WorkCard({
 
   return (
     <li className="rounded-card border border-asphalt-200 shadow-plate bg-white">
-      <div className="flex flex-wrap items-start justify-between gap-3 border-b-2 border-asphalt-950 bg-asphalt-50 px-4 py-3">
+      <div className="flex flex-wrap items-start justify-between gap-3 border-b border-asphalt-200 bg-asphalt-50 px-4 py-3">
         <div>
           <p className="text-xl font-extrabold tabular-nums text-asphalt-950">
             {formatTime(appointment.startAt)}–{formatTime(appointment.endAt)}
@@ -290,7 +290,7 @@ function UsedItems({
               </span>
             </li>
           ))}
-          <li className="flex justify-between border-t-2 border-asphalt-950 py-2 font-extrabold">
+          <li className="flex justify-between border-t border-asphalt-200 py-2 font-extrabold">
             <span>Ukupno</span>
             <span className="tabular-nums">{formatPrice(appointment.itemsTotal)}</span>
           </li>

@@ -78,7 +78,7 @@ export function ReserveDialog({
     >
       {product ? (
         <>
-          <div className="border-b-2 border-asphalt-950 bg-midnight-800 px-5 py-4">
+          <div className="border-b border-asphalt-200 bg-midnight-800 px-5 py-4">
             <h2 id="rezervacija-naslov" className="text-lg font-extrabold text-white">
               {done ? 'Rezervacija je zaprimljena' : 'Rezervacija artikla'}
             </h2>
@@ -126,7 +126,7 @@ export function ReserveDialog({
                 onChange={(event) => setNote(event.target.value)}
               />
 
-              <div className="flex items-baseline justify-between border-t-2 border-asphalt-950 pt-3">
+              <div className="flex items-baseline justify-between border-t border-asphalt-200 pt-3">
                 <span className="font-bold text-asphalt-950">Ukupno</span>
                 <span className="text-xl font-extrabold tabular-nums">
                   {formatPrice(product.salePrice * quantity)}

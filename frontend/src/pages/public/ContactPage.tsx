@@ -28,7 +28,7 @@ export function ContactPage() {
 
       <div className="mt-8 grid gap-6 lg:grid-cols-2">
         <div className="rounded-card border border-asphalt-200 shadow-plate bg-white">
-          <h2 className="border-b-2 border-asphalt-950 bg-asphalt-50 px-4 py-3 text-sm font-bold uppercase tracking-wide text-asphalt-700">
+          <h2 className="border-b border-asphalt-200 bg-asphalt-50 px-4 py-3 text-sm font-bold uppercase tracking-wide text-asphalt-700">
             Podaci za kontakt
           </h2>
           <dl className="divide-y divide-asphalt-100">
@@ -69,7 +69,7 @@ export function ContactPage() {
         </div>
 
         <div className="rounded-card border border-asphalt-200 shadow-plate bg-white">
-          <h2 className="border-b-2 border-asphalt-950 bg-asphalt-50 px-4 py-3 text-sm font-bold uppercase tracking-wide text-asphalt-700">
+          <h2 className="border-b border-asphalt-200 bg-asphalt-50 px-4 py-3 text-sm font-bold uppercase tracking-wide text-asphalt-700">
             Radno vrijeme
           </h2>
           {isLoading ? (

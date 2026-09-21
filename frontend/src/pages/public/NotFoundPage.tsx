@@ -24,7 +24,7 @@ export function NotFoundPage() {
           <span className="block h-[10px] w-16 rotate-[-45deg] bg-stop-600" />
         </div>
 
-        <h1 className="mt-8 text-3xl font-extrabold tracking-tight text-asphalt-950">
+        <h1 className="mt-8 display text-4xl text-asphalt-950">
           Ovdje nema ničega
         </h1>
         <p className="mt-3 text-[1.0625rem] leading-relaxed text-asphalt-700">

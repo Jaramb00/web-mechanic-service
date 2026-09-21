@@ -1,20 +1,32 @@
 import type { ReactNode } from 'react';
 import { cn } from '@/lib/cn';
+import { useReveal } from '@/lib/reveal';
 
-/** Sekcija javne stranice. Ploha određuje ton, ne dekoracija. */
+/**
+ * Sekcija javne stranice. Ploha određuje ton, ne dekoracija.
+ *
+ * `reveal` je namjerno opcija, a ne zadano ponašanje. Sekcije se koriste i u
+ * portalima, a alat koji netko gleda cijeli radni dan ne smije se otkrivati
+ * pri svakom scrollu — tamo je pokret smetnja, ne dojam. Ne stavlja se ni na
+ * prvu sekciju stranice, jer je ona već u kadru pri učitavanju pa bi samo
+ * zatreperila.
+ */
 export function Section({
   tone = 'light',
   className,
   children,
   as: Tag = 'section',
   labelledBy,
+  reveal = false,
 }: {
   tone?: 'light' | 'white' | 'midnight' | 'deep';
   className?: string;
   children: ReactNode;
   as?: 'section' | 'div';
   labelledBy?: string;
+  reveal?: boolean;
 }) {
+  const revealRef = useReveal<HTMLDivElement>();
   const tones = {
     light: 'bg-asphalt-50 text-asphalt-950',
     white: 'bg-white text-asphalt-950',
@@ -24,7 +36,12 @@ export function Section({
 
   return (
     <Tag aria-labelledby={labelledBy} className={cn(tones[tone], className)}>
-      <div className="mx-auto w-full max-w-6xl px-4 py-12 sm:py-16">{children}</div>
+      <div
+        ref={reveal ? revealRef : undefined}
+        className={cn('mx-auto w-full max-w-6xl px-4 py-12 sm:py-16', reveal && 'reveal')}
+      >
+        {children}
+      </div>
     </Tag>
   );
 }

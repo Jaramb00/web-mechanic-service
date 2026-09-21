@@ -60,7 +60,7 @@ export function FaqPage() {
         Česta pitanja
       </SectionTitle>
 
-      <div className="mt-8 divide-y-2 divide-asphalt-200 border-y-2 border-asphalt-950">
+      <div className="mt-8 divide-y divide-asphalt-200 overflow-hidden rounded-card border border-asphalt-200 bg-white shadow-plate">
         {FAQ.map((item) => (
           <details key={item.question} className="group">
             <summary className="flex cursor-pointer list-none items-center justify-between gap-4 py-4 text-[1.0625rem] font-bold text-asphalt-950 marker:content-none hover:text-midnight-800">

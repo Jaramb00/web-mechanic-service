@@ -9,7 +9,7 @@ import { IS_DEMO } from '@/config/site';
 export function DemoRibbon() {
   if (!IS_DEMO) return null;
   return (
-    <p className="border-b-2 border-asphalt-950 bg-volt-500 px-4 py-1.5 text-center text-xs font-bold text-asphalt-950">
+    <p className="border-b border-asphalt-200 bg-volt-500 px-4 py-1.5 text-center text-xs font-bold text-asphalt-950">
       DEMO VERZIJA · svi podaci, cijene i kontakti su zamjenski i služe samo za prikaz
     </p>
   );

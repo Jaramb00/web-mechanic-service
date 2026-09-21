@@ -55,7 +55,7 @@ export function TireStoragePage() {
         ) : null}
       </Section>
 
-      <Section tone="white" labelledBy="naslov-kako">
+      <Section reveal tone="white" labelledBy="naslov-kako">
         <SectionTitle id="naslov-kako">Kako to ide</SectionTitle>
 
         {/* Redoslijed nosi informaciju — korak 3 nema smisla prije koraka 1 — pa su
