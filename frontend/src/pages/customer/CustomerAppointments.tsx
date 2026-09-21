@@ -68,7 +68,7 @@ export default function CustomerAppointments() {
         <>
           <ul className="space-y-4">
             {data?.content.map((appointment) => (
-              <li key={appointment.id} className="rounded-control border-2 border-asphalt-950 bg-white">
+              <li key={appointment.id} className="rounded-card border border-asphalt-200 shadow-plate bg-white">
                 <div className="flex flex-wrap items-start justify-between gap-3 border-b border-asphalt-200 px-4 py-3">
                   <div>
                     <p className="text-lg font-extrabold tabular-nums text-asphalt-950">

@@ -60,7 +60,7 @@ export function TireStoragePage() {
 
         {/* Redoslijed nosi informaciju — korak 3 nema smisla prije koraka 1 — pa su
             koraci numerirani. */}
-        <ol className="mt-8 space-y-px overflow-hidden rounded-control border-2 border-asphalt-950">
+        <ol className="mt-8 space-y-px overflow-hidden rounded-card border border-asphalt-200 shadow-plate">
           {STEPS.map((step, index) => (
             <li key={step.title} className="flex gap-4 bg-white px-4 py-5 sm:gap-6 sm:px-6">
               <span

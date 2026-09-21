@@ -213,7 +213,7 @@ export function SlotLegend() {
         Zauzeto
       </li>
       <li className="flex items-center gap-2">
-        <span aria-hidden="true" className="h-4 w-6 rounded-[2px] border-2 border-asphalt-950 bg-volt-500" />
+        <span aria-hidden="true" className="h-4 w-6 rounded-[2px] border border-asphalt-200 shadow-plate bg-volt-500" />
         Vaš odabir
       </li>
     </ul>

@@ -36,7 +36,7 @@ export function ServicesPage() {
             {services?.map((service) => (
               <li
                 key={service.id}
-                className="rounded-control border-2 border-asphalt-950 bg-white p-5 sm:flex sm:items-start sm:gap-6"
+                className="rounded-card border border-asphalt-200 shadow-plate bg-white p-5 sm:flex sm:items-start sm:gap-6"
               >
                 <div className="min-w-0 flex-1">
                   <h3 className="text-lg font-extrabold text-asphalt-950">{service.name}</h3>

@@ -69,7 +69,7 @@ export default function AdminWorkingHours() {
       ) : isError ? (
         <ErrorState message={errorMessage(error)} onRetry={() => void refetch()} />
       ) : (
-        <ul className="space-y-px overflow-hidden rounded-control border-2 border-asphalt-950">
+        <ul className="space-y-px overflow-hidden rounded-card border border-asphalt-200 shadow-plate">
           {data?.map((entry) => {
             const current = value(entry);
             const dirty = draft[entry.dayOfWeek] !== undefined;
@@ -102,7 +102,7 @@ export default function AdminWorkingHours() {
                     disabled={current.closed}
                     value={trimSeconds(current.openTime)}
                     onChange={(event) => update(entry, { openTime: event.target.value })}
-                    className="min-h-11 rounded-plate border-2 border-asphalt-300 bg-white px-2 tabular-nums disabled:bg-asphalt-50 disabled:text-asphalt-300"
+                    className="min-h-11 rounded-plate border border-asphalt-200 bg-white px-2 tabular-nums disabled:bg-asphalt-50 disabled:text-asphalt-300"
                   />
                   <span aria-hidden="true" className="text-asphalt-500">–</span>
                   <label className="sr-only" htmlFor={`zatvara-${entry.dayOfWeek}`}>
@@ -114,7 +114,7 @@ export default function AdminWorkingHours() {
                     disabled={current.closed}
                     value={trimSeconds(current.closeTime)}
                     onChange={(event) => update(entry, { closeTime: event.target.value })}
-                    className="min-h-11 rounded-plate border-2 border-asphalt-300 bg-white px-2 tabular-nums disabled:bg-asphalt-50 disabled:text-asphalt-300"
+                    className="min-h-11 rounded-plate border border-asphalt-200 bg-white px-2 tabular-nums disabled:bg-asphalt-50 disabled:text-asphalt-300"
                   />
                 </span>
 

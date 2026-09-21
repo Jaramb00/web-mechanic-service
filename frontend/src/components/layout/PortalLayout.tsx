@@ -36,7 +36,7 @@ export function PortalLayout({ title, nav }: { title: string; nav: PortalNavItem
 
       <DemoRibbon />
 
-      <header className="on-midnight border-b-4 border-volt-500 bg-asphalt-950 text-white">
+      <header className="on-midnight border-b-2 border-volt-500 bg-midnight-950 text-white">
         <div className="mx-auto flex w-full max-w-7xl flex-wrap items-center gap-x-4 gap-y-2 px-4 py-3">
           <Link to="/" className="text-sm font-bold text-asphalt-300 no-underline hover:text-white">
             {site.name}
@@ -44,19 +44,19 @@ export function PortalLayout({ title, nav }: { title: string; nav: PortalNavItem
           <span aria-hidden="true" className="text-asphalt-500">
             /
           </span>
-          <h1 className="text-lg font-extrabold tracking-tight">{title}</h1>
+          <h1 className="display text-xl">{title}</h1>
 
           <div className="ml-auto flex items-center gap-3">
             <NotificationBell />
             <span className="hidden text-sm text-asphalt-300 sm:inline">{user?.fullName}</span>
-            <Button variant="ghost" size="sm" className="text-white hover:bg-asphalt-900" onClick={handleLogout}>
+            <Button variant="ghost" size="sm" className="text-white hover:bg-midnight-800" onClick={handleLogout}>
               <Logout size={18} />
               Odjava
             </Button>
           </div>
         </div>
 
-        <nav aria-label="Navigacija portala" className="border-t border-asphalt-900">
+        <nav aria-label="Navigacija portala" className="border-t border-midnight-800">
           <ul className="mx-auto flex w-full max-w-7xl gap-1 overflow-x-auto px-2">
             {nav.map((item) => (
               <li key={item.to} className="shrink-0">

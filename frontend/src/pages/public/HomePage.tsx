@@ -100,7 +100,7 @@ function Hero() {
               </ButtonLink>
               <a
                 href={site.contact.phoneHref}
-                className="inline-flex min-h-14 items-center justify-center gap-2.5 rounded-plate border-2 border-white px-6 text-lg font-bold text-white no-underline transition-colors duration-100 hover:bg-midnight-700"
+                className="inline-flex min-h-14 items-center justify-center gap-2.5 rounded-control border border-white/35 px-7 text-lg font-bold text-white no-underline transition-[background-color,border-color,transform] duration-150 ease-out hover:-translate-y-px hover:border-white/70 hover:bg-white/10"
               >
                 <Phone size={20} />
                 {site.contact.phone}
@@ -125,7 +125,7 @@ function FactStrip() {
   const todayHours = hours?.find((entry) => entry.dayOfWeek === today);
 
   return (
-    <dl className="mt-6 grid gap-px overflow-hidden rounded-control bg-asphalt-900 sm:grid-cols-3">
+    <dl className="mt-6 grid gap-px overflow-hidden rounded-card bg-midnight-800 sm:grid-cols-3">
       <Fact icon={<Clock size={18} />} term="Danas">
         {todayHours
           ? todayHours.closed
@@ -149,7 +149,7 @@ function FactStrip() {
 
 function Fact({ icon, term, children }: { icon: React.ReactNode; term: string; children: React.ReactNode }) {
   return (
-    <div className="flex items-start gap-3 bg-asphalt-950 px-4 py-4">
+    <div className="surface-dark flex items-start gap-3 bg-midnight-900 px-4 py-5">
       <span className="mt-0.5 text-volt-500">{icon}</span>
       <div className="min-w-0">
         <dt className="text-xs font-bold uppercase tracking-wide text-asphalt-300">{term}</dt>
@@ -176,7 +176,7 @@ function ServicesOverview() {
         Što radimo
       </SectionTitle>
 
-      <div className="mt-8 overflow-hidden rounded-control border-2 border-asphalt-950">
+      <div className="mt-8 overflow-hidden rounded-card border border-asphalt-200 bg-white shadow-plate">
         {isLoading ? (
           <div className="flex flex-col gap-px bg-asphalt-100">
             {Array.from({ length: 5 }, (_, index) => (
@@ -188,7 +188,7 @@ function ServicesOverview() {
             {shown.map((service) => (
               <li
                 key={service.id}
-                className="flex flex-wrap items-baseline gap-x-4 gap-y-1 bg-white px-4 py-4 sm:px-5"
+                className="flex flex-wrap items-baseline gap-x-4 gap-y-1 bg-white px-4 py-4 transition-colors duration-100 hover:bg-midnight-50 sm:px-5"
               >
                 <span className="min-w-0 flex-1 text-[1.0625rem] font-bold text-asphalt-950">
                   {service.name}
@@ -291,7 +291,7 @@ function SlotPreview() {
         ))}
       </div>
 
-      <div className="mt-6 rounded-control border-2 border-asphalt-950 bg-white px-4 py-3">
+      <div className="mt-6 rounded-card border border-asphalt-200 shadow-plate bg-white px-4 py-3">
         <SlotLegend />
       </div>
 
@@ -320,7 +320,7 @@ function DayColumn({
   const freeCount = day?.slots.filter((slot) => slot.available).length ?? 0;
 
   return (
-    <div className="rounded-control border-2 border-asphalt-950 bg-white">
+    <div className="rounded-card border border-asphalt-200 shadow-plate bg-white">
       <div className="flex items-baseline justify-between gap-2 border-b-2 border-asphalt-950 bg-asphalt-50 px-4 py-2.5">
         <h3 className="font-extrabold capitalize text-asphalt-950">
           {isToday ? 'danas' : `${formatWeekdayShort(`${date}T12:00:00`)} ${formatDayMonth(`${date}T12:00:00`)}`}
@@ -391,7 +391,7 @@ function VisitUs() {
           </div>
         </div>
 
-        <div className="rounded-control border-2 border-asphalt-950 bg-white">
+        <div className="rounded-card border border-asphalt-200 shadow-plate bg-white">
           <h3 className="border-b-2 border-asphalt-950 bg-asphalt-50 px-4 py-3 text-sm font-bold uppercase tracking-wide text-asphalt-700">
             Radno vrijeme
           </h3>

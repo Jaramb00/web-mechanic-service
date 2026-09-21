@@ -23,7 +23,7 @@ export function LocationPage() {
         stvarnima u <code className="font-bold">src/config/site.ts</code>.
       </Alert>
 
-      <div className="mt-6 overflow-hidden rounded-control border-2 border-asphalt-950">
+      <div className="mt-6 overflow-hidden rounded-card border border-asphalt-200 shadow-plate">
         {/* Karta se učitava lijeno: većini posjetitelja treba adresa, ne karta,
             a iframe inače blokira prvo iscrtavanje stranice. */}
         <iframe

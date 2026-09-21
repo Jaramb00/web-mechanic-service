@@ -106,7 +106,7 @@ export default function CustomerVehicles() {
         <form
           onSubmit={handleSubmit((values) => create.mutate(values))}
           noValidate
-          className="mb-6 rounded-control border-2 border-asphalt-950 bg-white p-5"
+          className="mb-6 rounded-card border border-asphalt-200 shadow-plate bg-white p-5"
         >
           <h2 className="text-lg font-extrabold text-asphalt-950">Novo vozilo</h2>
 
@@ -180,7 +180,7 @@ export default function CustomerVehicles() {
       ) : (
         <ul className="grid gap-4 sm:grid-cols-2">
           {data?.map((vehicle) => (
-            <li key={vehicle.id} className="rounded-control border-2 border-asphalt-950 bg-white">
+            <li key={vehicle.id} className="rounded-card border border-asphalt-200 shadow-plate bg-white">
               <div className="flex items-start gap-3 p-4">
                 <span className="mt-0.5 text-midnight-800">
                   <Car size={22} />

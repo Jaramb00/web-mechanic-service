@@ -75,7 +75,7 @@ for (const href of [...visitedLinks].sort()) {
 }
 
 // Statičke datoteke koje tražilice očekuju.
-for (const asset of ['/robots.txt', '/sitemap.xml', '/favicon.svg', '/og-image.svg']) {
+for (const asset of ['/robots.txt', '/sitemap.xml', '/favicon.svg', '/og-image.png', '/apple-touch-icon.png']) {
   const response = await page.request.get(`${BASE}${asset}`);
   if (!response.ok()) problems.push(`${asset}: nedostupan (HTTP ${response.status()})`);
 }

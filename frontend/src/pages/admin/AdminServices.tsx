@@ -113,7 +113,7 @@ export default function AdminServices() {
         <form
           onSubmit={form.handleSubmit((values) => save.mutate(values))}
           noValidate
-          className="mb-6 rounded-control border-2 border-asphalt-950 bg-white p-5"
+          className="mb-6 rounded-card border border-asphalt-200 shadow-plate bg-white p-5"
         >
           <h2 className="text-lg font-extrabold text-asphalt-950">
             {editing ? `Izmjena: ${editing.name}` : 'Nova usluga'}

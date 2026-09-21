@@ -121,7 +121,7 @@ function WorkCard({
   const transitions = NEXT_STATUS[appointment.status] ?? [];
 
   return (
-    <li className="rounded-control border-2 border-asphalt-950 bg-white">
+    <li className="rounded-card border border-asphalt-200 shadow-plate bg-white">
       <div className="flex flex-wrap items-start justify-between gap-3 border-b-2 border-asphalt-950 bg-asphalt-50 px-4 py-3">
         <div>
           <p className="text-xl font-extrabold tabular-nums text-asphalt-950">
@@ -300,7 +300,7 @@ function UsedItems({
       )}
 
       {open ? (
-        <div className="mt-4 rounded-plate border-2 border-asphalt-300 bg-asphalt-50 p-4">
+        <div className="mt-4 rounded-plate border border-asphalt-200 bg-asphalt-50 p-4">
           {addItem.isError ? (
             <Alert tone="error" title="Stavka nije dodana" className="mb-3">
               {errorMessage(addItem.error)}

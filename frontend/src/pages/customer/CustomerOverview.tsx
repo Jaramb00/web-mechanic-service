@@ -147,7 +147,7 @@ function Panel({
   children: React.ReactNode;
 }) {
   return (
-    <section className="rounded-control border-2 border-asphalt-950 bg-white">
+    <section className="rounded-card border border-asphalt-200 shadow-plate bg-white">
       <div className="flex items-center justify-between border-b-2 border-asphalt-950 bg-asphalt-50 px-4 py-2.5">
         <h2 className="text-sm font-bold uppercase tracking-wide text-asphalt-700">{title}</h2>
         <Link to={to} className="text-sm font-bold text-midnight-800">

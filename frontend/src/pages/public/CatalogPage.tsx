@@ -62,7 +62,7 @@ export function CatalogPage() {
             value={search}
             onChange={(event) => setSearch(event.target.value)}
             placeholder="Dimenzija, npr. 205/55 R16 — ili naziv"
-            className="min-h-11 w-full rounded-plate border-2 border-asphalt-300 bg-white pl-10 pr-3 text-[0.9375rem] placeholder:text-asphalt-500 hover:border-asphalt-500 focus:border-midnight-800"
+            className="min-h-11 w-full rounded-plate border border-asphalt-200 bg-white pl-10 pr-3 text-[0.9375rem] placeholder:text-asphalt-500 hover:border-asphalt-500 focus:border-midnight-800"
           />
         </div>
         <Button type="submit" variant="secondary">
@@ -205,7 +205,7 @@ function ProductPlate({
   const soldOut = product.availableQuantity <= 0;
 
   return (
-    <li className="flex flex-col rounded-control border-2 border-asphalt-950 bg-white">
+    <li className="flex flex-col rounded-card border border-asphalt-200 shadow-plate bg-white">
       <div className="flex-1 p-4">
         <p className="text-xs font-bold uppercase tracking-wide text-midnight-800">
           {product.categoryName}

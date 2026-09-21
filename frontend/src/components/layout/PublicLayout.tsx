@@ -4,6 +4,7 @@ import { cn } from '@/lib/cn';
 import { site, fullAddress } from '@/config/site';
 import { useAuth, homeRouteFor } from '@/features/auth/useAuth';
 import { Menu, Phone, User, X } from '@/components/ui/Icon';
+import { BrandMark } from '@/components/ui/BrandMark';
 import { ButtonLink } from '@/components/ui/Button';
 import { CookieConsent } from './CookieConsent';
 import { DemoRibbon } from './DemoRibbon';
@@ -36,15 +37,15 @@ export function PublicLayout() {
 
       <DemoRibbon />
 
-      <header className="on-midnight sticky top-0 z-30 border-b-4 border-asphalt-950 bg-midnight-800 text-white">
+      <header className="on-midnight sticky top-0 z-30 border-b border-midnight-700 bg-midnight-900/95 text-white backdrop-blur">
         <div className="mx-auto flex w-full max-w-6xl items-center gap-4 px-4 py-3">
           <Link
             to="/"
             className="flex min-w-0 items-center gap-2.5 no-underline"
             aria-label={`${site.name} — naslovnica`}
           >
-            <SignMark />
-            <span className="truncate text-lg font-extrabold leading-none tracking-tight text-white sm:text-xl">
+            <BrandMark className="h-9 w-9 text-white" />
+            <span className="display truncate text-xl leading-none text-white sm:text-2xl">
               {site.name}
             </span>
           </Link>
@@ -57,9 +58,9 @@ export function PublicLayout() {
                     to={item.to}
                     className={({ isActive }) =>
                       cn(
-                        'block rounded-plate px-3 py-2 text-[0.9375rem] font-semibold no-underline transition-colors duration-100',
+                        'block rounded-pill px-3.5 py-2 text-[0.9375rem] font-semibold no-underline transition-colors duration-150 ease-out',
                         isActive
-                          ? 'bg-midnight-950 text-white'
+                          ? 'bg-volt-500 text-asphalt-950'
                           : 'text-midnight-100 hover:bg-midnight-700 hover:text-white',
                       )
                     }
@@ -74,7 +75,7 @@ export function PublicLayout() {
           <div className="ml-auto flex items-center gap-2 lg:ml-0">
             <a
               href={site.contact.phoneHref}
-              className="hidden items-center gap-2 rounded-plate px-3 py-2 font-bold text-white no-underline hover:bg-midnight-700 sm:flex"
+              className="hidden items-center gap-2 rounded-pill px-3.5 py-2 font-bold text-white no-underline transition-colors duration-150 hover:bg-midnight-700 sm:flex"
             >
               <Phone size={18} />
               {site.contact.phone}
@@ -89,7 +90,7 @@ export function PublicLayout() {
             </span>
             <Link
               to={user ? homeRouteFor(user) : '/prijava'}
-              className="flex min-h-11 min-w-11 items-center justify-center rounded-plate text-white no-underline hover:bg-midnight-700"
+              className="flex min-h-11 min-w-11 items-center justify-center rounded-pill text-white no-underline transition-colors duration-150 hover:bg-midnight-700"
               aria-label={user ? 'Moj račun' : 'Prijava'}
             >
               <User size={22} />
@@ -100,7 +101,7 @@ export function PublicLayout() {
               aria-expanded={menuOpen}
               aria-controls="mobilni-izbornik"
               aria-label={menuOpen ? 'Zatvori izbornik' : 'Otvori izbornik'}
-              className="flex min-h-11 min-w-11 items-center justify-center rounded-plate text-white hover:bg-midnight-700 lg:hidden"
+              className="flex min-h-11 min-w-11 items-center justify-center rounded-pill text-white transition-colors duration-150 hover:bg-midnight-700 lg:hidden"
             >
               {menuOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
@@ -149,29 +150,16 @@ export function PublicLayout() {
   );
 }
 
-/** Znak servisa: plava ploha s uvučenom bijelom konturom i gumom u sredini. */
-function SignMark() {
-  return (
-    <span
-      aria-hidden="true"
-      className="flex h-10 w-10 shrink-0 items-center justify-center rounded-plate bg-white"
-    >
-      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#0b4c8c" strokeWidth="2">
-        <circle cx="12" cy="12" r="9" />
-        <circle cx="12" cy="12" r="3.4" />
-        <path d="M12 3v2.4M12 18.6V21M3 12h2.4M18.6 12H21" strokeLinecap="round" />
-      </svg>
-    </span>
-  );
-}
-
 function PublicFooter() {
   const year = new Date().getFullYear();
   return (
-    <footer className="on-midnight border-t-4 border-volt-500 bg-asphalt-950 text-asphalt-200">
+    <footer className="on-midnight border-t-2 border-volt-500 bg-midnight-950 text-asphalt-300">
       <div className="mx-auto grid w-full max-w-6xl gap-8 px-4 py-10 sm:grid-cols-2 lg:grid-cols-4">
         <div>
-          <p className="text-base font-extrabold text-white">{site.name}</p>
+          <p className="flex items-center gap-2.5">
+            <BrandMark className="h-8 w-8 text-white" />
+            <span className="display text-xl text-white">{site.name}</span>
+          </p>
           <p className="mt-2 text-sm leading-relaxed">{site.tagline}</p>
         </div>
 

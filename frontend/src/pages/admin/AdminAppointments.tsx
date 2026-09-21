@@ -44,7 +44,7 @@ export default function AdminAppointments() {
       <SectionHeader title="Termini" description="Svi termini uz filtar po statusu i razdoblju." />
 
       <form
-        className="mb-5 grid gap-4 rounded-control border-2 border-asphalt-950 bg-white p-4 sm:grid-cols-4"
+        className="mb-5 grid gap-4 rounded-card border border-asphalt-200 shadow-plate bg-white p-4 sm:grid-cols-4"
         onSubmit={(event) => {
           event.preventDefault();
           setPage(0);

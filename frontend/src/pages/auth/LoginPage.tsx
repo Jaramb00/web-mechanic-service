@@ -56,7 +56,7 @@ export function LoginPage() {
         <form
           onSubmit={handleSubmit}
           noValidate
-          className="mt-6 space-y-4 rounded-control border-2 border-asphalt-950 bg-white p-5 sm:p-6"
+          className="mt-6 space-y-4 rounded-card border border-asphalt-200 shadow-plate bg-white p-5 sm:p-6"
         >
           {error ? (
             <Alert tone="error" title="Prijava nije uspjela">

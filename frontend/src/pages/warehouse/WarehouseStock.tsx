@@ -113,7 +113,7 @@ export default function WarehouseStock() {
             value={search}
             onChange={(event) => setSearch(event.target.value)}
             placeholder="Naziv, šifra ili dimenzija"
-            className="min-h-11 w-full rounded-plate border-2 border-asphalt-300 bg-white pl-10 pr-3 text-[0.9375rem] hover:border-asphalt-500 focus:border-midnight-800"
+            className="min-h-11 w-full rounded-plate border border-asphalt-200 bg-white pl-10 pr-3 text-[0.9375rem] hover:border-asphalt-500 focus:border-midnight-800"
           />
         </div>
         <div className="w-full sm:w-52">
@@ -218,7 +218,7 @@ export default function WarehouseStock() {
       )}
 
       {active ? (
-        <section className="fixed inset-x-0 bottom-0 z-30 border-t-4 border-asphalt-950 bg-white p-4 shadow-[0_-8px_24px_rgba(13,17,23,0.12)]">
+        <section className="fixed inset-x-0 bottom-0 z-30 border-t border-asphalt-200 bg-white p-4 shadow-[0_-8px_32px_rgb(11_14_19_/_0.18)]">
           <div className="mx-auto w-full max-w-3xl">
             <h2 className="text-lg font-extrabold text-asphalt-950">
               {OPERATION_LABELS[operation]} — {active.name}

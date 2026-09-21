@@ -74,7 +74,7 @@ export function ReserveDialog({
     <dialog
       ref={ref}
       aria-labelledby="rezervacija-naslov"
-      className="m-auto w-[min(30rem,calc(100vw-2rem))] rounded-control border-2 border-asphalt-950 bg-white p-0 backdrop:bg-asphalt-950/60"
+      className="m-auto w-[min(30rem,calc(100vw-2rem))] rounded-card border border-asphalt-200 shadow-plate bg-white p-0 backdrop:bg-asphalt-950/60"
     >
       {product ? (
         <>
