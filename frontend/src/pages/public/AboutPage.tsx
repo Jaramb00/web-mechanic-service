@@ -44,11 +44,12 @@ export function AboutPage() {
         </p>
       </div>
 
+      {/* Širina je ograničena na rezoluciju izvora (627 px); šire bi bilo mekano. */}
       <Picture
         name="o-nama"
-        alt="Radionica servisa iznutra, s dizalicom i alatom"
-        sizes="(min-width: 768px) 700px, 100vw"
-        className="mt-10 block overflow-hidden rounded-card border border-asphalt-200 shadow-plate"
+        alt="Vulkanizer u radionici pregledava nalaz na tabletu"
+        sizes="(min-width: 640px) 560px, 100vw"
+        className="mt-10 block max-w-[560px] overflow-hidden rounded-card border border-asphalt-200 shadow-plate"
       />
 
       <div className="mt-8 flex flex-wrap gap-3">

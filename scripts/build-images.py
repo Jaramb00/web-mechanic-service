@@ -56,18 +56,28 @@ JPEG_QUALITY = 82
 class Slot:
     """Jedno mjesto za fotografiju na stranici."""
 
-    def __init__(self, name: str, ratio: tuple[int, int], widths: list[int], note: str):
+    def __init__(
+        self,
+        name: str,
+        ratio: tuple[int, int],
+        widths: list[int],
+        note: str,
+        focus: str = "center",
+    ):
         self.name = name
         self.ratio = ratio
         self.widths = widths
         self.note = note
+        # Gdje ostaje težište kad se kadar obrezuje po visini. Na fotografiji
+        # osobe sredina reže glavu, jer je lice u gornjoj trećini kadra.
+        self.focus = focus
 
     def height_for(self, width: int) -> int:
         return round(width * self.ratio[1] / self.ratio[0])
 
 
 SLOTS = [
-    Slot("radionica-hero", (16, 9), [960, 1600, 2400], "Pozadina prvog ekrana"),
+    Slot("radionica-hero", (16, 9), [960, 1600, 2400], "Pozadina prvog ekrana", focus="top"),
     Slot("hotel-za-gume", (4, 3), [480, 800, 1200], "Sekcija „Hotel za gume”"),
     Slot("o-nama", (3, 2), [480, 800, 1200], "Stranica „O nama”"),
     Slot("zamjena-guma", (3, 2), [480, 800, 1200], "Uvod stranice „Usluge”"),
@@ -129,11 +139,12 @@ def _label(draw, slot: Slot, width: int, height: int, colour):
     _centred(draw, f"izvor/{slot.name}.jpg", small, width // 2, y, colour["midnight-200"])
 
 
-def cover(img, width: int, height: int):
-    """Obrezivanje na zadani omjer iz sredine, pa skaliranje.
+def cover(img, width: int, height: int, focus: str = "center"):
+    """Obrezivanje na zadani omjer, pa skaliranje.
 
-    Sredina, a ne vrh: na fotografiji radionice lice i predmet rada gotovo
-    su uvijek u sredini kadra, a vrh je strop.
+    `focus` određuje što preživi rez po visini. Zadano je sredina, ali za
+    fotografiju osobe to odreže glavu — lice je gotovo uvijek u gornjoj
+    trećini kadra, a dolje je pod. Zato hero reže odozdo (`focus="top"`).
     """
     from PIL import Image
 
@@ -145,7 +156,7 @@ def cover(img, width: int, height: int):
         img = img.crop((left, 0, left + new_w, img.height))
     elif source < target:
         new_h = round(img.width / target)
-        top = (img.height - new_h) // 2
+        top = 0 if focus == "top" else (img.height - new_h) // 2
         img = img.crop((0, top, img.width, top + new_h))
     return img.resize((width, height), Image.LANCZOS)
 
@@ -163,17 +174,34 @@ def build(slot: Slot, colour) -> dict:
         if img.mode not in ("RGB", "L"):
             img = img.convert("RGB")
 
-    largest = max(slot.widths)
-    if img.width < largest:
-        print(
-            f"  ! {slot.name}: original je {img.width} px, traži se {largest} px — "
-            "slika će biti mekša nego što treba"
-        )
+    # Širine se ograničavaju na ono što original stvarno nosi. Napuhana slika
+    # nije samo mekša — ona je LAŽ prema pregledniku: srcset bi tvrdio da
+    # postoji 2400 px izvedenica, preglednik bi je na retini preuzeo umjesto
+    # manje, i platio bi promet za piksele koje nitko nije snimio.
+    # Najmanja širina ostaje uvijek, da mjesto nikad ne ostane bez slike.
+    usable = [w for w in slot.widths if w <= img.width] or [min(slot.widths)]
 
+    # Kad original stoji IZMEĐU dvije deklarirane širine (npr. 627 px, a
+    # ljestvica je 480/800/1200), sve iznad njega otpada i ostaje samo 480 —
+    # a prikaz je širi od toga, pa preglednik opet napuhuje. Zato se dodaje i
+    # izvorna širina: ona je najviše što slika pošteno nosi.
+    if img.width > max(usable) and img.width not in usable:
+        usable.append(img.width)
+
+    if usable != list(slot.widths):
+        dropped = [w for w in slot.widths if w not in usable]
+        if dropped:
+            print(
+                f"  ! {slot.name}: original je {img.width} px, pa otpadaju širine "
+                f"{dropped}. Za oštru sliku treba original od barem "
+                f"{max(slot.widths)} px."
+            )
+
+    largest = max(usable)
     written = []
-    for width in slot.widths:
+    for width in usable:
         height = slot.height_for(width)
-        resized = cover(img, width, height)
+        resized = cover(img, width, height, slot.focus)
         for suffix, params in (
             ("avif", {"quality": AVIF_QUALITY}),
             ("webp", {"quality": WEBP_QUALITY, "method": 6}),
@@ -185,19 +213,31 @@ def build(slot: Slot, colour) -> dict:
     # Jedan JPEG kao zadnja zamjena. Ne treba ih tri: preglednik koji ne zna
     # ni AVIF ni WebP gotovo sigurno nije na uskoj vezi kojoj bi tri širine
     # nešto značile.
-    fallback_w = slot.widths[len(slot.widths) // 2]
-    fallback = cover(img, fallback_w, slot.height_for(fallback_w))
+    fallback_w = usable[len(usable) // 2]
+    fallback = cover(img, fallback_w, slot.height_for(fallback_w), slot.focus)
     out = FOTO / f"{slot.name}-{fallback_w}.jpg"
     fallback.save(out, quality=JPEG_QUALITY, optimize=True, progressive=True)
     written.append(out)
 
+    # Ukloni izvedenice iz ranijih pokretanja koje više ne pripadaju ovom
+    # mjestu. Bez ovoga bi zaostale datoteke ostale u repozitoriju i bile
+    # posluživane, a manifest ih više ne spominje — nevidljiv višak koji se
+    # primijeti tek kad netko usporedi popis datoteka s manifestom.
+    keep = {p.name for p in written}
+    removed = 0
+    for old in FOTO.glob(f"{slot.name}-*"):
+        if old.name not in keep and old.suffix in (".avif", ".webp", ".jpg"):
+            old.unlink()
+            removed += 1
+
     total_kb = sum(p.stat().st_size for p in written) // 1024
     mark = "ZAMJENSKA" if is_placeholder else "fotografija"
-    print(f"  {slot.name:<16} {mark:<12} {len(written)} datoteka, {total_kb} kB")
+    stale = f", uklonjeno zaostalih: {removed}" if removed else ""
+    print(f"  {slot.name:<16} {mark:<12} {len(written)} datoteka, {total_kb} kB{stale}")
 
 
     return {
-        "widths": slot.widths,
+        "widths": usable,
         "width": largest,
         "height": slot.height_for(largest),
         "fallbackWidth": fallback_w,

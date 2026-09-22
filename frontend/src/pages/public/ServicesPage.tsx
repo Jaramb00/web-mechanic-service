@@ -19,20 +19,24 @@ export function ServicesPage() {
 
   return (
     <Section tone="white" labelledBy="naslov-usluge">
-      <SectionTitle
-        id="naslov-usluge"
-        level={1}
-        description="Sve što radimo, s okvirnim trajanjem i cijenom. Trajanje je važno jer određuje koliko termin zauzima u rasporedu."
-      >
-        Usluge
-      </SectionTitle>
+      {/* Fotografija stoji uz naslov, a ne preko cijele širine: izvor je
+          627 px, pa bi je puna širina napuhala i omekšala. */}
+      <div className="grid items-center gap-8 lg:grid-cols-[1fr_minmax(0,560px)] lg:gap-12">
+        <SectionTitle
+          id="naslov-usluge"
+          level={1}
+          description="Sve što radimo, s okvirnim trajanjem i cijenom. Trajanje je važno jer određuje koliko termin zauzima u rasporedu."
+        >
+          Usluge
+        </SectionTitle>
 
-      <Picture
-        name="zamjena-guma"
-        alt="Vulkanizer skida kotač s vozila na dizalici"
-        sizes="(min-width: 768px) 700px, 100vw"
-        className="mt-8 block overflow-hidden rounded-card border border-asphalt-200 shadow-plate"
-      />
+        <Picture
+          name="zamjena-guma"
+          alt="Vulkanizer pritezateljem skida kotač s vozila"
+          sizes="(min-width: 1024px) 560px, 100vw"
+          className="block overflow-hidden rounded-card border border-asphalt-200 shadow-plate"
+        />
+      </div>
 
       <div className="mt-8">
         {isLoading ? (

@@ -271,6 +271,9 @@
      ispod AA. Zastor je zato najgušći lijevo, gdje tekst stoji, a prema desnoj
      strani popušta da se fotografija vidi. Zatamniti cijelu sliku jednoliko
      bilo bi jednostavnije i lošije: izgubi se i ono zbog čega je slika tu.
+     Desni kraj je na 0.48, a ne niže: tamo stoji telefonski gumb s bijelim
+     tekstom, koji na 0.40 padne ispod AA. Izmjereno na stvarnoj fotografiji,
+     ne procijenjeno.
      Žuti sjaj je isti potez kao `.spotlight`, da hero ostane u istom svijetu
      i kad ispod njega nema fotografije. */
   .hero-scrim {
@@ -279,7 +282,7 @@
         100deg,
         rgb(7 12 24 / 0.95) 0%,
         rgb(7 12 24 / 0.88) 42%,
-        rgb(7 12 24 / 0.58) 100%
+        rgb(7 12 24 / 0.48) 100%
       ),
       radial-gradient(45rem 30rem at 10% -15%, rgb(255 237 0 / 0.16), transparent 62%);
   }

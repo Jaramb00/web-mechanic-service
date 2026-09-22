@@ -119,7 +119,7 @@ function Hero() {
                 </ButtonLink>
                 <a
                   href={site.contact.phoneHref}
-                  className="inline-flex min-h-14 items-center justify-center gap-2.5 rounded-control border border-white/35 px-7 text-lg font-bold text-white no-underline transition-[background-color,border-color,transform] duration-150 ease-out hover:-translate-y-px hover:border-white/70 hover:bg-white/10"
+                  className="inline-flex min-h-14 items-center justify-center gap-2.5 rounded-control border border-white/35 bg-midnight-950/45 px-7 text-lg font-bold text-white no-underline backdrop-blur-sm transition-[background-color,border-color,transform] duration-150 ease-out hover:-translate-y-px hover:border-white/70 hover:bg-midnight-950/70"
                 >
                   <Phone size={20} />
                   {site.contact.phone}

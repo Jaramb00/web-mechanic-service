@@ -213,6 +213,11 @@ ime greška pri prevođenju, a ne slomljena slika u pregledniku.
 pa ide `eager` uz `fetchpriority="high"`. Sve ostalo je `lazy` — ista postavka na slici
 ispod preloma otima propusnost onome što se vidi.
 
+Skripta **ne napuhuje** slike: širine veće od originala otpadaju i to se javi pri
+svakom pokretanju. Kad original stoji između dvije stepenice ljestvice, dodaje se i
+njegova izvorna širina, pa prikaz nikad nije širi od onoga što je stvarno snimljeno.
+Rez po visini ide iz sredine, osim heroa (`focus="top"`) — sredina bi odrezala lice.
+
 ### Zamjenske ploče
 
 Ako originala nema, skripta ne puca nego nacrta označenu ploču u bojama teme, s natpisom
@@ -227,8 +232,12 @@ i nazivom datoteke koju treba spremiti. Prazno mjesto se previdi; ploča s natpi
 
 Zastor je najgušći lijevo, gdje stoji tekst, i popušta udesno da se fotografija vidi.
 U zoni teksta alfa nikad ne pada ispod 0,78, pa je **čitljivost zajamčena bez obzira na
-to koliko je fotografija svijetla** — provjereno i računski i mjerenjem piksela u
-pregledniku: najgori slučaj na zamjenskoj ploči je bijeli naslov **9,04:1**.
+to koliko je fotografija svijetla**. Izmjereno na stvarnoj fotografiji u pregledniku:
+bijeli naslov **5,21:1**, volt nadnaslov 13,28:1, opis 11,55:1 — sve AA.
+
+Desni kraj zastora je na **0,48**, a ne niže, jer tamo stoji telefonski gumb s bijelim
+tekstom: na 0,40 pada ispod AA. Taj gumb usto ima vlastitu podlogu, pa mu čitljivost ne
+ovisi o tome kakvu fotografiju klijent kasnije stavi.
 
 Posljedica koju treba znati: fotografija se stvarno vidi tek u desnoj trećini heroa.
 Kadar zato treba imati sadržaj desno, a ne u sredini.
