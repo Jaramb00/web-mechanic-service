@@ -266,6 +266,24 @@
       radial-gradient(40rem 30rem at 95% 110%, rgb(53 85 140 / 0.45), transparent 65%);
   }
 
+  /* ZASTOR ISPOD HERO TEKSTA.
+     Fotografija radionice je mjestimično svijetla — bijeli naslov na njoj pada
+     ispod AA. Zastor je zato najgušći lijevo, gdje tekst stoji, a prema desnoj
+     strani popušta da se fotografija vidi. Zatamniti cijelu sliku jednoliko
+     bilo bi jednostavnije i lošije: izgubi se i ono zbog čega je slika tu.
+     Žuti sjaj je isti potez kao `.spotlight`, da hero ostane u istom svijetu
+     i kad ispod njega nema fotografije. */
+  .hero-scrim {
+    background-image:
+      linear-gradient(
+        100deg,
+        rgb(7 12 24 / 0.95) 0%,
+        rgb(7 12 24 / 0.88) 42%,
+        rgb(7 12 24 / 0.58) 100%
+      ),
+      radial-gradient(45rem 30rem at 10% -15%, rgb(255 237 0 / 0.16), transparent 62%);
+  }
+
   /* Suptilna dubina na tamnim karticama — 4%, taman toliko da ploha ne bude
      mrtva. Više od toga i sustav počinje izgledati kao predložak. */
   .surface-dark {

@@ -3,6 +3,7 @@ import { site, fullAddress } from '@/config/site';
 import { Section, SectionTitle } from '@/components/ui/Section';
 import { Alert } from '@/components/ui/Feedback';
 import { ButtonLink } from '@/components/ui/Button';
+import { Picture } from '@/components/ui/Picture';
 
 export function AboutPage() {
   useSeo({
@@ -42,6 +43,13 @@ export function AboutPage() {
           zato da ne morate zvati i čekati: vidite stanje i uzmete termin koji vam odgovara.
         </p>
       </div>
+
+      <Picture
+        name="o-nama"
+        alt="Radionica servisa iznutra, s dizalicom i alatom"
+        sizes="(min-width: 768px) 700px, 100vw"
+        className="mt-10 block overflow-hidden rounded-card border border-asphalt-200 shadow-plate"
+      />
 
       <div className="mt-8 flex flex-wrap gap-3">
         <ButtonLink to="/rezervacija">Rezerviraj termin</ButtonLink>

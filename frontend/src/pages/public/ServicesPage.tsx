@@ -5,6 +5,7 @@ import { Section, SectionTitle } from '@/components/ui/Section';
 import { ButtonLink } from '@/components/ui/Button';
 import { ErrorState, LoadingRows } from '@/components/ui/Feedback';
 import { ArrowRight } from '@/components/ui/Icon';
+import { Picture } from '@/components/ui/Picture';
 
 export function ServicesPage() {
   useSeo({
@@ -25,6 +26,13 @@ export function ServicesPage() {
       >
         Usluge
       </SectionTitle>
+
+      <Picture
+        name="zamjena-guma"
+        alt="Vulkanizer skida kotač s vozila na dizalici"
+        sizes="(min-width: 768px) 700px, 100vw"
+        className="mt-8 block overflow-hidden rounded-card border border-asphalt-200 shadow-plate"
+      />
 
       <div className="mt-8">
         {isLoading ? (

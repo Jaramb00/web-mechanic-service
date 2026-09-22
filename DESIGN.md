@@ -190,6 +190,51 @@ odozdo prema gore. Bez toga se donje vide kroz gornje i stog se čita kao hrpa t
 
 ---
 
+## Fotografije
+
+Cjevovod: originali u `frontend/public/foto/izvor/`, izvedenice i manifest radi
+`scripts/build-images.py`.
+
+```bash
+pip install pillow fonttools brotli
+python3 scripts/build-images.py
+```
+
+Svako mjesto dobiva **AVIF i WebP u tri širine** i jedan JPEG kao zadnju zamjenu.
+Razlika nije kozmetička: hero je 19 kB u AVIF-u i 163 kB u JPEG-u. `<Picture>` nudi
+formate tim redom i pušta preglednik da uzme prvi koji zna.
+
+Skripta u `src/config/photos.ts` upisuje **stvarne dimenzije** izvedenica. One idu u
+`width`/`height` na `<img>`, pa preglednik rezervira prostor prije nego slika stigne —
+izmjereni CLS na početnoj je **0,0012**. Naziv mjesta je tipiziran, pa je pogrešno
+ime greška pri prevođenju, a ne slomljena slika u pregledniku.
+
+**Prednost dohvata nosi samo hero.** On je u prvom ekranu i gotovo sigurno LCP element,
+pa ide `eager` uz `fetchpriority="high"`. Sve ostalo je `lazy` — ista postavka na slici
+ispod preloma otima propusnost onome što se vidi.
+
+### Zamjenske ploče
+
+Ako originala nema, skripta ne puca nego nacrta označenu ploču u bojama teme, s natpisom
+i nazivom datoteke koju treba spremiti. Prazno mjesto se previdi; ploča s natpisom
+„ZAMJENSKA FOTOGRAFIJA" se ne previdi. Manifest takvo mjesto nosi kao `placeholder: true`.
+
+### Zastor u herou
+
+```css
+.hero-scrim { /* 0.95 -> 0.88 -> 0.58 alfe, ulijevo najgušće */ }
+```
+
+Zastor je najgušći lijevo, gdje stoji tekst, i popušta udesno da se fotografija vidi.
+U zoni teksta alfa nikad ne pada ispod 0,78, pa je **čitljivost zajamčena bez obzira na
+to koliko je fotografija svijetla** — provjereno i računski i mjerenjem piksela u
+pregledniku: najgori slučaj na zamjenskoj ploči je bijeli naslov **9,04:1**.
+
+Posljedica koju treba znati: fotografija se stvarno vidi tek u desnoj trećini heroa.
+Kadar zato treba imati sadržaj desno, a ne u sredini.
+
+---
+
 ## Slika za dijeljenje linka
 
 `og:image` mora biti **raster**: Facebook, WhatsApp, Viber, LinkedIn ni X ne prikazuju SVG.

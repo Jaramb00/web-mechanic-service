@@ -18,6 +18,7 @@ import { ButtonLink } from '@/components/ui/Button';
 import { SlotBoard, SlotLegend } from '@/components/SlotBoard';
 import { Skeleton } from '@/components/ui/Feedback';
 import { ArrowRight, Clock, MapPin, Phone } from '@/components/ui/Icon';
+import { Picture } from '@/components/ui/Picture';
 
 export function HomePage() {
   useSeo({
@@ -51,60 +52,79 @@ function Hero() {
   return (
     <section className="on-midnight bg-midnight-950 text-white" aria-labelledby="naslov-pocetna">
       <div className="mx-auto w-full max-w-6xl px-4 pb-10 pt-10 sm:pt-14">
-        <div className="spotlight edge-light rounded-card p-6 sm:p-10">
-          <h1
-            id="naslov-pocetna"
-            className="display text-balance text-[clamp(2.5rem,8vw,5rem)] text-white"
-          >
-            {site.name}
-          </h1>
+        {/* `isolate` drži apsolutno pozicioniranu fotografiju i zastor unutar
+            heroa: bez njega bi se pri promjeni z-indeksa negdje drugdje mogli
+            probiti preko ljepljivog zaglavlja. */}
+        <div className="edge-light relative isolate overflow-hidden rounded-card">
+          <Picture
+            name="radionica-hero"
+            /* Ukrasna: naslov i podatak o prvom slobodnom terminu nose cijelu
+               poruku, pa bi je čitač ekrana inače pročitao dvaput. */
+            alt=""
+            sizes="(min-width: 1152px) 1088px, 100vw"
+            /* Jedina slika na stranici koja smije imati prednost: ona je u
+               prvom ekranu i gotovo sigurno LCP element. */
+            priority
+            className="absolute inset-0"
+            imgClassName="h-full w-full object-cover"
+          />
+          <div aria-hidden="true" className="hero-scrim absolute inset-0" />
 
-          {/* Znak slaže odredište i radnju jedno uz drugo; slaganje jedno ispod
-              drugog ostaje samo za uski ekran. */}
-          <div className="mt-8 grid gap-6 border-t-2 border-midnight-500 pt-6 lg:grid-cols-[1fr_auto] lg:items-end lg:gap-10">
-            <div className="min-w-0">
-              {isLoading ? (
-                <div className="flex flex-col gap-3">
-                  <Skeleton className="h-4 w-44 bg-midnight-700" />
-                  <Skeleton className="h-12 w-72 bg-midnight-700" />
-                </div>
-              ) : nextSlot ? (
-                <>
-                  <p className="text-sm font-bold uppercase tracking-[0.18em] text-volt-400">
-                    Prvi slobodan termin
-                  </p>
-                  <p className="plate-title mt-2 text-[clamp(1.75rem,5vw,3rem)] font-extrabold leading-none text-white">
-                    {formatSlotLabel(nextSlot.startAt)}
-                  </p>
-                  <p className="mt-2 text-[0.9375rem] text-midnight-100">
-                    za uslugu „{nextSlot.serviceName}" · još {nextSlot.freeBays}{' '}
-                    {nextSlot.freeBays === 1 ? 'slobodno mjesto' : 'slobodna mjesta'} u tom terminu
-                  </p>
-                </>
-              ) : (
-                <>
-                  <p className="text-sm font-bold uppercase tracking-[0.18em] text-volt-400">
-                    Trenutno nema slobodnih termina
-                  </p>
-                  <p className="mt-2 max-w-[55ch] text-[1.0625rem] leading-relaxed text-midnight-100">
-                    U sezoni se popuni sve. Nazovite nas — često se oslobodi termin zbog otkazivanja.
-                  </p>
-                </>
-              )}
-            </div>
+          <div className="relative p-6 sm:p-10">
+            <h1
+              id="naslov-pocetna"
+              className="display text-balance text-[clamp(2.5rem,8vw,5rem)] text-white"
+            >
+              {site.name}
+            </h1>
 
-            <div className="flex flex-col gap-3 sm:flex-row lg:flex-col lg:shrink-0">
-              <ButtonLink to="/rezervacija" size="lg">
-                Rezerviraj termin
-                <ArrowRight size={20} />
-              </ButtonLink>
-              <a
-                href={site.contact.phoneHref}
-                className="inline-flex min-h-14 items-center justify-center gap-2.5 rounded-control border border-white/35 px-7 text-lg font-bold text-white no-underline transition-[background-color,border-color,transform] duration-150 ease-out hover:-translate-y-px hover:border-white/70 hover:bg-white/10"
-              >
-                <Phone size={20} />
-                {site.contact.phone}
-              </a>
+            {/* Znak slaže odredište i radnju jedno uz drugo; slaganje jedno ispod
+                drugog ostaje samo za uski ekran. */}
+            <div className="mt-8 grid gap-6 border-t-2 border-midnight-500 pt-6 lg:grid-cols-[1fr_auto] lg:items-end lg:gap-10">
+              <div className="min-w-0">
+                {isLoading ? (
+                  <div className="flex flex-col gap-3">
+                    <Skeleton className="h-4 w-44 bg-midnight-700" />
+                    <Skeleton className="h-12 w-72 bg-midnight-700" />
+                  </div>
+                ) : nextSlot ? (
+                  <>
+                    <p className="text-sm font-bold uppercase tracking-[0.18em] text-volt-400">
+                      Prvi slobodan termin
+                    </p>
+                    <p className="plate-title mt-2 text-[clamp(1.75rem,5vw,3rem)] font-extrabold leading-none text-white">
+                      {formatSlotLabel(nextSlot.startAt)}
+                    </p>
+                    <p className="mt-2 text-[0.9375rem] text-midnight-100">
+                      za uslugu „{nextSlot.serviceName}" · još {nextSlot.freeBays}{' '}
+                      {nextSlot.freeBays === 1 ? 'slobodno mjesto' : 'slobodna mjesta'} u tom terminu
+                    </p>
+                  </>
+                ) : (
+                  <>
+                    <p className="text-sm font-bold uppercase tracking-[0.18em] text-volt-400">
+                      Trenutno nema slobodnih termina
+                    </p>
+                    <p className="mt-2 max-w-[55ch] text-[1.0625rem] leading-relaxed text-midnight-100">
+                      U sezoni se popuni sve. Nazovite nas — često se oslobodi termin zbog otkazivanja.
+                    </p>
+                  </>
+                )}
+              </div>
+
+              <div className="flex flex-col gap-3 sm:flex-row lg:flex-col lg:shrink-0">
+                <ButtonLink to="/rezervacija" size="lg">
+                  Rezerviraj termin
+                  <ArrowRight size={20} />
+                </ButtonLink>
+                <a
+                  href={site.contact.phoneHref}
+                  className="inline-flex min-h-14 items-center justify-center gap-2.5 rounded-control border border-white/35 px-7 text-lg font-bold text-white no-underline transition-[background-color,border-color,transform] duration-150 ease-out hover:-translate-y-px hover:border-white/70 hover:bg-white/10"
+                >
+                  <Phone size={20} />
+                  {site.contact.phone}
+                </a>
+              </div>
             </div>
           </div>
         </div>

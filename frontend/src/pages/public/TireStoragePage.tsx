@@ -5,6 +5,7 @@ import { Section, SectionTitle } from '@/components/ui/Section';
 import { ButtonLink } from '@/components/ui/Button';
 import { Alert } from '@/components/ui/Feedback';
 import { ArrowRight } from '@/components/ui/Icon';
+import { Picture } from '@/components/ui/Picture';
 
 const STEPS = [
   {
@@ -39,20 +40,31 @@ export function TireStoragePage() {
   return (
     <>
       <Section tone="midnight" labelledBy="naslov-hotel">
-        <SectionTitle
-          id="naslov-hotel"
-        level={1}
-          invert
-          description="Komplet guma zauzima pola balkona, a u vlažnom podrumu propada brže nego na cesti. Kod nas stoji tamo gdje mu je mjesto."
-        >
-          Hotel za gume
-        </SectionTitle>
+        <div className="grid items-center gap-8 lg:grid-cols-[1.15fr_1fr] lg:gap-12">
+          <div>
+            <SectionTitle
+              id="naslov-hotel"
+              level={1}
+              invert
+              description="Komplet guma zauzima pola balkona, a u vlažnom podrumu propada brže nego na cesti. Kod nas stoji tamo gdje mu je mjesto."
+            >
+              Hotel za gume
+            </SectionTitle>
 
-        {storage ? (
-          <p className="mt-8 inline-block rounded-control bg-volt-500 px-5 py-3 text-xl font-extrabold tabular-nums text-asphalt-950 edge-light-dark">
-            {formatPrice(storage.price)} po sezoni
-          </p>
-        ) : null}
+            {storage ? (
+              <p className="edge-light-dark mt-8 inline-block rounded-control bg-volt-500 px-5 py-3 text-xl font-extrabold tabular-nums text-asphalt-950">
+                {formatPrice(storage.price)} po sezoni
+              </p>
+            ) : null}
+          </div>
+
+          <Picture
+            name="hotel-za-gume"
+            alt="Složeni kompleti guma u zatvorenom skladištu servisa"
+            sizes="(min-width: 1024px) 480px, 100vw"
+            className="edge-light overflow-hidden rounded-card"
+          />
+        </div>
       </Section>
 
       <Section reveal tone="white" labelledBy="naslov-kako">

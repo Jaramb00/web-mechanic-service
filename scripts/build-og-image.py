@@ -35,32 +35,13 @@ import sys
 import urllib.parse
 import urllib.request
 
-ROOT = pathlib.Path(__file__).resolve().parent.parent
-THEME = ROOT / "frontend/src/styles/theme.css"
-SITE = ROOT / "frontend/src/config/site.ts"
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
+from theme_tokens import ROOT, site_value, tokens  # noqa: E402
+
 OUT_DIR = ROOT / "frontend/public"
 
 W, H = 1200, 630
 UA = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/120 Safari/537.36"
-
-
-def tokens() -> dict[str, tuple[int, int, int]]:
-    """Boje dolaze iz theme.css, da slika ne odluta od sustava."""
-    css = THEME.read_text(encoding="utf-8")
-    found = re.findall(r"--color-([a-z]+-\d+):\s*#([0-9a-fA-F]{6})", css)
-    if not found:
-        sys.exit(f"Nijedan token boje nije pronađen u {THEME}")
-    return {name: tuple(int(h[i : i + 2], 16) for i in (0, 2, 4)) for name, h in found}
-
-
-def site_value(key: str) -> str:
-    """Čita jedno polje iz site.ts. Namjerno bez parsera — traži se točno
-    `key: '...'` na početku retka, pa krivi pogodak nije tih: skripta stane."""
-    src = SITE.read_text(encoding="utf-8")
-    match = re.search(rf"^\s*{key}:\s*'([^']*)'", src, re.M)
-    if not match:
-        sys.exit(f"Polje '{key}' nije pronađeno u {SITE}")
-    return match.group(1)
 
 
 def google_font(text: str, *, italic: bool, weight: int, width: int) -> bytes:

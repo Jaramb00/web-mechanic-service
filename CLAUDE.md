@@ -143,6 +143,12 @@ Tri stvari koje se lako nehotice prekrše:
 - **`og-image.png` se generira, ne crta.** Nakon promjene naziva servisa ili tokena
   boje pokrenuti `python3 scripts/build-og-image.py`. Mora ostati raster — Facebook,
   WhatsApp, Viber i LinkedIn ne prikazuju SVG kao og:image.
+- **Fotografije se ne ubacuju ručno.** Original ide u `frontend/public/foto/izvor/`
+  pod nazivom mjesta, pa se pokrene `python3 scripts/build-images.py`. Skripta radi
+  AVIF/WebP izvedenice i upisuje dimenzije u `src/config/photos.ts` — taj manifest je
+  GENERIRAN i ne uređuje se ručno. Ako originala nema, na tom mjestu stoji označena
+  zamjenska ploča; `<Picture>` je jedini put do slike na stranici.
+  Prednost dohvata (`priority`) smije nositi samo hero.
 
 Animacije ulaza (`.reveal` / `useReveal`) uključuju se po sekciji, nikad globalno:
 portali su alat koji se gleda cijeli dan. Jedini ozbiljan kvar je da sadržaj ostane
