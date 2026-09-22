@@ -63,7 +63,7 @@ export function CatalogPage() {
             value={search}
             onChange={(event) => setSearch(event.target.value)}
             placeholder="Dimenzija, npr. 205/55 R16 — ili naziv"
-            className="min-h-11 w-full rounded-control border border-asphalt-200 bg-white pl-10 pr-3 text-[0.9375rem] transition-[border-color,box-shadow] duration-150 ease-out placeholder:text-asphalt-300 hover:border-asphalt-300 focus:border-midnight-800 focus:shadow-plate"
+            className="min-h-11 w-full rounded-control border border-asphalt-400 bg-white pl-10 pr-3 text-[0.9375rem] transition-[border-color,box-shadow] duration-150 ease-out placeholder:text-asphalt-500 hover:border-asphalt-500 focus:border-midnight-800 focus:shadow-plate"
           />
         </div>
         <Button type="submit" variant="secondary">
@@ -217,7 +217,7 @@ function ProductPlate({
           {product.manufacturer ?? '—'}
           {product.tireSize ? ` · ${product.tireSize}` : ''}
         </p>
-        <p className="mt-0.5 text-xs tabular-nums text-asphalt-300">{product.sku}</p>
+        <p className="mt-0.5 text-xs tabular-nums text-asphalt-500">{product.sku}</p>
       </div>
 
       <div className="flex items-end justify-between gap-3 border-t border-asphalt-200 bg-asphalt-50 p-4">

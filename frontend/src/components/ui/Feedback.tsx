@@ -108,7 +108,7 @@ export function EmptyState({
           {illustration}
         </span>
       ) : icon ? (
-        <span className="text-asphalt-300">{icon}</span>
+        <span className="text-asphalt-500">{icon}</span>
       ) : null}
       <h3 className="text-lg font-bold text-asphalt-900">{title}</h3>
       <p className="max-w-prose text-[0.9375rem] text-asphalt-500">{description}</p>

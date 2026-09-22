@@ -95,25 +95,21 @@ def spotlight(base, colour, cx: int, cy: int, radius: int, peak: float):
 
 
 def brand_mark(draw, cx: int, cy: int, r: int, body, accent):
-    """Znak marke: guma i luk svjetla, isti kao BrandMark.tsx."""
-    ring = max(2, round(r * 0.22))
-    draw.ellipse([cx - r, cy - r, cx + r, cy + r], outline=body, width=ring)
-    hub = round(r * 0.34)
-    draw.ellipse([cx - hub, cy - hub, cx + hub, cy + hub], outline=body, width=ring)
-    for angle in (270, 30, 150):  # tri prečke
-        a = math.radians(angle)
-        draw.line(
-            [
-                cx + hub * math.cos(a) * 1.55,
-                cy + hub * math.sin(a) * 1.55,
-                cx + r * math.cos(a) * 0.58,
-                cy + r * math.sin(a) * 0.58,
-            ],
-            fill=body,
-            width=max(1, round(r * 0.125)),
-        )
-    # Luk svjetla pada s gornje lijeve strane: 180° -> 285°
-    draw.arc([cx - r, cy - r, cx + r, cy + r], 180, 285, fill=accent, width=ring + 2)
+    """Znak marke iz klijentova loga: prsten s četiri proreza i žutim lukom.
+
+    Kutovi su izmjereni iz PDF-a s logom (polarni presjek prstena) i isti su
+    kao u `BrandMark.tsx` i `public/favicon.svg`: žuto 353°–96°, tamni
+    segmenti između, prorezi na 150°, 210°, 270° i 330°.
+
+    Ovdje su zapisani u PIL-ovoj konvenciji, koja mjeri od 3 sata u smjeru
+    kazaljke — to je izmjereni kut umanjen za 90°.
+    """
+    ring = max(2, round(r * 0.25))
+    box = [cx - r + ring // 2, cy - r + ring // 2, cx + r - ring // 2, cy + r - ring // 2]
+
+    for start, end in ((7, 57), (63, 117), (123, 178), (183, 238), (243, 263)):
+        draw.arc(box, start, end, fill=body, width=ring)
+    draw.arc(box, 263, 366, fill=accent, width=ring)
 
 
 def main() -> None:

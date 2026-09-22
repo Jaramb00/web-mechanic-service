@@ -101,6 +101,6 @@ function formatDelta(value: number): string {
 }
 
 function deltaClass(value: number): string {
-  if (value === 0) return 'text-asphalt-300';
+  if (value === 0) return 'text-asphalt-500';
   return value > 0 ? 'text-go-600' : 'text-stop-600';
 }

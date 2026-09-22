@@ -32,24 +32,32 @@ export function ContactPage() {
             Podaci za kontakt
           </h2>
           <dl className="divide-y divide-asphalt-100">
-            <div className="flex items-start gap-3 px-4 py-4">
-              <Phone size={20} className="mt-0.5 shrink-0 text-midnight-800" />
-              <div>
-                <dt className="text-sm font-semibold text-asphalt-500">Telefon</dt>
-                <dd className="text-lg font-bold">
-                  <a href={site.contact.phoneHref} className="text-asphalt-950 no-underline hover:underline">
-                    {site.contact.phone}
-                  </a>
-                </dd>
-              </div>
+            {/* Ikona stoji UNUTAR `<dt>`, apsolutno pozicionirana. `<dl>` smije
+                sadržavati samo `<dt>`/`<dd>` parove, najviše omotane u jedan
+                `<div>`; ranije su bili razinu dublje, uz `<svg>` kao bratom, pa
+                je axe to prijavio kao `definition-list` i `dlitem`. */}
+            <div className="relative px-4 py-4 pl-12">
+              <dt className="text-sm font-semibold text-asphalt-500">
+                <span aria-hidden="true" className="absolute left-4 top-4 text-midnight-800">
+                  <Phone size={20} />
+                </span>
+                Telefon
+              </dt>
+              <dd className="text-lg font-bold">
+                <a href={site.contact.phoneHref} className="text-asphalt-950 no-underline hover:underline">
+                  {site.contact.phone}
+                </a>
+              </dd>
             </div>
-            <div className="flex items-start gap-3 px-4 py-4">
-              <MapPin size={20} className="mt-0.5 shrink-0 text-midnight-800" />
-              <div>
-                <dt className="text-sm font-semibold text-asphalt-500">Adresa</dt>
-                <dd className="font-bold text-asphalt-950">{fullAddress}</dd>
-                <dd className="mt-1 text-[0.9375rem] text-asphalt-700">{site.address.directions}</dd>
-              </div>
+            <div className="relative px-4 py-4 pl-12">
+              <dt className="text-sm font-semibold text-asphalt-500">
+                <span aria-hidden="true" className="absolute left-4 top-4 text-midnight-800">
+                  <MapPin size={20} />
+                </span>
+                Adresa
+              </dt>
+              <dd className="font-bold text-asphalt-950">{fullAddress}</dd>
+              <dd className="mt-1 text-[0.9375rem] text-asphalt-700">{site.address.directions}</dd>
             </div>
             <div className="px-4 py-4">
               <dt className="text-sm font-semibold text-asphalt-500">E-mail</dt>

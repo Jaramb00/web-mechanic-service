@@ -102,7 +102,7 @@ export default function AdminWorkingHours() {
                     disabled={current.closed}
                     value={trimSeconds(current.openTime)}
                     onChange={(event) => update(entry, { openTime: event.target.value })}
-                    className="min-h-11 rounded-control border border-asphalt-200 bg-white px-2 tabular-nums disabled:bg-asphalt-50 disabled:text-asphalt-300"
+                    className="min-h-11 rounded-control border border-asphalt-400 bg-white px-2 tabular-nums disabled:bg-asphalt-50 disabled:text-asphalt-300"
                   />
                   <span aria-hidden="true" className="text-asphalt-500">–</span>
                   <label className="sr-only" htmlFor={`zatvara-${entry.dayOfWeek}`}>
@@ -114,7 +114,7 @@ export default function AdminWorkingHours() {
                     disabled={current.closed}
                     value={trimSeconds(current.closeTime)}
                     onChange={(event) => update(entry, { closeTime: event.target.value })}
-                    className="min-h-11 rounded-control border border-asphalt-200 bg-white px-2 tabular-nums disabled:bg-asphalt-50 disabled:text-asphalt-300"
+                    className="min-h-11 rounded-control border border-asphalt-400 bg-white px-2 tabular-nums disabled:bg-asphalt-50 disabled:text-asphalt-300"
                   />
                 </span>
 

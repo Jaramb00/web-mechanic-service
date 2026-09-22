@@ -114,7 +114,7 @@ export default function WarehouseStock() {
             value={search}
             onChange={(event) => setSearch(event.target.value)}
             placeholder="Naziv, šifra ili dimenzija"
-            className="min-h-11 w-full rounded-control border border-asphalt-200 bg-white pl-10 pr-3 text-[0.9375rem] hover:border-asphalt-500 focus:border-midnight-800"
+            className="min-h-11 w-full rounded-control border border-asphalt-400 bg-white pl-10 pr-3 text-[0.9375rem] hover:border-asphalt-500 focus:border-midnight-800"
           />
         </div>
         <div className="w-full sm:w-52">

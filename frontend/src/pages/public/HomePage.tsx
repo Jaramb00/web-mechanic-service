@@ -167,14 +167,24 @@ function FactStrip() {
   );
 }
 
+/**
+ * Ikona stoji UNUTAR `<dt>`, a ne kao njegov brat.
+ *
+ * `<dl>` smije sadržavati samo `<dt>`/`<dd>` parove, po potrebi omotane u
+ * jedan `<div>`. Ranije su bili zavučeni razinu dublje, uz `<span>` s ikonom
+ * kao bratom — axe je to prijavio kao `definition-list` i `dlitem`. Apsolutno
+ * pozicioniranje drži izgled istim, a strukturu ispravnom.
+ */
 function Fact({ icon, term, children }: { icon: React.ReactNode; term: string; children: React.ReactNode }) {
   return (
-    <div className="surface-dark flex items-start gap-3 bg-midnight-900 px-4 py-5">
-      <span className="mt-0.5 text-volt-500">{icon}</span>
-      <div className="min-w-0">
-        <dt className="text-xs font-bold uppercase tracking-wide text-asphalt-300">{term}</dt>
-        <dd className="mt-0.5 font-semibold text-white">{children}</dd>
-      </div>
+    <div className="surface-dark relative min-w-0 bg-midnight-900 py-5 pl-12 pr-4">
+      <dt className="text-xs font-bold uppercase tracking-wide text-asphalt-300">
+        <span aria-hidden="true" className="absolute left-4 top-5 text-volt-500">
+          {icon}
+        </span>
+        {term}
+      </dt>
+      <dd className="mt-0.5 font-semibold text-white">{children}</dd>
     </div>
   );
 }

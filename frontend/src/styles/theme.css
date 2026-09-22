@@ -26,53 +26,59 @@
      neupotrebljiv. Smije biti ploha s tamnim tekstom na sebi, veliki
      grafički element, ili tekst na midnight podlozi. Nikad tekst na svijetlom
      — za to postoji volt-700. */
-  --color-volt-100: #fffccc;
-  --color-volt-300: #fff799;
-  --color-volt-400: #fff34d;
-  --color-volt-500: #ffed00;
-  --color-volt-600: #e5d400;
-  --color-volt-700: #6b6300;
+  --color-volt-100: #fef3cc;
+  --color-volt-300: #fce38a;
+  --color-volt-400: #fad64d;
+  --color-volt-500: #f7c600;
+  --color-volt-600: #d9ac00;
+  --color-volt-700: #6b5400;
 
   /* --- MIDNIGHT — dubina. midnight-800 je mornarska s kape s reference. ---
      Nosi cijele plohe od ruba do ruba, ne akcente. */
-  --color-midnight-50: #eef2f9;
-  --color-midnight-100: #dce5f5;
-  --color-midnight-200: #b9c9e8;
-  --color-midnight-500: #35558c;
-  --color-midnight-700: #1d3358;
-  --color-midnight-800: #13233f;
-  --color-midnight-900: #0c1424;
-  --color-midnight-950: #070c18;
+  --color-midnight-50: #edf0f6;
+  --color-midnight-100: #d8dfec;
+  --color-midnight-200: #b2bfd6;
+  --color-midnight-500: #2c466f;
+  --color-midnight-700: #172943;
+  --color-midnight-800: #0e1b31;
+  --color-midnight-900: #080f1d;
+  --color-midnight-950: #04080f;
 
   /* --- ASPHALT — neutrali s hladnim, plavkastim odsjajem. ----------------
      Stari sustav je sivu držao namjerno neutralnom; ovdje asfalt pripada
      istom svijetu kao midnight, pa nosi njegovu primjesu. */
-  --color-asphalt-50: #f6f7f9;
-  --color-asphalt-100: #eaecf1;
-  --color-asphalt-200: #d6dae3;
-  --color-asphalt-300: #aeb5c4;
-  --color-asphalt-500: #646d7e;
-  --color-asphalt-700: #3a4150;
-  --color-asphalt-900: #171b24;
-  --color-asphalt-950: #0b0e13;
+  --color-asphalt-50: #f1f2f5;
+  --color-asphalt-100: #e3e6ec;
+  --color-asphalt-200: #cbd0db;
+  --color-asphalt-300: #9ba4b6;
+  /* Postoji zbog JEDNOG pravila: rub polja za unos je granica po kojoj se zna
+     gdje se tipka, pa WCAG 1.4.11 za njega traži 3:1 — a asphalt-200 daje
+     1.55:1. Ovaj ton drži 3.66:1 na bijelom i 3.27:1 na podlozi stranice.
+     Za ukrasne razdjelnike i obrise kartica i dalje je asphalt-200: njih se
+     ne mora razaznati da bi se sučelje moglo koristiti. */
+  --color-asphalt-400: #7d8698;
+  --color-asphalt-500: #555e6e;
+  --color-asphalt-700: #2e3543;
+  --color-asphalt-900: #12161d;
+  --color-asphalt-950: #080a0e;
 
   /* --- STOP — greška i zabrana. -----------------------------------------
      stop-300 postoji samo zato što crvena na tamnoj plohi mora biti
      svjetlija da zadrži kontrast; stop-600 tamo pada ispod AA. */
-  --color-stop-50: #fdf1f2;
-  --color-stop-100: #fbdde0;
+  --color-stop-50: #fcf0f1;
+  --color-stop-100: #f8dade;
   --color-stop-300: #ff9aa4;
-  --color-stop-500: #d81f32;
-  --color-stop-600: #b3111f;
-  --color-stop-700: #8c0c18;
+  --color-stop-500: #c81a2c;
+  --color-stop-600: #a20e1b;
+  --color-stop-700: #7c0a15;
 
   /* --- GO — slobodno i potvrđeno. Isti razlog za go-300. ----------------- */
-  --color-go-50: #edf9f1;
-  --color-go-100: #d3f0de;
+  --color-go-50: #ecf7f0;
+  --color-go-100: #cfeddc;
   --color-go-300: #5fd894;
-  --color-go-500: #12904a;
-  --color-go-600: #0e7239;
-  --color-go-700: #0a592c;
+  --color-go-500: #0f7d40;
+  --color-go-600: #0b6231;
+  --color-go-700: #084b26;
 
   /* --- Oblik ------------------------------------------------------------
      Gustoća podataka traži mirnoću: tablice i značke ostaju oštre, plohe
@@ -85,9 +91,9 @@
   /* --- Dubina -----------------------------------------------------------
      Sjena je uvijek dvoslojna: uska kontaktna + široka meka. Nikad obojani
      halo bez pomaka. */
-  --shadow-plate: 0 1px 2px rgb(11 14 19 / 0.06), 0 2px 8px -2px rgb(11 14 19 / 0.08);
-  --shadow-raised: 0 2px 4px rgb(11 14 19 / 0.08), 0 12px 28px -8px rgb(11 14 19 / 0.16);
-  --shadow-float: 0 4px 8px rgb(11 14 19 / 0.10), 0 24px 48px -12px rgb(11 14 19 / 0.28);
+  --shadow-plate: 0 1px 2px rgb(8 10 14 / 0.06), 0 2px 8px -2px rgb(8 10 14 / 0.08);
+  --shadow-raised: 0 2px 4px rgb(8 10 14 / 0.08), 0 12px 28px -8px rgb(8 10 14 / 0.16);
+  --shadow-float: 0 4px 8px rgb(8 10 14 / 0.10), 0 24px 48px -12px rgb(8 10 14 / 0.28);
 
   /* --- Pokret -----------------------------------------------------------
      Jedna krivulja za ulaz (brz start, mekano slijetanje) i jedna linearna
@@ -249,12 +255,12 @@
      unutarnja sjena, ne kao border, pa ne pomiče raspored. */
   .edge-light {
     box-shadow:
-      inset 0 1px 0 rgb(255 237 0 / 0.22),
+      inset 0 1px 0 rgb(247 198 0 / 0.26),
       inset 0 0 0 1px rgb(255 255 255 / 0.07);
   }
   /* Na žutoj plohi svjetlo je tamno — inače se izgubi. */
   .edge-light-dark {
-    box-shadow: inset 0 1px 0 rgb(11 14 19 / 0.18);
+    box-shadow: inset 0 1px 0 rgb(8 10 14 / 0.18);
   }
 
   /* REFLEKTOR — jedini veliki gradijent u sustavu.
@@ -262,8 +268,8 @@
   .spotlight {
     background-color: var(--color-midnight-900);
     background-image:
-      radial-gradient(60rem 40rem at 15% -10%, rgb(255 237 0 / 0.16), transparent 60%),
-      radial-gradient(40rem 30rem at 95% 110%, rgb(53 85 140 / 0.45), transparent 65%);
+      radial-gradient(60rem 40rem at 15% -10%, rgb(247 198 0 / 0.17), transparent 60%),
+      radial-gradient(40rem 30rem at 95% 110%, rgb(44 70 111 / 0.45), transparent 65%);
   }
 
   /* ZASTOR ISPOD HERO TEKSTA.
@@ -280,11 +286,11 @@
     background-image:
       linear-gradient(
         100deg,
-        rgb(7 12 24 / 0.95) 0%,
-        rgb(7 12 24 / 0.88) 42%,
-        rgb(7 12 24 / 0.48) 100%
+        rgb(4 8 15 / 0.95) 0%,
+        rgb(4 8 15 / 0.88) 42%,
+        rgb(4 8 15 / 0.48) 100%
       ),
-      radial-gradient(45rem 30rem at 10% -15%, rgb(255 237 0 / 0.16), transparent 62%);
+      radial-gradient(45rem 30rem at 10% -15%, rgb(247 198 0 / 0.17), transparent 62%);
   }
 
   /* Suptilna dubina na tamnim karticama — 4%, taman toliko da ploha ne bude

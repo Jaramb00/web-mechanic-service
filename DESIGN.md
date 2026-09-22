@@ -8,9 +8,13 @@ Sve navedeno stvarno postoji u `frontend/src`.
 **Radionica noću.** Duboka tamna ploha, jedno oštro žuto svjetlo, guma kao materijal.
 Motorsport grafika, ne korporativni SaaS.
 
-Paleta nije izabrana nego **izmjerena**: žuta `#FFED00` i mornarska `#13233F` očitane su
-iz tiska koji je dao klijent. Bijela podloga nosi 73% te grafike, pa je i ovdje stranica
-svijetla, a tamne plohe su događaj — hero, zaglavlje, podnožje, „Hotel za gume".
+Paleta nije izabrana nego **izmjerena**: zlatna `#F7C600` i tamna `#141414` očitane su
+polarnim presjekom iz **loga koji je dao klijent**. Logo je crn i zlatan na bijelom, pa je
+i stranica svijetla, a tamne plohe su događaj — hero, zaglavlje, podnožje, „Hotel za gume".
+
+Na zahtjev klijenta cijela je ljestvica **produbljena**: mornarska, neutrali i semafori
+spušteni su za jedan stupanj, a podloga stranice je ostala svijetla jer bi tamni mod radio
+protiv loga.
 
 Ono što taj izbor **isključuje**: šarene gradijente, staklo, rešetku jednakih kartica
 „ikona + naslov + tekst", nadnaslove iznad naslova, i bilo koju boju koja ne nosi značenje.
@@ -29,12 +33,13 @@ provjerljivo s `grep -rn '#[0-9a-fA-F]\{6\}' frontend/src --include=*.tsx`.
 
 | Uloga | Token | Vrijednost | Gdje |
 |---|---|---|---|
-| Potpis brenda, radnja, aktivno stanje | `volt-500` | `#FFED00` | primarni gumb, aktivna navigacija, luk svjetla, naglasci na tamnom |
-| Dubina, autoritet | `midnight-800` | `#13233F` | plohe sekcija, sekundarni gumb |
-| Najdublja ploha | `midnight-950` | `#070C18` | hero, zaglavlje portala, podnožje |
-| Tekst, linije, svijetle podloge | `asphalt-50…950` | `#F6F7F9 … #0B0E13` | tipografija, rubovi, podloga stranice |
-| Greška, zabrana | `stop-600` | `#B3111F` | poruke o greškama, destruktivne radnje |
-| Slobodno, potvrđeno | `go-500/600` | `#12904A` | slobodni termini, uspjeh |
+| Potpis brenda, radnja, aktivno stanje | `volt-500` | `#F7C600` | primarni gumb, aktivna navigacija, luk znaka, naglasci na tamnom |
+| Dubina, autoritet | `midnight-800` | `#0E1B31` | plohe sekcija, sekundarni gumb |
+| Najdublja ploha | `midnight-950` | `#04080F` | hero, zaglavlje portala, podnožje |
+| Tekst, linije, svijetle podloge | `asphalt-50…950` | `#F1F2F5 … #080A0E` | tipografija, rubovi, podloga stranice |
+| **Rub polja za unos** | `asphalt-400` | `#7D8698` | **samo** granice polja — objašnjeno niže |
+| Greška, zabrana | `stop-600` | `#A20E1B` | poruke o greškama, destruktivne radnje |
+| Slobodno, potvrđeno | `go-500/600` | `#0F7D40` | slobodni termini, uspjeh |
 
 Asfaltna skala nosi **hladnu, plavkastu primjesu** — pripada istom svijetu kao midnight.
 
@@ -47,9 +52,16 @@ Izračunate, ne procijenjene (`scripts/build-og-image.py` čita iste tokene):
 
 | Kombinacija | Kontrast | Umjesto toga |
 |---|---|---|
-| `volt-500` kao tekst na bijelom | **1.21:1** | `volt-700` (6.16:1) |
-| Bijeli tekst na `volt-500` plohi | **1.21:1** | `asphalt-950` (15.98:1) |
-| `stop-600` / `go-600` na tamnoj plohi | **2.25 / 2.60:1** | `stop-300` / `go-300` (7.77 / 8.76:1) |
+| `volt-500` kao tekst na bijelom | **1.61:1** | `volt-700` (7.26:1) |
+| Bijeli tekst na `volt-500` plohi | **1.61:1** | `asphalt-950` (12.29:1) |
+| `stop-600` / `go-600` na tamnoj plohi | ispod 3:1 | `stop-300` / `go-300` (8.53 / 9.62:1) |
+| `asphalt-300` kao tekst na svijetlom | **2.51:1** | `asphalt-500` (6.54:1) |
+| `asphalt-200` kao rub polja za unos | **1.55:1** | `asphalt-400` (3.66:1) |
+
+Zadnja dva reda nisu teorija: axe ih je našao na stranici. SKU u katalogu i tekst
+rezerviranog mjesta u polju bili su `asphalt-300`, a rub svakog polja `asphalt-200`.
+WCAG 1.4.11 za **granicu polja** traži 3:1 jer se po njoj zna gdje se tipka; za ukrasne
+razdjelnike i obrise kartica to ne vrijedi i tamo `asphalt-200` ostaje.
 
 Zato `volt-700`, `stop-300` i `go-300` postoje — nisu ukras ljestvice nego nadomjestak.
 Žuta smije biti **ploha s tamnim tekstom**, veliki grafički element, ili tekst na
@@ -126,11 +138,14 @@ Implementacija: `src/lib/statusLabels.ts`, `src/components/ui/Status.tsx`,
 Svjetlo u radionici pada odozgo i hvata gornji brid plohe. Crta se kao **unutarnja sjena,
 ne kao border**, pa ne pomiče raspored. Parnjak `.edge-light-dark` radi isto na žutoj plohi.
 
-Isti potez je **znak marke** (`BrandMark.tsx`): guma s boka i žuti luk koji joj hvata
-gornji lijevi brid. Tijelo je `currentColor` pa se boji iz konteksta — bijelo na tamnom,
-mornarsko na svijetlom — bez ijedne varijante komponente. Ista geometrija ponavlja se na
-tri mjesta i **mijenja se na sva tri zajedno**: `BrandMark.tsx`, `public/favicon.svg`,
-`scripts/build-og-image.py`.
+**Znak marke** (`BrandMark.tsx`) dolazi iz klijentova loga: prsten s četiri proreza i
+zlatnim lukom u gornjem desnom kvadrantu. Geometrija nije pogođena od oka nego izmjerena
+polarnim presjekom iz PDF-a — žuto 353°–96°, prorezi na 150°, 210°, 270° i 330°, debljina
+prstena 25 % vanjskog polumjera.
+
+Tijelo je `currentColor` pa se boji iz konteksta — bijelo na tamnom, tamno na svijetlom —
+bez ijedne varijante komponente. Ista geometrija živi na tri mjesta i **mijenja se na sva
+tri zajedno**: `BrandMark.tsx`, `public/favicon.svg`, `scripts/build-og-image.py`.
 
 ---
 
@@ -274,6 +289,48 @@ python3 scripts/build-og-image.py
 Zauzeti termin se **ne skriva** nego šrafira i precrtava. U sezoni je vidljiva popunjenost
 dio poruke: posjetitelj mora vidjeti da mjesta nestaju. Isti tretman nose neradni dani u
 traci dana — dan na koji se ne može doći ne smije izgledati kao da se može odabrati.
+
+---
+
+## Provjera pristupačnosti
+
+```bash
+npm run dev            # u drugom terminalu
+npm run check:a11y
+```
+
+`frontend/scripts/check-a11y.mjs` pušta **axe-core** preko 27 ekrana — 14 javnih ruta i
+13 portalnih, jer se portali vide tek nakon prijave, a tablice, obrasci i dijalozi su
+upravo mjesta gdje pristupačnost najčešće padne. Provjerava se WCAG 2.1 A i AA.
+
+Stanje: **bez nalaza**.
+
+Nalazi koje je ta provjera otkrila i koji su popravljeni:
+
+| Nalaz | Što je bilo | Popravak |
+|---|---|---|
+| `definition-list`, `dlitem` | `<dt>`/`<dd>` bili su razinu preduboko, uz `<svg>` kao bratom | ikona seli **unutar** `<dt>`, apsolutno pozicionirana |
+| `color-contrast` | SKU u katalogu na `asphalt-300` (2.51:1) | `asphalt-500` |
+| — | tekst rezerviranog mjesta u poljima na `asphalt-300` | `asphalt-500` |
+| — | rub polja za unos `asphalt-200` (1.55:1, traži se 3:1) | novi `asphalt-400` |
+
+Uz to je nađena i **hardkodirana boja koju prethodna provjera nije mogla vidjeti**:
+strelica u `SelectField` bila je data-URI s upisanim `%235c6674`. Grep koji traži
+`#rrggbb` to ne hvata jer je URL-kodirano. Sada je stvarna ikona s `currentColor`, a
+provjera se pokreće ovako:
+
+```bash
+grep -rn '#[0-9a-fA-F]\{6\}\|%23[0-9a-fA-F]\{3,6\}' frontend/src --include=*.tsx
+```
+
+### Što axe ne može odlučiti
+
+Na 20 ekrana axe prijavljuje `color-contrast` kao **nedovršeno**, uvijek iz istog
+razloga: element stoji na **gradijentu**, pa se pozadina ne svodi na jednu boju. To su
+hero i primarni gumb. Oba su izmjerena ručno i oba prolaze:
+
+- hero, bijeli naslov nad fotografijom kroz zastor: **5,21:1**
+- primarni gumb, `asphalt-950` na najtamnijem kraju gradijenta (`volt-600`): **9,29:1**
 
 ---
 

@@ -35,6 +35,7 @@ npm run test                        # Vitest
 npx vitest run src/lib/format.test.ts   # jedna datoteka
 npm run e2e                         # Playwright
 npm run check:site                  # provjera linkova i SEO meta tagova
+npm run check:a11y                  # axe-core preko 27 ekrana, WCAG 2.1 A i AA
 ```
 
 Backend se uvijek pokreće s profilom `demo` lokalno. `JWT_SECRET` **nema default izvan
@@ -130,14 +131,21 @@ React 19 + Vite + Tailwind 4 (CSS-first `@theme` u `src/styles/theme.css`), TanS
 Query, React Hook Form + Zod. Vizualni sustav je „radionica noću" — pravila su u
 `DESIGN.md`, tokeni u `theme.css`. Ne uvoditi boje ni radijuse mimo tokena; da nijedna
 komponenta ne sadrži boju provjerava se s
-`grep -rn '#[0-9a-fA-F]\{6\}' frontend/src --include=*.tsx` (mora biti prazno).
+`grep -rn '#[0-9a-fA-F]\{6\}\|%23[0-9a-fA-F]\{3,6\}' frontend/src --include=*.tsx`
+(mora biti prazno).
 
 Tri stvari koje se lako nehotice prekrše:
 
-- **Žuta nije boja za tekst.** `volt-500` na bijelom ima kontrast 1.21:1. Smije biti
-  ploha s tamnim tekstom na sebi ili tekst na mornarskoj podlozi. Za žuti tekst na
-  svijetlom postoji `volt-700`. Isto vrijedi obrnuto: na žutom gumbu tekst je uvijek
-  `asphalt-950`, nikad bijeli.
+- **Žuta nije boja za tekst.** `volt-500` (#F7C600, iz klijentova loga) na bijelom ima
+  kontrast 1.61:1. Smije biti ploha s tamnim tekstom na sebi ili tekst na mornarskoj
+  podlozi. Za žuti tekst na svijetlom postoji `volt-700`. Isto vrijedi obrnuto: na žutom
+  gumbu tekst je uvijek `asphalt-950`, nikad bijeli.
+- **`asphalt-300` nije boja za tekst na svijetlom** (2.51:1) — za to je `asphalt-500`.
+  Na tamnim plohama je u redu. Rub polja za unos je `asphalt-400`, ne `asphalt-200`:
+  WCAG 1.4.11 za granicu polja traži 3:1, a `asphalt-200` daje 1.55:1.
+- **Hardkodirane boje traže se i URL-kodirane.** Provjera je
+  `grep -rn '#[0-9a-fA-F]\{6\}\|%23[0-9a-fA-F]\{3,6\}' frontend/src --include=*.tsx` —
+  bez `%23` dijela promakne boja upisana u data-URI, što se već jednom dogodilo.
 - **Znak marke živi na tri mjesta** i mijenja se na sva tri zajedno:
   `components/ui/BrandMark.tsx`, `public/favicon.svg`, `scripts/build-og-image.py`.
 - **`og-image.png` se generira, ne crta.** Nakon promjene naziva servisa ili tokena

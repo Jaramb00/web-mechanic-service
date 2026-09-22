@@ -12,13 +12,14 @@
 export const IS_DEMO = true;
 
 export const site = {
-  /** Stvarni naziv servisa — potvrdio klijent. */
-  name: 'Vulkanizer Željko',
+  /** Stvarni naziv servisa — iz loga koji je dao klijent. */
+  name: 'Autocentar Bulić',
   legalName: 'Naziv obrta d.o.o.',
   /** TODO(klijent): OIB. */
   oib: '00000000000',
 
-  tagline: 'Gume, balansiranje i hotel za gume',
+  /** Podnaslov je preuzet iz loga: gume - auto servis. */
+  tagline: 'Gume i auto servis',
 
   contact: {
     /** TODO(klijent): stvarni broj telefona. */
