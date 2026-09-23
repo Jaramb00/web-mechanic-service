@@ -52,6 +52,15 @@ To je bitno za pisanje testova: H2 bi progutao upite koje PostgreSQL odbija, a u
 su takvi upiti dvaput probili do korisnika. Test koji ne dira pravi PostgreSQL ne
 dokazuje ništa o ovim invarijantama.
 
+**Regresija na ekranu se pokriva testom kroz HTTP, ne pozivom servisa.** Pregled termina
+u administraciji rušio se na 500 **dvaput**, a drugi put i nakon što je regresijski test
+(`StaffAppointmentFilterTest`) već postojao — jer on zove `AppointmentQueryService`
+izravno i ne dira kontroler, vezanje parametara ni serijalizaciju. Ekran ide kroz
+`MockMvc` s kolačićem prijave (`StaffAppointmentEndpointTest`, `AccessControlTest`), i
+provjerava se tijelo odgovora, ne samo status. Uz to: čisti testni podaci ne dokazuju
+ništa o demo seedu — termini u prošlosti, završeni termini sa stavkama i otkazani termini
+moraju biti u podacima testa.
+
 ## Arhitektura
 
 Modularni monolit, paketi po domeni pod `hr.demo.vulkanizer`: `auth users vehicles

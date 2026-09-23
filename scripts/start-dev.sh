@@ -257,11 +257,28 @@ for _ in $(seq 1 60); do
   sleep 1
 done
 
+# Stanje koje se ne vidi je stanje koje se krivo pretpostavi. Oba retka ispod
+# postoje zbog stvarnih nesporazuma: backend koji je i dalje vrtio stari kod jer
+# proces nije restartan nakon `git pull`, i dojava koja "ne radi" jer slanje
+# nikad nije bilo uključeno.
+COMMIT="$(git -C "$ROOT" rev-parse --short HEAD 2>/dev/null || echo '?')"
+DIRTY=""
+git -C "$ROOT" diff --quiet 2>/dev/null || DIRTY=" (s nekomitanim izmjenama)"
+
+if [ "${MAIL_ENABLED:-false}" = "true" ]; then
+  MAIL_STATE="šalje se na ${MAIL_SHOP_RECIPIENT:-<MAIL_SHOP_RECIPIENT nije postavljen>}"
+else
+  MAIL_STATE="ISKLJUČENO — poruka ide u ${LOG_DIR}/backend.log (uključi s MAIL_ENABLED=true)"
+fi
+
 cat <<INFO
 
 ────────────────────────────────────────────────────────────
   Aplikacija:  http://localhost:${FRONTEND_PORT}
   Swagger UI:  http://localhost:${BACKEND_PORT}/swagger-ui.html
+
+  Pokrenuti kod:  ${COMMIT}${DIRTY}
+  E-mail dojava:  ${MAIL_STATE}
 
   Demo korisnici — lozinka za sve: Demo1234!
     admin@demo.local       administrator
