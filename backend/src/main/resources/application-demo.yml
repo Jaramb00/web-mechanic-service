@@ -9,6 +9,11 @@ app:
   jwt:
     # Samo za lokalni demo. Produkcija nema default i pada bez JWT_SECRET.
     secret: ${JWT_SECRET:demo-only-secret-key-min-32-bytes-long-do-not-use-in-production}
+  mail:
+    # Zamjenska adresa, da se u demou vidi cijela dojava u logu i bez postavljene
+    # okoline. Stvarna adresa servisa dolazi iz MAIL_SHOP_RECIPIENT — u repozitorij
+    # se ne upisuje.
+    shop-recipient: ${MAIL_SHOP_RECIPIENT:servis@demo.local}
 
 logging:
   level:

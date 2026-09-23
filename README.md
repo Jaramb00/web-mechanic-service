@@ -253,7 +253,41 @@ Sve se postavlja kroz varijable okoline; predložak je [`.env.example`](.env.exa
 | `SPRING_PROFILES_ACTIVE` | ne | `demo` (sa seed podacima) ili `prod` |
 | `COOKIE_SECURE` | ne | **mora biti `true` u produkciji** |
 | `CORS_ALLOWED_ORIGINS` | ne | potreban samo ako frontend nije na istom originu |
+| `MAIL_ENABLED` | ne | `false` (default) = dojava se ispisuje u log umjesto da se šalje |
+| `MAIL_USERNAME`, `MAIL_PASSWORD`, `MAIL_FROM`, `MAIL_SHOP_RECIPIENT` | da, ako je `MAIL_ENABLED=true` | bez ijedne od njih aplikacija se ne diže |
 | `VITE_ANALYTICS_ID` | ne | prazno = mjerenje posjeta isključeno |
+
+### E-mail dojava o novoj rezervaciji
+
+Kad kupac rezervira termin, servis dobiva e-mail s terminom, uslugom, kupcem, telefonom
+i vozilom. **Kupcu se potvrda ne šalje** — nemamo provjeru je li adresa koju je upisao
+stvarno njegova, a slanje na neprovjerenu adresu je put u spam liste. Preduvjeti su
+popisani u [docs/OPEN-QUESTIONS.md](docs/OPEN-QUESTIONS.md).
+
+Po defaultu slanje je **isključeno** i poruka se ispiše u log, pa se sadržaj može
+provjeriti bez ijednog poslanog maila. Za stvarno slanje preko Gmaila:
+
+1. Uključi dvofaktorsku prijavu na Google računu (bez nje App Password ne postoji).
+2. Na <https://myaccount.google.com/apppasswords> generiraj lozinku za aplikaciju —
+   dobiješ 16 znakova u četiri skupine.
+3. Postavi varijable i pokreni:
+
+```bash
+export MAIL_ENABLED=true
+export MAIL_USERNAME=adresa@gmail.com
+export MAIL_PASSWORD='xxxx xxxx xxxx xxxx'   # App Password, NE lozinka računa
+export MAIL_FROM=adresa@gmail.com            # Gmail traži da bude isti kao MAIL_USERNAME
+export MAIL_SHOP_RECIPIENT=servis@primjer.hr
+./scripts/start-dev.sh
+```
+
+Ako poruka ne stigne, razlog je u logu backenda: `535` znači krivu App Password,
+`Connection timed out` znači da mreža blokira port 587. Prva poruka zna završiti u
+„Promocijama" ili spamu — označi je jednom kao „nije spam".
+
+Gmail je izbor za demo (nula registracije, ~500 poruka dnevno). Za produkciju s vlastitom
+domenom ide transakcijski pružatelj (Resend, Brevo, Postmark) zbog dostavljivosti —
+mijenja se samo `SmtpMailSender`, ostatak koda ne zna kojim putem poruka ide.
 
 Podaci o servisu (naziv, adresa, telefon, OIB, koordinate) nisu u varijablama okoline nego
 u [`frontend/src/config/site.ts`](frontend/src/config/site.ts), jer se ugrađuju u build.

@@ -101,6 +101,25 @@ invarijanta `SUM(delta_reserved) == reserved_quantity` je pod testom.
 - Javni odgovori su trimani: nabavna cijena, hash lozinke, tuđi e-mailovi i interne
   bilješke ne izlaze iz backenda.
 
+## E-mail
+
+Dojava servisu o novoj rezervaciji ide kroz `MailSender` u `notifications`. Tri stvari
+koje se lako nehotice prekrše:
+
+- **`app.mail.enabled` je `false` po defaultu**, i tada radi `LoggingMailSender` — poruka
+  se ispiše u log. Tako demo i testovi ne diraju mrežu. Uključen SMTP traži sve
+  `MAIL_*` varijable; ako jedna nedostaje, aplikacija se **ne diže** (namjerno).
+- **Slanje nikad ne smije oboriti rezervaciju.** Termin je već commitan kad poruka kreće.
+  Zato je `onAppointmentBookedSendMail` zaseban `@TransactionalEventListener` **bez**
+  `@Transactional`: u zajedničkoj transakciji jedan neuspjeli dohvat označio bi je za
+  rollback i progutao obavijest u aplikaciji koja je već spremljena.
+- **`management.health.mail.enabled: false` mora ostati.** `spring-boot-starter-mail` sam
+  dodaje Actuatorovu provjeru koja na svaki `/actuator/health` otvara SMTP vezu — s njom
+  health vraća 503 čim SMTP nije dostupan i log se puni stack traceovima.
+
+Kupcu se potvrda **ne** šalje jer adresa nije provjerena; preduvjeti su u
+`docs/OPEN-QUESTIONS.md`.
+
 ## Zamka: nullable parametri u JPQL-u
 
 **Nikad ne pisati `(:param IS NULL OR stupac = :param)`.** Hibernate imenovani parametar

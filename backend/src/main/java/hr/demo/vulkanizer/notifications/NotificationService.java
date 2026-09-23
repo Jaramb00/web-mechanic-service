@@ -9,8 +9,9 @@ import org.springframework.transaction.annotation.Transactional;
 /**
  * Obavijesti unutar aplikacije.
  *
- * DEMO: sve ostaje u bazi i prikazuje se u portalu. Slanje e-maila i SMS-a je
- * svjesno izostavljeno — vidi docs/OPEN-QUESTIONS.md.
+ * Sve ostaje u bazi i prikazuje se u portalu. E-mail je zaseban put: dojavu
+ * servisu o novoj rezervaciji šalje DomainEventNotifier preko MailSendera.
+ * SMS i potvrda kupcu nisu implementirani — vidi docs/OPEN-QUESTIONS.md.
  */
 @Service
 public class NotificationService {

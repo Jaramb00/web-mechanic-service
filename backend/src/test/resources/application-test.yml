@@ -16,6 +16,11 @@ spring:
 app:
   jwt:
     secret: test-only-secret-key-with-at-least-32-characters
+  mail:
+    # Eksplicitno: testovi nikad ne diraju mrežu.
+    enabled: false
+    from: servis@test.local
+    shop-recipient: vlasnik@test.local
   rate-limit:
     login-attempts: 5
     login-window-minutes: 1

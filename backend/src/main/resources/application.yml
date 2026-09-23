@@ -28,6 +28,20 @@ spring:
       fail-on-unknown-properties: true   # tamperirani payload pada glasno, ne tiho
     default-property-inclusion: non_null
 
+  mail:
+    host: ${MAIL_HOST:smtp.gmail.com}
+    port: ${MAIL_PORT:587}
+    # Bez defaulta: prazno znači da slanje nije konfigurirano.
+    username: ${MAIL_USERNAME:}
+    password: ${MAIL_PASSWORD:}
+    properties:
+      mail.smtp.auth: true
+      mail.smtp.starttls.enable: true
+      # Bez timeouta jedan zaglavljeni SMTP poslužitelj drži DB konekciju otvorenom.
+      mail.smtp.connectiontimeout: 5000
+      mail.smtp.timeout: 5000
+      mail.smtp.writetimeout: 5000
+
   threads:
     virtual:
       enabled: true
@@ -47,6 +61,13 @@ management:
   endpoint:
     health:
       show-details: never
+  health:
+    mail:
+      # spring-boot-starter-mail sam dodaje provjeru koja na SVAKI /actuator/health
+      # otvara SMTP vezu. Posljedica: health je DOWN (503) čim SMTP nije dostupan,
+      # iako aplikacija radi — a slanje je po dizajnu best-effort i pad slanja ne
+      # smije oboriti rezervaciju, pa ne smije oboriti ni health.
+      enabled: false
 
 springdoc:
   swagger-ui:
@@ -74,6 +95,14 @@ app:
   rate-limit:
     login-attempts: 10
     login-window-minutes: 5
+  mail:
+    # Ugašeno po defaultu: nitko tko klonira repozitorij ne počne slučajno slati
+    # e-mailove, a demo radi bez ijedne vanjske ovisnosti.
+    enabled: ${MAIL_ENABLED:false}
+    from: ${MAIL_FROM:}
+    # TODO(klijent): u produkciji ide adresa servisa, ne osobna.
+    shop-recipient: ${MAIL_SHOP_RECIPIENT:}
+    portal-url: ${MAIL_PORTAL_URL:http://localhost:5173}
 
 logging:
   level:

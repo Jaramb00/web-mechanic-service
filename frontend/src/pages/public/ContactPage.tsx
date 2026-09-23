@@ -104,9 +104,9 @@ export function ContactPage() {
       </div>
 
       <Alert tone="info" className="mt-6">
-        Obrazac za slanje poruke namjerno nije uključen u demo verziju: slanje e-maila nije
-        implementirano, pa bi obrazac koji „radi" bio obmana. Za produkciju je to jedna od
-        prvih stavki na popisu.
+        Obrazac za slanje poruke namjerno nije uključen u demo verziju: javni obrazac traži
+        zaštitu od spama jaču od one koju demo ima. Za termin ionako ne treba poruka —
+        rezervacija ide izravno, a servis o njoj dobiva obavijest e-mailom.
       </Alert>
 
       <div className="mt-8 flex flex-wrap gap-3">

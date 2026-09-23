@@ -35,7 +35,8 @@ class BookingAttempt {
                 Instant startAt, Instant endAt, String customerNote) {
         Appointment saved = appointments.saveAndFlush(
                 new Appointment(customerId, vehicleId, serviceId, bayId, startAt, endAt, customerNote));
-        events.publishEvent(new AppointmentBookedEvent(saved.getId(), customerId, serviceId, startAt));
+        events.publishEvent(new AppointmentBookedEvent(
+                saved.getId(), customerId, vehicleId, serviceId, startAt, customerNote));
         return saved.getId();
     }
 }

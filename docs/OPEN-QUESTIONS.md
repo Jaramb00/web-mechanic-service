@@ -57,14 +57,32 @@ Nije napravljeno i **ne izgleda kao da jest**:
 
 | Funkcionalnost | Napomena |
 |---|---|
-| Slanje e-maila i SMS-a | obavijesti postoje, ali samo unutar aplikacije |
-| Obrazac za kontakt | namjerno izostavljen — bez slanja e-maila bio bi obmana |
+| Potvrda rezervacije kupcu e-mailom | traži provjeru adrese — vidi niže |
+| SMS i Viber obavijesti | plaća se po poruci; odluka je klijentova |
+| Podsjetnik dan prije termina | traži zakazani posao i stupac `reminder_sent_at` |
+| Obrazac za kontakt | traži zaštitu od spama jaču od honeypota; telefon i e-mail su na stranici |
 | Online plaćanje | plaća se pri preuzimanju vozila |
 | Izdavanje računa i fiskalizacija | zaseban i opsežan posao |
 | Narudžbe dobavljačima | inventory prati stanje, ne nabavni proces |
 | Više poslovnica | arhitektura to podnosi, ali nije implementirano |
 | Izvještaji i analitika | dashboard pokazuje stanje dana, ne trendove |
 | Mobilna aplikacija | stranica je responzivna, native aplikacije nema |
+
+### Što treba prije nego potvrda krene kupcu
+
+Dojava servisu o novoj rezervaciji **šalje se e-mailom**. Potvrda kupcu se svjesno ne
+šalje: adresa koju upiše pri registraciji nije ničim provjerena, pa bi slanje na nju
+značilo slanje na tuđu ili nepostojeću adresu. Redoslijed:
+
+- [ ] Token za potvrdu adrese pri registraciji i stupac `email_verified_at`
+- [ ] E-mail s poveznicom za potvrdu, s rokom trajanja
+- [ ] Postupanje s odbijenim porukama (bounce) — adresa koja odbija prestaje se koristiti
+- [ ] Tek onda potvrda o rezervaciji, po želji s `.ics` privitkom za kalendar
+
+Slanje je u demou sinkrono, unutar obrade događaja. Za produkciju ide red poruka s
+ponavljanjem, da spor SMTP ne drži zahtjev.
+
+---
 
 ## 4. Tehnički dug prije produkcije
 

@@ -63,10 +63,12 @@ sa stanja u istom trenutku.
 
 Implementirano u demou: javna stranica s cjenikom, online rezervacija termina, korisnički
 portal (vozila, termini, rezervacije artikala), dashboard administratora, majstora i
-skladištara, osnovni inventory s knjigom prometa.
+skladištara, osnovni inventory s knjigom prometa, e-mail dojava servisu o novoj
+rezervaciji.
 
-Svjesno izvan opsega demo faze: online plaćanje, slanje e-maila i SMS-a, narudžbe
-dobavljačima, više poslovnica, izdavanje računa, integracija s fiskalizacijom.
+Svjesno izvan opsega demo faze: online plaćanje, potvrda rezervacije kupcu e-mailom
+(traži provjeru adrese), SMS, narudžbe dobavljačima, više poslovnica, izdavanje računa,
+integracija s fiskalizacijom.
 
 **Podaci o klijentu nisu poznati.** Naziv servisa, adresa, telefon, OIB, koordinate i
 fotografije su placeholderi u `frontend/src/config/site.ts` i moraju se zamijeniti prije

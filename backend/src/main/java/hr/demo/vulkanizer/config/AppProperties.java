@@ -16,7 +16,7 @@ import java.util.List;
  */
 @Validated
 @ConfigurationProperties(prefix = "app")
-public record AppProperties(Jwt jwt, Cookie cookie, Cors cors, Booking booking, RateLimit rateLimit) {
+public record AppProperties(Jwt jwt, Cookie cookie, Cors cors, Booking booking, RateLimit rateLimit, Mail mail) {
 
     public record Jwt(
             /* HS256 traži barem 256 bita ključa; kraći ključ znači slabiji potpis. */
@@ -42,5 +42,14 @@ public record AppProperties(Jwt jwt, Cookie cookie, Cors cors, Booking booking, 
     }
 
     public record RateLimit(@Min(1) int loginAttempts, @Min(1) int loginWindowMinutes) {
+    }
+
+    /**
+     * Odlazni e-mail. Polja namjerno NEMAJU @NotBlank: kad je {@code enabled=false}
+     * (demo i testovi) ništa se ne šalje, pa prazne vrijednosti nisu greška.
+     * Kad je uključen, potpunost provjerava SmtpMailSender pri pokretanju — bolje
+     * da se aplikacija ne digne nego da tiho ne šalje.
+     */
+    public record Mail(boolean enabled, String from, String shopRecipient, String portalUrl) {
     }
 }

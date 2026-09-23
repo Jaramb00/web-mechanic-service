@@ -2,11 +2,14 @@ package hr.demo.vulkanizer.notifications;
 
 import hr.demo.vulkanizer.appointments.AppointmentBookedEvent;
 import hr.demo.vulkanizer.appointments.AppointmentStatusChangedEvent;
+import hr.demo.vulkanizer.catalog.ServiceCatalogFacade;
+import hr.demo.vulkanizer.config.AppProperties;
 import hr.demo.vulkanizer.inventory.LowStockEvent;
 import hr.demo.vulkanizer.reservations.ReservationCreatedEvent;
 import hr.demo.vulkanizer.users.RoleName;
 import hr.demo.vulkanizer.users.UserFacade;
 import hr.demo.vulkanizer.users.UserView;
+import hr.demo.vulkanizer.vehicles.VehicleFacade;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.PageRequest;
@@ -35,12 +38,21 @@ class DomainEventNotifier {
 
     private final NotificationService notifications;
     private final UserFacade users;
+    private final ServiceCatalogFacade services;
+    private final VehicleFacade vehicles;
+    private final MailSender mail;
+    private final AppProperties.Mail mailSettings;
     private final ZoneId zone;
 
     DomainEventNotifier(NotificationService notifications, UserFacade users,
-                        hr.demo.vulkanizer.config.AppProperties properties) {
+                        ServiceCatalogFacade services, VehicleFacade vehicles,
+                        MailSender mail, AppProperties properties) {
         this.notifications = notifications;
         this.users = users;
+        this.services = services;
+        this.vehicles = vehicles;
+        this.mail = mail;
+        this.mailSettings = properties.mail();
         this.zone = properties.booking().zone();
     }
 
@@ -51,6 +63,36 @@ class DomainEventNotifier {
                 "Termin je zaprimljen",
                 "Zaprimili smo vašu rezervaciju za " + event.startAt().atZone(zone).format(WHEN)
                         + ". Javit ćemo vam kad je potvrdimo.");
+    }
+
+    /**
+     * Dojava servisu da je stigla nova rezervacija.
+     *
+     * Namjerno je ZASEBAN slušatelj, i namjerno bez {@code @Transactional}:
+     * sastavljanje poruke ide u nekoliko modula, pa bi u zajedničkoj transakciji
+     * jedan neuspjeli dohvat označio transakciju za rollback i progutao obavijest
+     * u aplikaciji koja je već spremljena. Ovako dvoje ne mogu srušiti jedno drugo.
+     *
+     * Kupcu se potvrda NE šalje: nemamo provjeru je li adresa koju je upisao
+     * stvarno njegova, a slanje na neprovjerenu adresu je put u spam liste.
+     * Preduvjeti su u docs/OPEN-QUESTIONS.md.
+     */
+    @TransactionalEventListener
+    public void onAppointmentBookedSendMail(AppointmentBookedEvent event) {
+        String recipient = mailSettings.shopRecipient();
+        if (recipient == null || recipient.isBlank()) {
+            log.debug("Dojava servisu preskočena: app.mail.shop-recipient nije postavljen.");
+            return;
+        }
+        try {
+            mail.send(BookingMail.forShop(recipient, mailSettings.portalUrl(), zone, event,
+                    users.findById(event.customerId()).orElse(null),
+                    services.getById(event.serviceId()),
+                    vehicles.getAny(event.vehicleId())));
+        } catch (RuntimeException e) {
+            // Termin je već commitan. Neuspjela dojava je problem servisa, ne kupca.
+            log.error("Dojava o rezervaciji {} nije poslana: {}", event.appointmentId(), e.getMessage(), e);
+        }
     }
 
     @TransactionalEventListener
