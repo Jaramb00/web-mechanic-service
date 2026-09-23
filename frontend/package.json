@@ -13,7 +13,8 @@
     "test:watch": "vitest",
     "e2e": "playwright test",
     "check:site": "node scripts/check-site.mjs",
-    "check:a11y": "node scripts/check-a11y.mjs"
+    "check:a11y": "node scripts/check-a11y.mjs",
+    "shots": "node scripts/shots.mjs"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",

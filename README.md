@@ -169,7 +169,13 @@ npm run typecheck            # TypeScript
 npm run test                 # jedinični testovi (Vitest)
 npm run e2e                  # E2E testovi (Playwright) — traži pokrenut backend
 npm run check:site           # poveznice, meta podaci, H1, alt tekstovi
+npm run check:a11y           # axe-core preko 27 ekrana, WCAG 2.1 A i AA
+npm run shots -- /kontakt    # snimke ekrana u frontend/.shots/
 ```
+
+Snimanje ekrana prima više ruta odjednom, prijavu (`--kao admin@demo.local`) i mobilni
+prikaz (`--mobilno`). Korisno kad se aplikacija ne može otvoriti u pregledniku — na
+poslužitelju bez sučelja ili u okolini za razvoj u oblaku.
 
 ---
 

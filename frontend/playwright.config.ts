@@ -1,4 +1,6 @@
 import { defineConfig, devices } from '@playwright/test';
+// @ts-expect-error - dijeljeni razrješivač preglednika, bez tipova (obican .mjs)
+import { chromiumExecutable } from './scripts/browser.mjs';
 
 /**
  * E2E testovi traže da backend radi na :8080 s `demo` profilom (seed podaci) i
@@ -30,15 +32,15 @@ export default defineConfig({
       use: {
         ...devices['Desktop Chrome'],
         // Okolina ima predinstaliran Chromium starijeg builda od onoga koji
-        // @playwright/test očekuje, pa se putanja zadaje eksplicitno.
-        launchOptions: { executablePath: process.env.CHROMIUM_PATH || undefined },
+        // @playwright/test očekuje, pa se putanja razrješava (vidi scripts/browser.mjs).
+        launchOptions: { executablePath: chromiumExecutable() },
       },
     },
     {
       name: 'mobile',
       use: {
         ...devices['Pixel 7'],
-        launchOptions: { executablePath: process.env.CHROMIUM_PATH || undefined },
+        launchOptions: { executablePath: chromiumExecutable() },
       },
       testMatch: /responsive\.spec\.ts/,
     },

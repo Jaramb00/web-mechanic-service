@@ -36,3 +36,6 @@ blob-report/
 .impeccable/mocks/
 .impeccable/build/
 *.tsbuildinfo
+
+# Snimke ekrana iz `npm run shots` — dokaz, ne izvorni kod.
+frontend/.shots/

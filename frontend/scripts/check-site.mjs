@@ -5,9 +5,10 @@
  * Pokretanje:  npm run check:site        (traži pokrenut dev ili preview server)
  */
 import { chromium } from '@playwright/test';
+import { chromiumExecutable } from './browser.mjs';
 
 const BASE = process.env.CHECK_BASE_URL ?? 'http://localhost:5173';
-const EXECUTABLE = process.env.CHROMIUM_PATH || undefined;
+const EXECUTABLE = chromiumExecutable();
 
 /** Rute koje su namijenjene tražilicama i posjetiteljima. */
 const PUBLIC_ROUTES = [

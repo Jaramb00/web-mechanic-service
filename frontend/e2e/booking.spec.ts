@@ -25,8 +25,26 @@ test.describe('rezervacija termina', () => {
 
     await page.goto('/rezervacija');
 
-    // Stranica se otvara na danu na kojem stvarno ima mjesta.
+    // Dan se bira nekoliko dana unaprijed, NAMJERNO — ne uzima se prvi slobodan
+    // termin. Otkazivanje je dopušteno samo do 2 sata prije termina
+    // (app.booking.cancel-cutoff-hours), pa bi test koji rezervira najraniji
+    // slobodan termin prolazio ujutro, a popodne padao jer gumb „Otkaži termin"
+    // ispravno ne postoji. Zatvoreni dani se ne prikazuju kao gumbi, pa ih ovaj
+    // izbor sam preskače; traži se prvi dan koji stvarno ima slobodnih termina.
+    const days = page.getByRole('group', { name: 'Odabir dana' }).getByRole('button');
     const slots = page.getByRole('group', { name: /Slobodni termini/ }).getByRole('button');
+
+    let found = false;
+    const openDays = await days.count();
+    for (let index = 2; index < Math.min(openDays, 8); index += 1) {
+      await days.nth(index).click();
+      // Seed popunjava sva radna mjesta sljedećeg jutra, pa dan zna biti pun.
+      if (await slots.first().isVisible({ timeout: 5_000 }).catch(() => false)) {
+        found = true;
+        break;
+      }
+    }
+    expect(found, 'nijedan od sljedećih dana nema slobodan termin').toBe(true);
     await expect(slots.first()).toBeVisible();
     // Gumb uz vrijeme nosi i opis za čitače ekrana, pa se uzima samo prvi redak.
     const chosen = (await slots.first().innerText()).trim().split('\n')[0];

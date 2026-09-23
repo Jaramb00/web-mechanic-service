@@ -19,9 +19,10 @@
  */
 import { chromium } from 'playwright';
 import { AxeBuilder } from '@axe-core/playwright';
+import { chromiumExecutable } from './browser.mjs';
 
 const BASE = process.env.BASE_URL ?? 'http://localhost:5173';
-const EXECUTABLE = process.env.CHROMIUM_PATH || undefined;
+const EXECUTABLE = chromiumExecutable();
 const TAGS = ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'];
 
 const PUBLIC_ROUTES = [

@@ -36,7 +36,20 @@ npx vitest run src/lib/format.test.ts   # jedna datoteka
 npm run e2e                         # Playwright
 npm run check:site                  # provjera linkova i SEO meta tagova
 npm run check:a11y                  # axe-core preko 27 ekrana, WCAG 2.1 A i AA
+
+npm run shots -- /kontakt /cjenik                    # snimke ekrana u .shots/
+npm run shots -- --kao admin@demo.local /admin/termini
+npm run shots -- --mobilno /                          # 390 px
 ```
+
+Sve četiri naredbe koje voze preglednik (`e2e`, `check:site`, `check:a11y`, `shots`)
+uzimaju putanju do Chromiuma iz `scripts/browser.mjs`: prvo `CHROMIUM_PATH`, pa
+predinstalirani `/opt/pw-browsers/chromium` ako postoji, inače Playwrightov vlastiti.
+**Ne vraćati na golo `process.env.CHROMIUM_PATH`** — tu varijablu nitko nije postavljao,
+pa su sve četiri u okolini za razvoj u oblaku tiho odbijale krenuti.
+
+`npm run e2e` traži backend na :8080 s `demo` profilom; `shots` uz `--kao` prijavljuje se
+kroz stvarni obrazac, pa snima ono što korisnik vidi.
 
 Backend se uvijek pokreće s profilom `demo` lokalno. `JWT_SECRET` **nema default izvan
 `demo` profila** — to je namjerno, da demo ključ ne završi u produkciji.
@@ -51,6 +64,11 @@ ponovljivi.
 To je bitno za pisanje testova: H2 bi progutao upite koje PostgreSQL odbija, a upravo
 su takvi upiti dvaput probili do korisnika. Test koji ne dira pravi PostgreSQL ne
 dokazuje ništa o ovim invarijantama.
+
+**E2e testovi ne smiju ovisiti o dobu dana.** `booking.spec.ts` je birao najraniji
+slobodan termin i očekivao da se može otkazati — a otkazivanje je dopušteno do 2 sata
+prije termina (`app.booking.cancel-cutoff-hours`), pa je test prolazio ujutro i padao
+popodne. Bira se dan nekoliko dana unaprijed.
 
 **Regresija na ekranu se pokriva testom kroz HTTP, ne pozivom servisa.** Pregled termina
 u administraciji rušio se na 500 **dvaput**, a drugi put i nakon što je regresijski test
