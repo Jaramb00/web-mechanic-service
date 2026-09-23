@@ -158,9 +158,10 @@ Tri stvari koje se lako nehotice prekrše:
   zamjenska ploča; `<Picture>` je jedini put do slike na stranici.
   Prednost dohvata (`priority`) smije nositi samo hero.
 
-Animacije ulaza (`.reveal` / `useReveal`) uključuju se po sekciji, nikad globalno:
-portali su alat koji se gleda cijeli dan. Jedini ozbiljan kvar je da sadržaj ostane
-nevidljiv, pa `src/lib/reveal.test.tsx` pokriva sva tri zamjenska puta.
+**Nema animacija ulaza na scroll.** Postojale su pa su uklonjene: stranica za
+rezervaciju od njih ne dobiva ništa, a spadaju u obrasce po kojima se sučelje prepoznaje
+kao generirano. Isto vrijedi za `backdrop-blur` — nema ga nigdje. Jedini pokret je
+podizanje plohe na hover.
 
 Dev poslužitelj posreduje `/api` na `localhost:8080`, pa frontend i API dijele origin
 i cookie radi bez CORS-a — isto kao u produkciji iza nginxa.

@@ -29,7 +29,10 @@ Ono što taj izbor **isključuje**: šarene gradijente, staklo, rešetku jednaki
 
 Definirana u `src/styles/theme.css`, blok `@theme`. **Jedino mjesto** koje klijent mijenja
 da preuzme vlastiti brand — nijedna komponenta ne sadrži hardkodiranu boju, što je
-provjerljivo s `grep -rn '#[0-9a-fA-F]\{6\}' frontend/src --include=*.tsx`.
+provjerljivo s
+`grep -rn '#[0-9a-fA-F]\{6\}\|%23[0-9a-fA-F]\{3,6\}' frontend/src --include=*.tsx`.
+Dio s `%23` nije višak: boja upisana u data-URI je URL-kodirana i bez njega promakne,
+što se već jednom dogodilo.
 
 | Uloga | Token | Vrijednost | Gdje |
 |---|---|---|---|
@@ -130,7 +133,7 @@ Implementacija: `src/lib/statusLabels.ts`, `src/components/ui/Status.tsx`,
 ```css
 .edge-light {
   box-shadow:
-    inset 0 1px 0 rgb(255 237 0 / 0.22),
+    inset 0 1px 0 rgb(247 198 0 / 0.26),
     inset 0 0 0 1px rgb(255 255 255 / 0.07);
 }
 ```
@@ -173,18 +176,9 @@ Ona **nadjačava** Tailwindov `ease-out`, pa je dovoljno napisati `ease-out`.
   katalogu, jedina prava interaktivna kartica u sustavu. Gumb ima vlastiti, manji pomak od
   1 px jer često stoji uz polje za unos, gdje veći pomak izgleda kao da raspored poskakuje.
   Nikad skaliranje — tekst bi se zamutio, a susjedne plohe pomaknule.
-- **Ulaz u kadar:** `.reveal` / `.reveal-in` preko `useReveal` (`src/lib/reveal.ts`).
-  IntersectionObserver i dvije CSS klase umjesto ~30 kB animacijske biblioteke.
-
-`reveal` je **opcija sekcije, ne zadano ponašanje**: alat koji netko gleda cijeli radni
-dan ne smije se otkrivati pri svakom scrollu. Uključen je samo na marketinškim
-stranicama, i nikad na prvoj sekciji — ona je već u kadru pa bi samo zatreperila.
-
-Jedini ozbiljan kvar animacije je da sadržaj **ostane nevidljiv**. Tri puta koja to
-sprječavaju pokriva `src/lib/reveal.test.tsx`: nema IntersectionObservera → odmah vidljivo;
-`prefers-reduced-motion` → odmah vidljivo, promatrač se ne pokreće; ušlo u kadar →
-otkriveno i **prestaje se pratiti**, jer ponovno skrivanje pri scrollu prema gore smeta
-čitanju.
+Pokreta ima samo toliko: podizanje plohe na hover. **Ulaza u kadar na scroll nema** i to
+je namjerno — stranica za rezervaciju termina od njega ne dobiva ništa, a spada u obrasce
+po kojima se sučelje prepoznaje kao generirano.
 
 ---
 

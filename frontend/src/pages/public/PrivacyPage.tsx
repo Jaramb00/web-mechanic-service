@@ -17,7 +17,7 @@ export function PrivacyPage() {
       <SectionTitle id="naslov-privatnost"
         level={1}>Politika privatnosti</SectionTitle>
 
-      <Alert tone="warning" title="Zamjenski tekst — mora ga pregledati pravni stručnjak" className="mt-6">
+      <Alert tone="warning" title="Zamjenski tekst: mora ga pregledati pravni stručnjak" className="mt-6">
         Ovo je predložak, a ne pravno mišljenje. Prije objave ga mora pregledati i
         prilagoditi klijent odnosno osoba stručna za zaštitu podataka. Ne tvrdimo da je
         ovako napisan tekst usklađen s GDPR-om ni s hrvatskim propisima.
@@ -38,7 +38,7 @@ export function PrivacyPage() {
           </li>
           <li>
             <strong>Podaci o vozilu:</strong> marka, model, godina, registracijska oznaka i
-            dimenzija guma — potrebni da bismo znali što servisiramo.
+            dimenzija guma. Potrebni su da bismo znali što servisiramo.
           </li>
           <li>
             <strong>Podaci o terminima i rezervacijama:</strong> vrijeme termina, odabrana
@@ -73,7 +73,7 @@ export function PrivacyPage() {
 
         <h2>Kome ih prosljeđujemo</h2>
         <p>
-          <em>TODO(klijent): navesti stvarne izvršitelje obrade</em> — primjerice pružatelja
+          <em>TODO(klijent): navesti stvarne izvršitelje obrade</em>, primjerice pružatelja
           usluge poslužitelja. U ovoj demo verziji podaci se ne prosljeđuju nikome i ne
           napuštaju poslužitelj na kojem aplikacija radi.
         </p>

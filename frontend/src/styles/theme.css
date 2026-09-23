@@ -7,8 +7,8 @@
    ploha, jedno oštro žuto svjetlo, guma kao materijal. Motorsport grafika.
 
    Tri boje nose sve:
-     volt     (#FFED00) = potpis brenda, radnja, aktivno stanje
-     midnight (#13233F) = dubina, autoritet, tamne plohe
+     volt     (#F7C600) = potpis brenda, radnja, aktivno stanje
+     midnight (#0E1B31) = dubina, autoritet, tamne plohe
      asphalt            = tekst, linije, svijetle podloge
 
    Uz njih dva semafora koja se ne smiju stopiti s brendom:
@@ -21,11 +21,11 @@
 @theme {
   --font-sans: 'Archivo', ui-sans-serif, system-ui, sans-serif;
 
-  /* --- VOLT — potpis. Uzet točno s tiska na majici (#FFED00). -------------
-     PAŽNJA: volt-500 na bijelom ima kontrast 1.1:1 i kao tekst je
+  /* --- VOLT — potpis. Izmjeren iz klijentova loga (#F7C600). --------------
+     PAŽNJA: volt-500 na bijelom ima kontrast 1.61:1 i kao tekst je
      neupotrebljiv. Smije biti ploha s tamnim tekstom na sebi, veliki
-     grafički element, ili tekst na midnight podlozi. Nikad tekst na svijetlom
-     — za to postoji volt-700. */
+     grafički element, ili tekst na midnight podlozi. Nikad tekst na svijetlom;
+     za to postoji volt-700. */
   --color-volt-100: #fef3cc;
   --color-volt-300: #fce38a;
   --color-volt-400: #fad64d;
@@ -33,7 +33,7 @@
   --color-volt-600: #d9ac00;
   --color-volt-700: #6b5400;
 
-  /* --- MIDNIGHT — dubina. midnight-800 je mornarska s kape s reference. ---
+  /* --- MIDNIGHT — dubina. Produbljena na zahtjev klijenta. ---------------
      Nosi cijele plohe od ruba do ruba, ne akcente. */
   --color-midnight-50: #edf0f6;
   --color-midnight-100: #d8dfec;
@@ -108,8 +108,8 @@
    privatnosti nepotreban rizik.
 
    Archivo je varijabilan po težini (100–900) I po širini (62–125%), pa se
-   teški kondenzirani verzali s reference dobivaju iz datoteke koja je već
-   ovdje — bez ijednog dodatnog zahtjeva. */
+   teški kondenzirani verzali dobivaju iz datoteke koja je već ovdje, bez
+   ijednog dodatnog zahtjeva. */
 @font-face {
   font-family: 'Archivo';
   font-style: normal;
@@ -231,7 +231,7 @@
 
 @layer components {
   /* DISPLEJNI NASLOV — teški kondenzirani kurzivni verzali.
-     Ovo je tipografski potpis preuzet s tiska na majici. Namjerno samo za
+     Ovo je tipografski potpis sustava. Namjerno samo za
      naslove: u tekstu bi kosi verzali ubili čitljivost, a hrvatski dijakritici
      na malim veličinama postaju kaša. */
   .display {
@@ -341,25 +341,9 @@
     transform: translateY(-2px);
     box-shadow: var(--shadow-raised);
   }
-
-  /* ULAZ U KADAR — postavlja se preko IntersectionObservera (useReveal).
-     Bez biblioteke: dvije klase i jedna tranzicija. */
-  .reveal {
-    opacity: 0;
-    transform: translateY(12px);
-    transition:
-      opacity 420ms var(--ease-out),
-      transform 420ms var(--ease-out);
-  }
-  .reveal-in {
-    opacity: 1;
-    transform: none;
-  }
 }
 
-/* Korisnik koji je isključio animacije dobiva sve odmah i na mjestu —
-   uključujući elemente koji čekaju IntersectionObserver, da sadržaj nikad
-   ne ostane nevidljiv ako se promatrač ne pokrene. */
+/* Korisnik koji je isključio animacije dobiva sve odmah i na mjestu. */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -370,10 +354,6 @@
     scroll-behavior: auto !important;
   }
 
-  .reveal {
-    opacity: 1;
-    transform: none;
-  }
   .lift:hover {
     transform: none;
   }

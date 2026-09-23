@@ -84,7 +84,7 @@ export default function WarehouseStock() {
     <>
       <SectionHeader
         title="Zaliha"
-        description="Količine se mijenjaju isključivo kroz ove radnje — svaka ostavlja zapis u knjizi prometa."
+        description="Količine se mijenjaju isključivo kroz ove radnje. Svaka ostavlja zapis u knjizi prometa."
         action={
           <Link to="/skladiste/promet" className="font-semibold text-midnight-800">
             Povijest prometa
@@ -222,7 +222,7 @@ export default function WarehouseStock() {
         <section className="fixed inset-x-0 bottom-0 z-30 border-t border-asphalt-200 bg-white p-4 shadow-[0_-8px_32px_rgb(11_14_19_/_0.18)]">
           <div className="mx-auto w-full max-w-3xl">
             <h2 className="text-lg font-extrabold text-asphalt-950">
-              {OPERATION_LABELS[operation]} — {active.name}
+              {OPERATION_LABELS[operation]}: {active.name}
             </h2>
             <p className="mt-0.5 text-sm tabular-nums text-asphalt-500">
               Trenutno: {active.physicalQuantity} kom, rezervirano {active.reservedQuantity} kom
@@ -250,7 +250,7 @@ export default function WarehouseStock() {
               <TextAreaField
                 label={operation === 'adjust' ? 'Razlog korekcije' : 'Napomena'}
                 required={operation === 'adjust'}
-                hint={operation === 'adjust' ? 'Obavezno — korekcija bez razloga je rupa u evidenciji.' : 'Npr. broj primke.'}
+                hint={operation === 'adjust' ? 'Obavezno. Korekcija bez razloga je rupa u evidenciji.' : 'Npr. broj primke.'}
                 value={note}
                 onChange={(event) => setNote(event.target.value)}
               />

@@ -106,7 +106,7 @@ function Hero() {
                       Trenutno nema slobodnih termina
                     </p>
                     <p className="mt-2 max-w-[55ch] text-[1.0625rem] leading-relaxed text-midnight-100">
-                      U sezoni se popuni sve. Nazovite nas — često se oslobodi termin zbog otkazivanja.
+                      U sezoni se popuni sve. Nazovite nas; često se oslobodi termin zbog otkazivanja.
                     </p>
                   </>
                 )}
@@ -119,7 +119,7 @@ function Hero() {
                 </ButtonLink>
                 <a
                   href={site.contact.phoneHref}
-                  className="inline-flex min-h-14 items-center justify-center gap-2.5 rounded-control border border-white/35 bg-midnight-950/45 px-7 text-lg font-bold text-white no-underline backdrop-blur-sm transition-[background-color,border-color,transform] duration-150 ease-out hover:-translate-y-px hover:border-white/70 hover:bg-midnight-950/70"
+                  className="inline-flex min-h-14 items-center justify-center gap-2.5 rounded-control border border-white/35 bg-midnight-950/85 px-7 text-lg font-bold text-white no-underline transition-[background-color,border-color,transform] duration-150 ease-out hover:-translate-y-px hover:border-white/70 hover:bg-midnight-950"
                 >
                   <Phone size={20} />
                   {site.contact.phone}
@@ -198,7 +198,7 @@ function ServicesOverview() {
   const shown = services?.slice(0, 6) ?? [];
 
   return (
-    <Section reveal tone="white" labelledBy="naslov-usluge">
+    <Section tone="white" labelledBy="naslov-usluge">
       <SectionTitle
         id="naslov-usluge"
         description="Cijene su okvirne i ovise o dimenziji gume i stanju vozila. Točan iznos dogovaramo prije početka rada."
@@ -250,7 +250,7 @@ function ServicesOverview() {
 
 function TireStorageTeaser() {
   return (
-    <Section reveal tone="midnight" labelledBy="naslov-hotel">
+    <Section tone="midnight" labelledBy="naslov-hotel">
       <div className="grid gap-8 lg:grid-cols-[1.1fr_1fr] lg:gap-14">
         <div>
           <SectionTitle
@@ -273,7 +273,7 @@ function TireStorageTeaser() {
             'Gume peremo prije spremanja i pregledamo dubinu profila',
             'Čuvaju se u zatvorenom prostoru, složene po pravilima struke',
             'Označene su na vaše ime i vozilo, s registracijom',
-            'Kad dođete na zamjenu, već su spremne — ne čekate',
+            'Kad dođete na zamjenu, već su spremne, pa ne čekate',
           ].map((item) => (
             <li key={item} className="flex gap-3 bg-midnight-800 px-4 py-3.5 text-[0.9375rem] text-white">
               <span aria-hidden="true" className="mt-1.5 h-2 w-2 shrink-0 bg-volt-500" />
@@ -303,12 +303,12 @@ function SlotPreview() {
   const days = [0, 1, 2].map((offset) => toIsoDate(addDays(firstDate, offset)));
 
   return (
-    <Section reveal tone="light" labelledBy="naslov-termini">
+    <Section tone="light" labelledBy="naslov-termini">
       <SectionTitle
         id="naslov-termini"
         description={
           service
-            ? `Sljedeća tri dana za uslugu „${service.name}". Zauzeti termini se vide — u sezoni nestaju brzo.`
+            ? `Sljedeća tri dana za uslugu „${service.name}". Zauzeti termini se vide. U sezoni nestaju brzo.`
             : 'Slobodni termini u sljedeća tri dana.'
         }
       >
@@ -395,7 +395,7 @@ function VisitUs() {
   const { data: hours, isLoading } = useWorkingHours();
 
   return (
-    <Section reveal tone="white" labelledBy="naslov-dolazak">
+    <Section tone="white" labelledBy="naslov-dolazak">
       <div className="grid gap-10 lg:grid-cols-2">
         <div>
           <SectionTitle id="naslov-dolazak" description={site.address.directions}>

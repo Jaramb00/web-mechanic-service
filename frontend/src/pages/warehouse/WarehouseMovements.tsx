@@ -33,7 +33,7 @@ export default function WarehouseMovements() {
     <>
       <SectionHeader
         title="Promet zalihe"
-        description="Svaka promjena količine ima zapis. Zapisi se ne mijenjaju i ne brišu — greška se ispravlja novim zapisom."
+        description="Svaka promjena količine ima zapis. Zapisi se ne mijenjaju i ne brišu. Greška se ispravlja novim zapisom."
       />
 
       {isLoading ? (

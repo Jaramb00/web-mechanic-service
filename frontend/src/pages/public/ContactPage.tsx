@@ -21,7 +21,7 @@ export function ContactPage() {
       <SectionTitle
         id="naslov-kontakt"
         level={1}
-        description="Za termin ne treba poziv — rezervirajte online. Za sve ostalo javite se telefonom ili e-mailom."
+        description="Za termin ne treba poziv: rezervirajte online. Za sve ostalo javite se telefonom ili e-mailom."
       >
         Kontakt
       </SectionTitle>

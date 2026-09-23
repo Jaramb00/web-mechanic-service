@@ -86,7 +86,7 @@ export default function CustomerVehicles() {
     <>
       <SectionHeader
         title="Moja vozila"
-        description="Vozilo je potrebno za rezervaciju termina — po njemu znamo koje gume i dimenzije očekivati."
+        description="Vozilo je potrebno za rezervaciju termina. Po njemu znamo koje gume i dimenzije očekivati."
         action={
           !adding ? (
             <Button onClick={() => setAdding(true)}>

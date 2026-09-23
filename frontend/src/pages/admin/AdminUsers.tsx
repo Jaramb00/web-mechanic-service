@@ -66,7 +66,7 @@ export default function AdminUsers() {
     <>
       <SectionHeader
         title="Korisnici"
-        description="Uloge određuju što tko smije. Provjera se radi na poslužitelju — mijenjanje uloge ovdje odmah vrijedi svugdje."
+        description="Uloge određuju što tko smije. Provjera se radi na poslužitelju, pa mijenjanje uloge ovdje odmah vrijedi svugdje."
       />
 
       {notice ? <Alert tone="success" className="mb-5">{notice}</Alert> : null}

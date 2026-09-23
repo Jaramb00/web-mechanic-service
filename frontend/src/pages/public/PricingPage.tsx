@@ -23,7 +23,7 @@ export function PricingPage() {
 
       <Alert tone="info" className="mt-6">
         Cijene vrijede za osobna vozila i standardne dimenzije. Za terenska i dostavna
-        vozila, niske profile i alu naplatke cijena se dogovara na licu mjesta — reći ćemo
+        vozila, niske profile i alu naplatke cijena se dogovara na licu mjesta. Reći ćemo
         je prije nego što počnemo raditi.
       </Alert>
 

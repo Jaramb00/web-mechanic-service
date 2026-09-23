@@ -143,7 +143,7 @@ export default function AdminServices() {
               max="480"
               step="5"
               required
-              hint="Mora odgovarati stvarnom trajanju — inače raspored ne valja."
+              hint="Mora odgovarati stvarnom trajanju. Inače raspored ne valja."
               error={form.formState.errors.durationMinutes?.message}
               {...form.register('durationMinutes')}
             />

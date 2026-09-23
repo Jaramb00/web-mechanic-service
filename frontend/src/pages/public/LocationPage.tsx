@@ -27,7 +27,7 @@ export function LocationPage() {
         {/* Karta se učitava lijeno: većini posjetitelja treba adresa, ne karta,
             a iframe inače blokira prvo iscrtavanje stranice. */}
         <iframe
-          title={`Karta s lokacijom servisa — ${fullAddress}`}
+          title={`Karta s lokacijom servisa: ${fullAddress}`}
           src={googleMapsEmbedUrl}
           loading="lazy"
           referrerPolicy="no-referrer-when-downgrade"

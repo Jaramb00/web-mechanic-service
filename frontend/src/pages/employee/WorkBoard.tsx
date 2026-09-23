@@ -40,7 +40,7 @@ export default function WorkBoard() {
     <>
       <SectionHeader
         title="Radni nalozi"
-        description="Termini po danu. Status mijenjajte kako posao napreduje — stranka to vidi u svom računu."
+        description="Termini po danu. Status mijenjajte kako posao napreduje; stranka to vidi u svom računu."
       />
 
       {notice ? <Alert tone="success" className="mb-5">{notice}</Alert> : null}

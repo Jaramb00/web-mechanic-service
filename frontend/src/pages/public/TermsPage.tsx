@@ -17,7 +17,7 @@ export function TermsPage() {
       <SectionTitle id="naslov-uvjeti"
         level={1}>Uvjeti korištenja</SectionTitle>
 
-      <Alert tone="warning" title="Zamjenski tekst — mora ga pregledati pravni stručnjak" className="mt-6">
+      <Alert tone="warning" title="Zamjenski tekst: mora ga pregledati pravni stručnjak" className="mt-6">
         Predložak, ne pravno mišljenje. Klijent ga mora prilagoditi svojem poslovanju i dati
         na pregled pravnom stručnjaku prije objave.
       </Alert>

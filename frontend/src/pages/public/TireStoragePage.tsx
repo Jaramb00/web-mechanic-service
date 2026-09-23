@@ -10,7 +10,7 @@ import { Picture } from '@/components/ui/Picture';
 const STEPS = [
   {
     title: 'Dolazite na zamjenu guma',
-    body: 'Rezervirate termin kao i inače. Recite da želite ostaviti komplet na čuvanje — ili upišite u napomenu pri rezervaciji.',
+    body: 'Rezervirate termin kao i inače. Recite da želite ostaviti komplet na čuvanje, ili to upišite u napomenu pri rezervaciji.',
   },
   {
     title: 'Gume peremo i pregledavamo',
@@ -67,7 +67,7 @@ export function TireStoragePage() {
         </div>
       </Section>
 
-      <Section reveal tone="white" labelledBy="naslov-kako">
+      <Section tone="white" labelledBy="naslov-kako">
         <SectionTitle id="naslov-kako">Kako to ide</SectionTitle>
 
         {/* Redoslijed nosi informaciju — korak 3 nema smisla prije koraka 1 — pa su

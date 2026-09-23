@@ -43,7 +43,7 @@ export function CatalogPage() {
       <SectionTitle
         id="naslov-ponuda"
         level={1}
-        description="Prikazana je raspoloživa količina — ono što je već rezervirano ne broji se kao dostupno."
+        description="Prikazana je raspoloživa količina. Ono što je već rezervirano ne broji se kao dostupno."
       >
         Ponuda guma i dijelova
       </SectionTitle>
@@ -62,7 +62,7 @@ export function CatalogPage() {
             type="search"
             value={search}
             onChange={(event) => setSearch(event.target.value)}
-            placeholder="Dimenzija, npr. 205/55 R16 — ili naziv"
+            placeholder="Dimenzija (npr. 205/55 R16) ili naziv"
             className="min-h-11 w-full rounded-control border border-asphalt-400 bg-white pl-10 pr-3 text-[0.9375rem] transition-[border-color,box-shadow] duration-150 ease-out placeholder:text-asphalt-500 hover:border-asphalt-500 focus:border-midnight-800 focus:shadow-plate"
           />
         </div>
@@ -101,7 +101,7 @@ export function CatalogPage() {
         ) : (data?.content.length ?? 0) === 0 ? (
           <EmptyState illustration={<EmptyArt kind="inventory" />}
             title="Nema artikala za taj upit"
-            description="Pokušajte s drugom dimenzijom ili poništite filtar. Ako tražite nešto određeno, nazovite nas — možemo naručiti."
+            description="Pokušajte s drugom dimenzijom ili poništite filtar. Ako tražite nešto određeno, nazovite nas, možemo naručiti."
             action={
               <Button
                 variant="outline"

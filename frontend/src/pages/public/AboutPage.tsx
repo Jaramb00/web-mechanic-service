@@ -8,7 +8,7 @@ import { Picture } from '@/components/ui/Picture';
 export function AboutPage() {
   useSeo({
     title: 'O nama',
-    description: `${site.name} — vulkanizerski servis u gradu ${site.address.city}. Zamjena guma, balansiranje, popravci i hotel za gume.`,
+    description: `${site.name}, vulkanizerski servis u gradu ${site.address.city}. Zamjena guma, balansiranje, popravci i hotel za gume.`,
     path: '/o-nama',
   });
 
@@ -22,7 +22,7 @@ export function AboutPage() {
           smije ih napisati samo klijent. */}
       <Alert tone="warning" title="Ovaj tekst mora napisati klijent" className="mt-6">
         Sadržaj ispod je zamjenski i namjerno ne sadrži nikakve tvrdnje o iskustvu, broju
-        stranaka ni certifikatima — takve podatke ne izmišljamo. Klijent ovdje upisuje
+        stranaka ni certifikatima. Takve podatke ne izmišljamo. Klijent ovdje upisuje
         stvarnu priču servisa.
       </Alert>
 

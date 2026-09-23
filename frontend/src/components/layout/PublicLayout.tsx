@@ -37,12 +37,12 @@ export function PublicLayout() {
 
       <DemoRibbon />
 
-      <header className="on-midnight sticky top-0 z-30 border-b border-midnight-700 bg-midnight-900/95 text-white backdrop-blur">
+      <header className="on-midnight sticky top-0 z-30 border-b border-midnight-700 bg-midnight-900 text-white">
         <div className="mx-auto flex w-full max-w-6xl items-center gap-4 px-4 py-3">
           <Link
             to="/"
             className="flex min-w-0 items-center gap-2.5 no-underline"
-            aria-label={`${site.name} — naslovnica`}
+            aria-label={`${site.name}, naslovnica`}
           >
             <BrandMark className="h-9 w-9 text-white" />
             <span className="display truncate text-lg leading-none text-white sm:text-xl">
@@ -202,7 +202,7 @@ function PublicFooter() {
 
       <div className="border-t border-asphalt-900">
         <p className="mx-auto w-full max-w-6xl px-4 py-4 text-xs text-asphalt-300">
-          © {year} {site.legalName} · OIB {site.oib} · Demo verzija — podaci o tvrtki su
+          © {year} {site.legalName} · OIB {site.oib} · Demo verzija. Podaci o tvrtki su
           zamjenski i moraju se zamijeniti stvarnima prije objave.
         </p>
       </div>

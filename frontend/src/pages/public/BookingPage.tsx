@@ -137,7 +137,7 @@ export function BookingPage() {
       </h1>
       <p className="mt-3 max-w-[60ch] text-[1.0625rem] leading-relaxed text-asphalt-200">
         Odaberite uslugu i dan, pa uzmite termin koji vam odgovara. Prijava je potrebna tek
-        na kraju — odabir se neće izgubiti.
+        na kraju i odabir se neće izgubiti.
       </p>
 
       <div className="mt-8 space-y-5">
@@ -158,7 +158,7 @@ export function BookingPage() {
               >
                 {services?.map((service) => (
                   <option key={service.id} value={service.id}>
-                    {service.name} — {formatPrice(service.price)} ({service.durationMinutes} min)
+                    {service.name} · {formatPrice(service.price)} ({service.durationMinutes} min)
                   </option>
                 ))}
               </SelectField>

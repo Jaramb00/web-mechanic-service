@@ -18,7 +18,7 @@ const FAQ = [
   {
     question: 'Mogu li otkazati termin?',
     answer:
-      'Da, kroz svoj račun, najkasnije dva sata prije termina. Ako je kasnije, nazovite nas — dogovorit ćemo se.',
+      'Da, kroz svoj račun, najkasnije dva sata prije termina. Ako je kasnije, nazovite nas i dogovorit ćemo se.',
   },
   {
     question: 'Što je hotel za gume i je li mi isplativ?',
@@ -38,7 +38,7 @@ const FAQ = [
   {
     question: 'Prihvaćate li kartice?',
     answer:
-      'Način plaćanja potvrđuje servis. Online plaćanje u ovoj verziji sustava nije implementirano — plaća se pri preuzimanju vozila.',
+      'Način plaćanja potvrđuje servis. Online plaćanje u ovoj verziji sustava nije implementirano. Plaća se pri preuzimanju vozila.',
   },
 ];
 
