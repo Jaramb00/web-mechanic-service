@@ -45,6 +45,34 @@ test.describe('portali osoblja', () => {
     await expect(page.getByText('Početno stanje').first()).toBeVisible();
   });
 
+  test('administrator se iz skladišta i radionice vraća u administraciju', async ({ page }) => {
+    await login(page, 'admin@demo.local');
+
+    for (const route of ['/skladiste', '/radionica']) {
+      await page.goto(route);
+      const back = page.getByRole('banner').getByRole('link', { name: 'Administracija' });
+      await expect(back, `staza natrag na ${route}`).toBeVisible();
+      await back.click();
+      await expect(page).toHaveURL(/\/admin$/);
+    }
+  });
+
+  test('skladištar i majstor ne vide put u administraciju', async ({ page }) => {
+    // Poveznica im ne bi radila — administracija za njih vraća 403. Ponuditi put
+    // koji završi porukom o zabrani gore je nego ne ponuditi ga.
+    for (const [email, route] of [
+      ['skladiste@demo.local', '/skladiste'],
+      ['majstor@demo.local', '/radionica'],
+    ]) {
+      await login(page, email);
+      await page.goto(route);
+      await expect(page.getByRole('banner').getByRole('link', { name: 'Administracija' }))
+        .toHaveCount(0);
+      await page.getByRole('button', { name: 'Odjava' }).click();
+      await page.waitForURL('**/', { timeout: 10_000 });
+    }
+  });
+
   test('kupac ne može otvoriti administraciju', async ({ page }) => {
     await login(page, 'ivan@demo.local');
     await page.goto('/admin');

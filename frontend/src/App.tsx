@@ -55,6 +55,13 @@ const ADMIN_NAV = [
 
 const EMPLOYEE_NAV = [{ to: '/radionica', label: 'Radni nalozi', end: true }];
 
+/**
+ * Radionicu i Skladište otvaraju i majstor/skladištar i administrator. Kad tamo
+ * dođe administrator, zaglavlje mu nudi put natrag u administraciju; majstoru i
+ * skladištaru se ne prikazuje, jer im ta putanja vraća 403.
+ */
+const ADMIN_PARENT = { to: '/admin', label: 'Administracija', role: 'ADMIN' } as const;
+
 const WAREHOUSE_NAV = [
   { to: '/skladiste', label: 'Zaliha', end: true },
   { to: '/skladiste/promet', label: 'Promet' },
@@ -123,13 +130,13 @@ export function App() {
           </Route>
 
           <Route element={<RequireAuth roles={['EMPLOYEE', 'ADMIN']} />}>
-            <Route element={<PortalLayout title="Radionica" nav={EMPLOYEE_NAV} />}>
+            <Route element={<PortalLayout title="Radionica" nav={EMPLOYEE_NAV} parent={ADMIN_PARENT} />}>
               <Route path="radionica" element={<WorkBoard />} />
             </Route>
           </Route>
 
           <Route element={<RequireAuth roles={['WAREHOUSE_WORKER', 'ADMIN']} />}>
-            <Route element={<PortalLayout title="Skladište" nav={WAREHOUSE_NAV} />}>
+            <Route element={<PortalLayout title="Skladište" nav={WAREHOUSE_NAV} parent={ADMIN_PARENT} />}>
               <Route path="skladiste" element={<WarehouseStock />} />
               <Route path="skladiste/promet" element={<WarehouseMovements />} />
               <Route path="skladiste/rezervacije" element={<WarehouseReservations />} />

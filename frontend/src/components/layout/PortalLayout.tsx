@@ -6,8 +6,18 @@ import { Button } from '@/components/ui/Button';
 import { Logout } from '@/components/ui/Icon';
 import { DemoRibbon } from './DemoRibbon';
 import { NotificationBell } from '@/features/notifications/NotificationBell';
+import type { RoleName } from '@/lib/types';
 
 export type PortalNavItem = { to: string; label: string; end?: boolean };
+
+/**
+ * Nadređeni portal u zaglavlju, npr. „Administracija / Skladište".
+ *
+ * `role` postoji zato što isti ekran koriste dvije uloge: skladištar i
+ * administrator otvaraju isto Skladište, ali samo administrator ima kamo
+ * natrag. Bez tog uvjeta skladištar bi dobio poveznicu koja mu vraća 403.
+ */
+export type PortalParent = { to: string; label: string; role?: RoleName };
 
 /**
  * Okvir portala (kupac, majstor, skladište, administracija).
@@ -16,9 +26,19 @@ export type PortalNavItem = { to: string; label: string; end?: boolean };
  * vodoravnom položaju, gdje bočni izbornik jede širinu koja treba tablici
  * naloga. Traka se na uskom ekranu vodoravno skrola i ostaje dohvatljiva palcem.
  */
-export function PortalLayout({ title, nav }: { title: string; nav: PortalNavItem[] }) {
+export function PortalLayout({
+  title,
+  nav,
+  parent,
+}: {
+  title: string;
+  nav: PortalNavItem[];
+  parent?: PortalParent;
+}) {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
+
+  const showParent = parent && (!parent.role || user?.roles.includes(parent.role));
 
   async function handleLogout() {
     await logout();
@@ -44,6 +64,19 @@ export function PortalLayout({ title, nav }: { title: string; nav: PortalNavItem
           <span aria-hidden="true" className="text-asphalt-500">
             /
           </span>
+          {showParent ? (
+            <>
+              <Link
+                to={parent.to}
+                className="text-sm font-bold text-asphalt-300 no-underline hover:text-white"
+              >
+                {parent.label}
+              </Link>
+              <span aria-hidden="true" className="text-asphalt-500">
+                /
+              </span>
+            </>
+          ) : null}
           <h1 className="display text-xl">{title}</h1>
 
           <div className="ml-auto flex items-center gap-3">
