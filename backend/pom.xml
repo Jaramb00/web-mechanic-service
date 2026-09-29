@@ -140,6 +140,33 @@
 
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <!--
+            Lombok se NAVODI EKSPLICITNO kao procesor anotacija, iako je već
+            ovisnost projekta.
+
+            Od JDK-a 23 javac više ne pokreće sam procesore koje nađe na
+            classpathu (JEP 8067127) — traži ili `-proc:full` ili ovakav
+            popis. Bez toga Lombok tiho ne generira ništa, pa build javi
+            "cannot find symbol: getId()" na svakom getteru i izgleda kao da
+            je kod pokvaren.
+
+            To se i dogodilo: isti commit prolazio je na JDK-u 21 i u CI-ju,
+            a na JDK-u 24 nije. Ovako ne ovisi o verziji JDK-a.
+          -->
+          <annotationProcessorPaths>
+            <path>
+              <groupId>org.projectlombok</groupId>
+              <artifactId>lombok</artifactId>
+              <version>${lombok.version}</version>
+            </path>
+          </annotationProcessorPaths>
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
         <configuration>
           <!--

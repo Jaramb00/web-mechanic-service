@@ -163,6 +163,19 @@ koje se lako nehotice prekrše:
 Kupcu se potvrda **ne** šalje jer adresa nije provjerena; preduvjeti su u
 `docs/OPEN-QUESTIONS.md`.
 
+## Zamka: Lombok i JDK 23+
+
+Od JDK-a 23 `javac` **više ne pokreće sam procesore anotacija koje nađe na classpathu**.
+Lombok je i dalje ovisnost projekta, ali to samo po sebi nije dovoljno: bez eksplicitnog
+popisa procesora tiho ne generira ništa, pa build javi `cannot find symbol: getId()` na
+svakom getteru i izgleda kao da je kod pokvaren.
+
+Zato je u `backend/pom.xml` Lombok naveden i kao `<annotationProcessorPaths>` uz
+`maven-compiler-plugin`. **Taj blok se ne uklanja** iako izgleda kao dupliranje ovisnosti.
+
+Provjereno stvarnim prevođenjem: bez njega isti commit prolazi na JDK-u 21 i pada na
+JDK-u 25; s njim prolaze oba, 65 testova na svakom.
+
 ## Zamka: `@Modifying(clearAutomatically = true)` odvaja entitete
 
 Upiti nad zalihom u `ProductRepository` (`tryReserve`, `tryRelease`, `tryConsumeReserved`)

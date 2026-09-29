@@ -140,14 +140,6 @@ elif [ "$JAVA_MAJOR" -lt 21 ]; then
   macOS:  brew install --cask temurin@21"
 else
   echo "  Java $JAVA_MAJOR (iz ${JAVA_SOURCE})"
-  # Projekt cilja JDK 21. Novija Java se NE odbija, ali se najavljuje: Lombok
-  # generira gettere kroz procesor anotacija i na JDK-u koji još ne podržava
-  # tiho ne odradi posao. Build tada javi "cannot find symbol: getId()", što
-  # izgleda kao pokvaren kod, a nije.
-  if [ "$JAVA_MAJOR" -gt 21 ]; then
-    echo "  Napomena: projekt je građen za JDK 21. Ako build javi 'cannot find symbol'"
-    echo "            na getterima, uzrok je Lombok na prenovom JDK-u — vidi poruku pri padu."
-  fi
 fi
 
 NODE_MAJOR="$(node -v 2>/dev/null | sed -E 's/^v([0-9]+).*/\1/' || true)"
@@ -239,21 +231,16 @@ diagnose_backend_failure() {
 
   ⚠  Prevoditelj ne vidi gettere koje generira Lombok.
 
-     Kod nije pokvaren — procesor anotacija nije odradio posao. Najčešći uzrok
-     je JDK noviji od onoga koji Lombok u ovoj verziji podržava.
+     Kod nije pokvaren — procesor anotacija nije odradio posao. Lombok je u
+     backend/pom.xml naveden kao annotationProcessorPath baš zato da ovo ne
+     ovisi o verziji JDK-a, pa je najvjerojatniji uzrok zaostalo prevedeno
+     stanje:
 
-     Provjeri kojim JDK-om Maven prevodi:
-
-         echo "\$JAVA_HOME"
-         \${JAVA_HOME:+\$JAVA_HOME/bin/}java -version
-
-     Projekt je građen za JDK 21. Na macOS-u:
-
-         brew install --cask temurin@21
-         export JAVA_HOME=\$(/usr/libexec/java_home -v 21)
+         (cd backend && ./mvnw clean)
          ./scripts/start-dev.sh
 
-     Ako je JDK već 21, očisti zaostale razrede:  (cd backend && ./mvnw clean)
+     Ako ni to ne pomogne, javi verziju:
+         \${JAVA_HOME:+\$JAVA_HOME/bin/}java -version
 
 EOM
   fi
