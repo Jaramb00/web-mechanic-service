@@ -271,6 +271,13 @@ else
   MAIL_STATE="ISKLJUČENO — poruka ide u ${LOG_DIR}/backend.log (uključi s MAIL_ENABLED=true)"
 fi
 
+# Demo seed računa datume od trenutka migracije, a nije idempotentan. Ako baza
+# stoji nekoliko dana, "danas" ostane bez termina i tabla termina te radionica
+# budu prazne — što se primijeti tek pred klijentom. Zato se to ovdje kaže
+# naglas, umjesto da se otkrije na prezentaciji.
+TODAY_COUNT="$(psql -h "$DB_HOST" -p "$DB_PORT" -U "$DB_USER" -d "$DB_NAME" -tAc \
+  "SELECT count(*) FROM appointments WHERE start_at::date = current_date" 2>/dev/null || echo '?')"
+
 cat <<INFO
 
 ────────────────────────────────────────────────────────────
@@ -279,6 +286,7 @@ cat <<INFO
 
   Pokrenuti kod:  ${COMMIT}${DIRTY}
   E-mail dojava:  ${MAIL_STATE}
+  Termina danas:  ${TODAY_COUNT}
 
   Demo korisnici — lozinka za sve: Demo1234!
     admin@demo.local       administrator
@@ -290,5 +298,17 @@ cat <<INFO
 ────────────────────────────────────────────────────────────
 
 INFO
+
+if [ "$TODAY_COUNT" = "0" ]; then
+  cat >&2 <<'WARN'
+  ⚠  DANAS NEMA NIJEDNOG TERMINA.
+
+     Demo podaci su ostarjeli: seed računa datume od trenutka migracije, pa
+     tabla termina i radionica izgledaju prazno. Prije prezentacije klijentu:
+
+         Ctrl+C, pa ./scripts/start-dev.sh --reset
+
+WARN
+fi
 
 wait

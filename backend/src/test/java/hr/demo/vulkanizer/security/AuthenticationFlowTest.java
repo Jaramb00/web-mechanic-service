@@ -136,7 +136,8 @@ class AuthenticationFlowTest extends AbstractIntegrationTest {
             int statusCode = mockMvc.perform(post("/api/auth/login").with(csrf())
                             .contentType("application/json").content(payload))
                     .andReturn().getResponse().getStatus();
-            if (statusCode == 422) {
+            // 429, ne 422: klijent mora razlikovati „uspori" od „podaci ne valjaju".
+            if (statusCode == 429) {
                 throttled = true;
                 break;
             }

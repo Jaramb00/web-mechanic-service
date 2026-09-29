@@ -49,7 +49,14 @@ class AppointmentAssembler {
         return build(appointment, true);
     }
 
-    private AppointmentView build(Appointment a, boolean includeCustomerContact) {
+    /**
+     * @param forStaff odlučuje što se SMIJE vidjeti, ne samo koja su polja
+     *                 popunjena. Zastavica se prije zvala {@code includeCustomerContact}
+     *                 i pokrivala samo ime i telefon, pa je servisna bilješka
+     *                 majstora bezuvjetno išla i kupcu. Sve što je interno mora
+     *                 visjeti o ovoj zastavici.
+     */
+    private AppointmentView build(Appointment a, boolean forStaff) {
         List<AppointmentItemView> itemViews = items.findByAppointmentIdOrderByIdAsc(a.getId()).stream()
                 .map(AppointmentAssembler::toItemView)
                 .toList();
@@ -63,7 +70,7 @@ class AppointmentAssembler {
 
         String customerName = null;
         String customerPhone = null;
-        if (includeCustomerContact) {
+        if (forStaff) {
             Optional<UserView> customer = users.findById(a.getCustomerId());
             customerName = customer.map(UserView::fullName).orElse(null);
             customerPhone = customer.map(UserView::phone).orElse(null);
@@ -75,11 +82,12 @@ class AppointmentAssembler {
                 vehicle == null ? null : vehicle.tireSize(),
                 a.getServiceId(), serviceName, bayName,
                 a.getStartAt(), a.getEndAt(), a.getStatus(),
-                a.getCustomerNote(), a.getMechanicNote(),
+                // Servisna bilješka je interna: kupac je ne vidi ni u popisu ni u detalju.
+                a.getCustomerNote(), forStaff ? a.getMechanicNote() : null,
                 itemViews, total, rules.isCancellableNow(a.getStatus(), a.getStartAt()));
     }
 
-    /** Skupni prikaz bez N+1 upita po vozilu i usluzi. */
+    /** Skupni prikaz bez N+1 upita po vozilu i usluzi. Koristi ga samo osoblje. */
     List<AppointmentView> toViewsForStaff(List<Appointment> appointments) {
         if (appointments.isEmpty()) {
             return List.of();

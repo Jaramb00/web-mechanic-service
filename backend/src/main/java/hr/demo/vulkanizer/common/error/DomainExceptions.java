@@ -40,6 +40,16 @@ public final class DomainExceptions {
         }
     }
 
+    /**
+     * Previše zahtjeva u kratkom roku. Zaseban tip jer se preslikava na 429, a
+     * ne na 422: klijent mora moći razlikovati „uspori" od „podaci ne valjaju".
+     */
+    public static class TooManyRequestsException extends RuntimeException {
+        public TooManyRequestsException(String message) {
+            super(message);
+        }
+    }
+
     /** Nema dovoljno raspoložive količine artikla. */
     public static class InsufficientStockException extends ConflictException {
         public InsufficientStockException(String message) {

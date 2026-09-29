@@ -70,6 +70,22 @@ slobodan termin i očekivao da se može otkazati — a otkazivanje je dopušteno
 prije termina (`app.booking.cancel-cutoff-hours`), pa je test prolazio ujutro i padao
 popodne. Bira se dan nekoliko dana unaprijed.
 
+**Neispravan zahtjev nije greška poslužitelja.** Spring iznimke koje nastaju prije
+kontrolera (kriva metoda, krivi tip u putanji, nepodržan Content-Type, neispravan datum
+ili enum u filtru, paginacija izvan raspona) bez vlastitog handlera upadaju u catch-all i
+postaju **500** — uz istu poruku koju korisnik dobije kad aplikacija stvarno pukne. To se
+već dogodilo: popravljen je samo `NoResourceFoundException`, a šest sestrinskih slučajeva
+je promaklo. Svi su sada na okupu u `ApiExceptionHandler`, a drži ih `web/ApiErrorMappingTest`.
+
+**Interne bilješke ne izlaze kupcu.** U `AppointmentAssembler.build()` zastavica
+`forStaff` odlučuje što se SMIJE vidjeti, ne samo koja su polja popunjena. Zvala se
+`includeCustomerContact` i pokrivala samo ime i telefon, pa je servisna bilješka majstora
+bezuvjetno išla i kupcu. Sve interno mora visjeti o toj zastavici.
+
+**Demo podaci ostare.** Seed računa datume od trenutka migracije i nije idempotentan, pa
+nakon nekoliko dana „danas" ostane bez termina i tabla je prazna. `start-dev.sh` to javlja
+pri dizanju (`Termina danas:`); prije prezentacije ide `--reset`.
+
 **Regresija na ekranu se pokriva testom kroz HTTP, ne pozivom servisa.** Pregled termina
 u administraciji rušio se na 500 **dvaput**, a drugi put i nakon što je regresijski test
 (`StaffAppointmentFilterTest`) već postojao — jer on zove `AppointmentQueryService`

@@ -1,6 +1,6 @@
 package hr.demo.vulkanizer.auth;
 
-import hr.demo.vulkanizer.common.error.DomainExceptions.BusinessRuleException;
+import hr.demo.vulkanizer.common.error.DomainExceptions.TooManyRequestsException;
 import hr.demo.vulkanizer.users.UserCredentials;
 import hr.demo.vulkanizer.users.UserFacade;
 import hr.demo.vulkanizer.users.UserView;
@@ -36,7 +36,7 @@ class AuthService {
 
     AppPrincipal login(String email, String rawPassword, String clientIp) {
         if (!rateLimiter.tryConsume(clientIp, email)) {
-            throw new BusinessRuleException("Previše pokušaja prijave. Pokušajte ponovno za nekoliko minuta.");
+            throw new TooManyRequestsException("Previše pokušaja prijave. Pokušajte ponovno za nekoliko minuta.");
         }
 
         Optional<UserCredentials> found = users.findCredentialsByEmail(email);

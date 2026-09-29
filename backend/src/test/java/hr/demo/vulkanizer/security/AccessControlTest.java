@@ -1,6 +1,7 @@
 package hr.demo.vulkanizer.security;
 
 import hr.demo.vulkanizer.appointments.AppointmentBookingService;
+import hr.demo.vulkanizer.appointments.AppointmentWorkService;
 import hr.demo.vulkanizer.appointments.dto.AppointmentCreateRequest;
 import hr.demo.vulkanizer.appointments.dto.AppointmentView;
 import hr.demo.vulkanizer.reservations.ReservationRequest;
@@ -37,6 +38,9 @@ class AccessControlTest extends AbstractIntegrationTest {
 
     @Autowired
     private AppointmentBookingService booking;
+
+    @Autowired
+    private AppointmentWorkService work;
 
     @Autowired
     private ReservationService reservations;
@@ -174,6 +178,34 @@ class AccessControlTest extends AbstractIntegrationTest {
                 .doesNotContain("physicalQuantity")
                 .doesNotContain("reservedQuantity");
         assertThat(body).contains("availableQuantity");
+    }
+
+    @Test
+    @DisplayName("Servisna bilješka majstora ne dolazi kupcu — ni u popisu ni u detalju")
+    void mechanicNoteStaysInternal() throws Exception {
+        UserView customer = fixtures.customer();
+        VehicleView vehicle = fixtures.vehicleFor(customer);
+        AppointmentView appointment = booking.book(customer.id(), new AppointmentCreateRequest(
+                fixtures.service("Test usluga 30").id(), vehicle.id(),
+                fixtures.futureSlot(57, LocalTime.of(13, 0)), "Napomena kupca.", null));
+
+        String internal = "INTERNO-" + java.util.UUID.randomUUID();
+        work.setMechanicNote(appointment.id(), internal);
+
+        Cookie session = loginAs(customer.email());
+
+        String list = mockMvc.perform(get("/api/me/appointments").cookie(session))
+                .andExpect(status().isOk())
+                .andReturn().getResponse().getContentAsString();
+        String detail = mockMvc.perform(get("/api/me/appointments/{id}", appointment.id()).cookie(session))
+                .andExpect(status().isOk())
+                .andReturn().getResponse().getContentAsString();
+
+        // Bilješka je interna: služi dogovoru unutar servisa, ne komunikaciji sa strankom.
+        assertThat(list).as("popis termina kupca").doesNotContain(internal);
+        assertThat(detail).as("detalj termina kupca").doesNotContain(internal);
+        // Vlastita napomena kupca mu naravno ostaje vidljiva.
+        assertThat(detail).contains("Napomena kupca.");
     }
 
     private ProductStockView stockedProduct() {
