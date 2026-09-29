@@ -112,6 +112,52 @@ class ReservationLifecycleTest extends AbstractIntegrationTest {
                 .isInstanceOf(NotFoundException.class);
     }
 
+    @Test
+    @DisplayName("Izdavanje se stvarno UPISUJE: druga izdaja iste rezervacije se odbija")
+    void fulfillingIsPersistedAndCannotRepeat() {
+        ProductStockView before = stocked();
+        UserView customer = fixtures.customer();
+        ReservationView reservation = reservations.create(customer.id(),
+                new ReservationRequest(before.id(), 3, null, null));
+
+        reservations.fulfill(reservation.id(), customer.id());
+
+        // Ovo je ključ: čita se STANJE IZ BAZE, ne objekt koji je servis vratio.
+        // Regresija: upiti nad zalihom nose @Modifying(clearAutomatically = true),
+        // pa se promjena statusa nakon njih gubila. Odgovor je javljao FULFILLED,
+        // a redak je ostajao CONFIRMED — ista se rezervacija mogla izdavati u
+        // nedogled, svaki put skidajući robu sa stanja.
+        assertThat(reservations.getForCustomer(reservation.id(), customer.id()).status())
+                .as("status pročitan iz baze nakon izdavanja")
+                .isEqualTo(ReservationStatus.FULFILLED);
+
+        assertThatThrownBy(() -> reservations.fulfill(reservation.id(), customer.id()))
+                .as("druga izdaja iste rezervacije")
+                .isInstanceOf(BusinessRuleException.class);
+
+        // Roba je smjela izaći točno jednom.
+        assertThat(inventory.getForStaff(before.id()).physicalQuantity())
+                .isEqualTo(before.physicalQuantity() - 3);
+    }
+
+    @Test
+    @DisplayName("Otkazivanje se stvarno UPISUJE: drugo otkazivanje se odbija")
+    void cancellingIsPersisted() {
+        ProductStockView before = stocked();
+        UserView customer = fixtures.customer();
+        ReservationView reservation = reservations.create(customer.id(),
+                new ReservationRequest(before.id(), 2, null, null));
+
+        reservations.cancelAsCustomer(reservation.id(), customer.id());
+
+        assertThat(reservations.getForCustomer(reservation.id(), customer.id()).status())
+                .as("status pročitan iz baze nakon otkazivanja")
+                .isEqualTo(ReservationStatus.CANCELLED);
+
+        assertThatThrownBy(() -> reservations.cancelAsCustomer(reservation.id(), customer.id()))
+                .isInstanceOf(BusinessRuleException.class);
+    }
+
     private ProductStockView stocked() {
         ProductStockView product = inventory
                 .searchForStaff("TEST-PLENTY", null, true, PageRequest.of(0, 1)).getContent().getFirst();

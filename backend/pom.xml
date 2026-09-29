@@ -137,6 +137,24 @@
           </excludes>
         </configuration>
       </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <configuration>
+          <!--
+            Isti redoslijed razreda svugdje. Bez ovoga Surefire ide redom kojim
+            datoteke dođu s diska, pa lokalni i CI prolaz mogu ići drukčije —
+            što se i dogodilo: set je lokalno bio zelen, a na GitHubu crven, i
+            trebalo je vaditi log da se uopće vidi koji test pada.
+
+            Testovi dijele bazu i ne čiste je između razreda (vidi CLAUDE.md),
+            pa je ponovljiv redoslijed ovdje uvjet da zelen lokalni set nešto
+            znači.
+          -->
+          <runOrder>alphabetical</runOrder>
+        </configuration>
+      </plugin>
     </plugins>
   </build>
 </project>

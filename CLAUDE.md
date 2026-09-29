@@ -163,6 +163,30 @@ koje se lako nehotice prekrše:
 Kupcu se potvrda **ne** šalje jer adresa nije provjerena; preduvjeti su u
 `docs/OPEN-QUESTIONS.md`.
 
+## Zamka: `@Modifying(clearAutomatically = true)` odvaja entitete
+
+Upiti nad zalihom u `ProductRepository` (`tryReserve`, `tryRelease`, `tryConsumeReserved`)
+nose `@Modifying(clearAutomatically = true, flushAutomatically = true)`. To je nužno da
+uvjetni `UPDATE` ostane atomaran, ali ima posljedicu koja se ne vidi s mjesta poziva:
+**nakon takvog upita persistence context je očišćen, a svi učitani entiteti odvojeni.**
+
+Zato **promjena stanja entiteta mora ići PRIJE poziva u skladište**, nikad poslije.
+`flushAutomatically = true` tada izmjenu upiše prije samog UPDATE-a, a ako zaliha ne
+pokrije traženo, cijela se transakcija poništi.
+
+Ovo je probilo do proizvoda: `ReservationService.fulfill` i `cancelInternal` mijenjali su
+status nakon poziva u skladište, pa se promjena gubila. API je javljao `FULFILLED`, redak
+je ostajao `CONFIRMED`, i **ista se rezervacija mogla izdavati u nedogled** — roba je
+svaki put izlazila sa stanja. Otkriveno tek prolazom kroz API uz čitanje baze; jedinični
+test je prolazio jer je provjeravao **objekt koji servis vrati**, a ne zapis u bazi.
+
+Pravilo koje iz toga slijedi: test promjene stanja mora čitati **iz baze**
+(`getForCustomer(...)`), ne vjerovati povratnoj vrijednosti servisa. Vidi
+`ReservationLifecycleTest.fulfillingIsPersistedAndCannotRepeat`.
+
+Redoslijed testnih razreda je zakovan (`<runOrder>alphabetical</runOrder>` u `pom.xml`)
+jer testovi dijele bazu, pa bi se lokalni i CI prolaz inače razlikovali.
+
 ## Zamka: nullable parametri u JPQL-u
 
 **Nikad ne pisati `(:param IS NULL OR stupac = :param)`.** Hibernate imenovani parametar

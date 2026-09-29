@@ -86,9 +86,10 @@ public class ReservationService {
         if (!reservation.getStatus().isHolding()) {
             throw new BusinessRuleException("Rezervacija se više ne može otkazati.");
         }
+        // Status se mijenja PRIJE poziva u skladište — vidi napomenu uz fulfill().
+        reservation.changeStatus(ReservationStatus.CANCELLED);
         inventory.release(reservation.getProductId(), reservation.getQuantity(),
                 StockRef.of(REF_TYPE, reservation.getId()), actorId);
-        reservation.changeStatus(ReservationStatus.CANCELLED);
         return toView(reservation);
     }
 
@@ -102,16 +103,30 @@ public class ReservationService {
         return toView(reservation);
     }
 
-    /** Roba je preuzeta: skida se i s police i s rezervacije. */
+    /**
+     * Roba je preuzeta: skida se i s police i s rezervacije.
+     *
+     * <p><b>Redoslijed nije stvar stila.</b> Upiti nad zalihom u
+     * {@code ProductRepository} nose {@code @Modifying(clearAutomatically = true)},
+     * što nakon izvršenja očisti cijeli persistence context i ODVOJI sve učitane
+     * entitete. Promjena statusa nakon takvog poziva mijenja odvojen objekt i
+     * nikad ne dođe do baze: odgovor bi javio FULFILLED, a redak bi ostao u
+     * starom statusu — pa bi se ista rezervacija mogla izdati iznova, svaki put
+     * skidajući robu sa stanja.
+     *
+     * <p>Zato status ide prvi. {@code flushAutomatically = true} osigurava da se
+     * izmjena upiše prije samog UPDATE-a nad zalihom, a ako zaliha ne pokrije
+     * traženo, cijela se transakcija poništi i status se vraća.
+     */
     @Transactional
     public ReservationView fulfill(Long reservationId, Long actorId) {
         ProductReservation reservation = require(reservationId);
         if (!reservation.getStatus().isHolding()) {
             throw new BusinessRuleException("Rezervacija je već zatvorena.");
         }
+        reservation.changeStatus(ReservationStatus.FULFILLED);
         inventory.consumeReserved(reservation.getProductId(), reservation.getQuantity(),
                 StockRef.of(REF_TYPE, reservation.getId()), actorId);
-        reservation.changeStatus(ReservationStatus.FULFILLED);
         return toView(reservation);
     }
 
