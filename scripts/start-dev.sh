@@ -120,12 +120,34 @@ fi
 # `|| true` na kraju je nužan: uz `set -e` i `pipefail` cjevovod koji ništa ne
 # nađe sruši skriptu BEZ IJEDNE PORUKE. Provjera verzije nikad ne smije biti
 # tiši način da se odustane od posla.
-JAVA_MAJOR="$(java -version 2>&1 | grep -Eo '"[0-9]+' | head -1 | tr -d '"' || true)"
+#
+# Gleda se JDK kojim će Maven STVARNO prevoditi. Maven uzima JAVA_HOME ako je
+# postavljen, a `java` s PATH-a tek inače — pa provjera samo PATH-a zna proći
+# dok se build prevodi sasvim drugim JDK-om.
+if [ -n "${JAVA_HOME:-}" ] && [ -x "$JAVA_HOME/bin/java" ]; then
+  BUILD_JAVA="$JAVA_HOME/bin/java"
+  JAVA_SOURCE="JAVA_HOME ($JAVA_HOME)"
+else
+  BUILD_JAVA="java"
+  JAVA_SOURCE="PATH"
+fi
+
+JAVA_MAJOR="$("$BUILD_JAVA" -version 2>&1 | grep -Eo '"[0-9]+' | head -1 | tr -d '"' || true)"
 if [ -z "$JAVA_MAJOR" ]; then
   echo "  Upozorenje: ne mogu pročitati verziju Jave — nastavljam, build će javiti ako je prestara."
 elif [ "$JAVA_MAJOR" -lt 21 ]; then
   fail "Java $JAVA_MAJOR je prestara — potrebna je 21 ili novija.
   macOS:  brew install --cask temurin@21"
+else
+  echo "  Java $JAVA_MAJOR (iz ${JAVA_SOURCE})"
+  # Projekt cilja JDK 21. Novija Java se NE odbija, ali se najavljuje: Lombok
+  # generira gettere kroz procesor anotacija i na JDK-u koji još ne podržava
+  # tiho ne odradi posao. Build tada javi "cannot find symbol: getId()", što
+  # izgleda kao pokvaren kod, a nije.
+  if [ "$JAVA_MAJOR" -gt 21 ]; then
+    echo "  Napomena: projekt je građen za JDK 21. Ako build javi 'cannot find symbol'"
+    echo "            na getterima, uzrok je Lombok na prenovom JDK-u — vidi poruku pri padu."
+  fi
 fi
 
 NODE_MAJOR="$(node -v 2>/dev/null | sed -E 's/^v([0-9]+).*/\1/' || true)"
@@ -205,6 +227,38 @@ cleanup() {
 }
 trap cleanup EXIT INT TERM
 
+# Prevoditeljska greška na Lombokovim getterima izgleda kao pokvaren kod, a
+# gotovo uvijek znači da procesor anotacija nije odradio posao. Bez ove poruke
+# korisnik dobije tridesetak redaka "cannot find symbol" i nijedan trag kamo dalje.
+diagnose_backend_failure() {
+  local log="$LOG_DIR/backend.log"
+  [ -f "$log" ] || return 0
+  if grep -q "cannot find symbol" "$log" \
+     && grep -Eq "symbol: +method (get|is)[A-Z]" "$log"; then
+    cat >&2 <<EOM
+
+  ⚠  Prevoditelj ne vidi gettere koje generira Lombok.
+
+     Kod nije pokvaren — procesor anotacija nije odradio posao. Najčešći uzrok
+     je JDK noviji od onoga koji Lombok u ovoj verziji podržava.
+
+     Provjeri kojim JDK-om Maven prevodi:
+
+         echo "\$JAVA_HOME"
+         \${JAVA_HOME:+\$JAVA_HOME/bin/}java -version
+
+     Projekt je građen za JDK 21. Na macOS-u:
+
+         brew install --cask temurin@21
+         export JAVA_HOME=\$(/usr/libexec/java_home -v 21)
+         ./scripts/start-dev.sh
+
+     Ako je JDK već 21, očisti zaostale razrede:  (cd backend && ./mvnw clean)
+
+EOM
+  fi
+}
+
 say "Dižem backend (profil demo) na portu ${BACKEND_PORT}"
 echo "  Log: ${LOG_DIR}/backend.log"
 (
@@ -226,6 +280,7 @@ for _ in $(seq 1 120); do
   kill -0 "$BACKEND_PID" 2>/dev/null || {
     printf '\n'
     tail -30 "$LOG_DIR/backend.log" >&2
+    diagnose_backend_failure
     fail "Backend se ugasio pri pokretanju. Cijeli log: ${LOG_DIR}/backend.log"
   }
   printf '.'
