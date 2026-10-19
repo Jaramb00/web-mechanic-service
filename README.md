@@ -1,313 +1,320 @@
-# Vulkanizerski servis — demo web aplikacija
+# Tyre Service — demo web application
 
-Demo (MVP prototip) poslovnog sustava za **jedan** vulkanizerski servis: javna web
-stranica s online rezervacijom termina, korisnički portal te portali za majstora,
-skladište i administratora.
+🇭🇷 [Hrvatska verzija](README.hr.md)
 
-> **Ovo je demo.** Svi podaci — naziv servisa, adresa, telefon, OIB, cijene, artikli i
-> korisnici — **izmišljeni su i označeni kao zamjenski**. Prije bilo kakve javne upotrebe
-> moraju se zamijeniti stvarnima. Pravne stranice su predlošci koje mora pregledati pravni
-> stručnjak. Vidi [docs/OPEN-QUESTIONS.md](docs/OPEN-QUESTIONS.md).
+A demo (MVP prototype) of a business system for **a single** tyre service: a public
+website with online appointment booking, a customer portal, and portals for the mechanic,
+the warehouse and the administrator.
 
----
-
-## Sadržaj
-
-- [Što demo pokazuje](#što-demo-pokazuje)
-- [Brzo pokretanje](#brzo-pokretanje)
-- [Demo pristupni podaci](#demo-pristupni-podaci)
-- [Razvoj bez Dockera](#razvoj-bez-dockera)
-- [Testovi](#testovi)
-- [Arhitektura ukratko](#arhitektura-ukratko)
-- [Konfiguracija](#konfiguracija)
-- [Dokumentacija](#dokumentacija)
+> **This is a demo.** All data — the shop name, address, phone, tax ID, prices, items and
+> users — is **made up and marked as placeholder**. It must be replaced with real data before
+> any public use. The legal pages are templates that must be reviewed by a legal
+> professional. See [docs/OPEN-QUESTIONS.md](docs/OPEN-QUESTIONS.md).
 
 ---
 
-## Što demo pokazuje
+## Contents
 
-**Javna stranica** — naslovnica koja u prvom ekranu pokazuje *stvarni prvi slobodan termin*
-dohvaćen s API-ja, cjenik, usluge, hotel za gume, ponuda guma i dijelova, kontakt, lokacija,
-česta pitanja, pravne stranice i vlastita stranica 404.
-
-**Rezervacija termina** — odabir usluge, dana i termina, pa vozila i napomene. Prijava se
-traži tek na kraju i odabir se ne gubi. Zauzeti termini se **prikazuju šrafirani**, ne
-skrivaju: u sezoni je vidljiva popunjenost dio poruke.
-
-**Korisnički portal** — vozila, termini sa statusom i poviješću, rezervacije artikala,
-obavijesti.
-
-**Portal majstora** — radni nalozi po danu, promjena statusa, servisna napomena,
-evidencija utrošenih artikala (koja odmah skida robu sa zalihe).
-
-**Skladište** — stanje zalihe s raspoloživom količinom, zaprimanje, izdavanje i korekcija,
-te **knjiga prometa** u kojoj svaka promjena ima trag.
-
-**Administracija** — pregled dana, svi termini, usluge i cjenik, korisnici i uloge,
-radno vrijeme.
-
-Potpun popis: [docs/IMPLEMENTED.md](docs/IMPLEMENTED.md).
+- [What the demo shows](#what-the-demo-shows)
+- [Quick start](#quick-start)
+- [Demo login details](#demo-login-details)
+- [Development without Docker](#development-without-docker)
+- [Tests](#tests)
+- [Architecture in brief](#architecture-in-brief)
+- [Configuration](#configuration)
+- [Documentation](#documentation)
 
 ---
 
-## Brzo pokretanje
+## What the demo shows
 
-### Jednom naredbom (preporučeno za demo)
+**Public website** — a homepage whose first screen shows the *actual next free slot*
+fetched from the API, price list, services, tyre storage, tyres and parts on offer,
+contact, location, FAQ, legal pages and a custom 404 page.
 
-Potrebno: **Java 21+**, **Node 22+**, **PostgreSQL 16+**.
-Maven ne treba instalirati — projekt nosi Maven Wrapper (`backend/mvnw`), koji pri prvom
-pokretanju sam skine ispravnu verziju.
+**Appointment booking** — choose a service, day and time slot, then the vehicle and a note.
+Sign-in is requested only at the end, and the selection is not lost. Taken slots are
+**shown hatched**, not hidden: during the season, visible demand is part of the message.
+
+**Customer portal** — vehicles, appointments with status and history, item reservations,
+notifications.
+
+**Mechanic portal** — work orders by day, status changes, service notes, recording parts
+used (which immediately deducts them from stock).
+
+**Warehouse** — stock levels with available quantity, receiving, issuing and adjustments,
+plus a **stock movement ledger** where every change leaves a trace.
+
+**Administration** — daily overview, all appointments, services and prices, users and
+roles, opening hours.
+
+Full list: [docs/IMPLEMENTED.md](docs/IMPLEMENTED.md).
+
+---
+
+## Quick start
+
+### One command (recommended for a demo)
+
+Requirements: **Java 21+**, **Node 22+**, **PostgreSQL 16+**.
+Maven does not need to be installed — the project ships the Maven Wrapper (`backend/mvnw`),
+which downloads the correct version on first run.
 
 ```bash
 ./scripts/start-dev.sh
 ```
 
-Skripta provjeri preduvjete, pokrene PostgreSQL ako ne radi, stvori bazu ako je nema,
-instalira ovisnosti frontenda pri prvom pokretanju, pa digne backend i frontend i pričeka
-da oba stvarno odgovore. Na kraju ispiše adresu i demo login podatke. `Ctrl+C` gasi oboje.
+The script checks prerequisites, starts PostgreSQL if it isn't running, creates the database
+if it doesn't exist, installs frontend dependencies on first run, then starts the backend
+and frontend and waits until both actually respond. At the end it prints the URL and the
+demo login details. `Ctrl+C` stops both.
 
-Prije prezentacije klijentu, da demo podaci budu na početnom stanju:
+Before presenting to a client, to reset the demo data to its initial state:
 
 ```bash
 ./scripts/start-dev.sh --reset
 ```
 
-Logovi su u `.dev-logs/` (nisu u Gitu).
+Logs are in `.dev-logs/` (not in Git).
 
 ### Docker Compose
 
 ```bash
 cp .env.example .env
-# Otvorite .env i postavite barem POSTGRES_USER, POSTGRES_PASSWORD i JWT_SECRET.
-# JWT_SECRET generirajte s:  openssl rand -base64 48
+# Open .env and set at least POSTGRES_USER, POSTGRES_PASSWORD and JWT_SECRET.
+# Generate JWT_SECRET with:  openssl rand -base64 48
 
 docker compose up --build
 ```
 
-Aplikacija: <http://localhost:8080> · Swagger: <http://localhost:8080/swagger-ui.html>
+App: <http://localhost:8080> · Swagger: <http://localhost:8080/swagger-ui.html>
 
-> **Napomena o provjeri:** `docker-compose.yml` i Dockerfile-ovi provjereni su samo
-> sintaktički (`docker compose config`). Nisu pokrenuti, jer razvojno okruženje u kojem je
-> demo izrađen nema Docker daemon. Backend, frontend i svi testovi jesu pokretani i
-> provjereni izravno, protiv stvarnog PostgreSQL-a.
+> **Note on verification:** `docker-compose.yml` and the Dockerfiles have only been checked
+> syntactically (`docker compose config`). They have not been run, because the development
+> environment the demo was built in has no Docker daemon. The backend, frontend and all
+> tests have been run and verified directly, against a real PostgreSQL.
 
-### Ručno (bez Dockera)
+### Manually (without Docker)
 
-Potrebno: **Java 21+**, **Node 22+**, **PostgreSQL 16+** (Maven dolazi kroz `./mvnw`).
+Requirements: **Java 21+**, **Node 22+**, **PostgreSQL 16+** (Maven comes via `./mvnw`).
 
 ```bash
-# 1. Baza
+# 1. Database
 createdb vulkanizer
 
-# 2. Backend — Flyway sam odradi shemu i demo podatke
+# 2. Backend — Flyway sets up the schema and demo data by itself
 cd backend
 POSTGRES_USER=postgres POSTGRES_PASSWORD=postgres POSTGRES_DB=vulkanizer \
 SPRING_PROFILES_ACTIVE=demo \
 JWT_SECRET=$(openssl rand -base64 48) \
 ./mvnw spring-boot:run
 
-# 3. Frontend (u drugom terminalu)
+# 3. Frontend (in a second terminal)
 cd frontend
 npm install
 npm run dev
 ```
 
-Aplikacija: <http://localhost:5173> (Vite posreduje `/api` na backend, pa frontend i API
-dijele origin i cookie s tokenom radi bez CORS-a — isto kao u produkciji iza nginxa.)
+App: <http://localhost:5173> (Vite proxies `/api` to the backend, so the frontend and the
+API share an origin and the token cookie works without CORS — the same as in production
+behind nginx.)
 
-### Reset demo podataka
+### Resetting demo data
 
-Prije prezentacije ili E2E testova:
+Before a presentation or E2E tests:
 
 ```bash
 ./scripts/reset-demo.sh
-# pa ponovno pokrenite backend s profilom `demo`
+# then restart the backend with the `demo` profile
 ```
 
-Seed namjerno **nije** idempotentan: čist reset je pošteniji i brži od pokušaja
-„dopuni ako nedostaje", koji uvijek ostavi neki zaostali zapis.
+The seed is intentionally **not** idempotent: a clean reset is more honest and faster than
+trying to "fill in what's missing", which always leaves some stray record behind.
 
 ---
 
-## Demo pristupni podaci
+## Demo login details
 
-Lozinka za **sve** demo račune: `Demo1234!`
+Password for **all** demo accounts: `Demo1234!`
 
-| Uloga | E-mail | Što vidi |
+| Role | E-mail | What they see |
 |---|---|---|
-| Administrator | `admin@demo.local` | sve — pregled dana, termini, usluge, korisnici, radno vrijeme, skladište |
-| Majstor | `majstor@demo.local` | radne naloge, statuse, napomene, evidenciju utroška |
-| Skladištar | `skladiste@demo.local` | zalihu, promet, rezervacije artikala |
-| Kupac | `ivan@demo.local` | svoja vozila, termine i rezervacije |
-| Kupac | `ana@demo.local` | isto |
-| Kupac | `marko@demo.local` | isto |
-| Kupac | `petra@demo.local` | isto |
-| Kupac | `tomislav@demo.local` | isto |
+| Administrator | `admin@demo.local` | everything — daily overview, appointments, services, users, opening hours, warehouse |
+| Mechanic | `majstor@demo.local` | work orders, statuses, notes, parts used |
+| Warehouse | `skladiste@demo.local` | stock, movements, item reservations |
+| Customer | `ivan@demo.local` | their own vehicles, appointments and reservations |
+| Customer | `ana@demo.local` | same |
+| Customer | `marko@demo.local` | same |
+| Customer | `petra@demo.local` | same |
+| Customer | `tomislav@demo.local` | same |
 
-Ti su podaci vidljivi i na stranici za prijavu dok je `IS_DEMO` uključen
-(`frontend/src/config/site.ts`). **U produkciji se `IS_DEMO` gasi i blok nestaje.**
+These details are also shown on the sign-in page while `IS_DEMO` is enabled
+(`frontend/src/config/site.ts`). **In production `IS_DEMO` is switched off and the block disappears.**
 
-> Lozinka `Demo1234!` postoji isključivo za demonstraciju i ne smije se koristiti nigdje
-> drugdje. Hash u seed migraciji je BCrypt generiran samo za tu svrhu.
+> The password `Demo1234!` exists solely for demonstration and must not be used anywhere
+> else. The hash in the seed migration is a BCrypt hash generated only for this purpose.
 
 ---
 
-## Razvoj bez Dockera
+## Development without Docker
 
 ```bash
 # Backend
 cd backend
-./mvnw spring-boot:run       # pokretanje
-./mvnw verify                # testovi (traži PostgreSQL, vidi niže)
+./mvnw spring-boot:run       # run
+./mvnw verify                # tests (needs PostgreSQL, see below)
 
 # Frontend
 cd frontend
-npm run dev                  # razvojni poslužitelj
-npm run build                # produkcijski build
+npm run dev                  # development server
+npm run build                # production build
 npm run lint                 # ESLint
 npm run typecheck            # TypeScript
-npm run test                 # jedinični testovi (Vitest)
-npm run e2e                  # E2E testovi (Playwright) — traži pokrenut backend
-npm run check:site           # poveznice, meta podaci, H1, alt tekstovi
-npm run check:a11y           # axe-core preko 27 ekrana, WCAG 2.1 A i AA
-npm run shots -- /kontakt    # snimke ekrana u frontend/.shots/
+npm run test                 # unit tests (Vitest)
+npm run e2e                  # E2E tests (Playwright) — needs the backend running
+npm run check:site           # links, metadata, H1, alt texts
+npm run check:a11y           # axe-core across 27 screens, WCAG 2.1 A and AA
+npm run shots -- /kontakt    # screenshots into frontend/.shots/
 ```
 
-Snimanje ekrana prima više ruta odjednom, prijavu (`--kao admin@demo.local`) i mobilni
-prikaz (`--mobilno`). Korisno kad se aplikacija ne može otvoriti u pregledniku — na
-poslužitelju bez sučelja ili u okolini za razvoj u oblaku.
+The screenshot script accepts several routes at once, a login (`--kao admin@demo.local`) and
+a mobile view (`--mobilno`). Useful when the app can't be opened in a browser — on a headless
+server or in a cloud development environment.
 
 ---
 
-## Testovi
+## Tests
 
-### Backend — 44 integracijska testa
+### Backend — 44 integration tests
 
-Rade protiv **stvarnog PostgreSQL-a**, ne in-memory baze: ključna jamstva sustava
-(`EXCLUDE` constraint nad `tstzrange`, uvjetni `UPDATE`-ovi nad zalihom) oslanjaju se na
-PostgreSQL semantiku, pa bi in-memory baza davala lažno zeleno.
+They run against **real PostgreSQL**, not an in-memory database: the system's key guarantees
+(an `EXCLUDE` constraint over `tstzrange`, conditional `UPDATE`s on stock) rely on
+PostgreSQL semantics, so an in-memory database would give false greens.
 
 ```bash
 createdb vulkanizer_test
 cd backend && ./mvnw verify
 ```
 
-Pokriveno je ono što stvarno može poći po zlu:
+What is covered is what can actually go wrong:
 
-- **paralelni booking** istog termina — prolazi točno onoliko rezervacija koliko ima
-  radnih mjesta, ostale dobiju 409, i nijedno radno mjesto nema dva termina u isto vrijeme;
-- **otkazivanje oslobađa termin** — isti slot je nakon otkazivanja ponovno dostupan;
-- **paralelne rezervacije artikla** — nikad se ne rezervira više nego što je raspoloživo,
-  a stanje svakog artikla odgovara zbroju knjige prometa;
-- **IDOR** — korisnik A traži vozilo, termin ili rezervaciju korisnika B i dobiva **404**
-  (ne 403, da se ne otkrije ni postojanje zapisa);
-- **eskalacija ovlasti** — registracija s podmetnutim poljem `role` pada s 400;
-- **rate limit** na prijavi; **CSRF** na mutirajućim zahtjevima;
-- **granice modula** (ArchUnit) — nijedan JPA entitet ne izlazi iz svog modula.
+- **concurrent booking** of the same slot — exactly as many bookings succeed as there are
+  bays, the rest get 409, and no bay ever has two appointments at the same time;
+- **cancelling frees the slot** — the same slot is available again after cancellation;
+- **concurrent item reservations** — never more is reserved than is available, and every
+  item's stock matches the sum of the movement ledger;
+- **IDOR** — user A requests user B's vehicle, appointment or reservation and gets **404**
+  (not 403, so the record's existence isn't revealed either);
+- **privilege escalation** — registering with an injected `role` field fails with 400;
+- **rate limit** on sign-in; **CSRF** on mutating requests;
+- **module boundaries** (ArchUnit) — no JPA entity leaves its module.
 
-Testovi kreću od prazne baze pri svakom pokretanju, pa su ponovljivi.
+Tests start from an empty database on every run, so they are repeatable.
 
-### Frontend — 24 jedinična + 12 E2E testa
+### Frontend — 24 unit + 12 E2E tests
 
 ```bash
 cd frontend
 npm run test                                  # Vitest
-npm run e2e                                   # Playwright (backend mora raditi)
+npm run e2e                                   # Playwright (backend must be running)
 ```
 
-E2E pokriva registraciju → dodavanje vozila → rezervaciju → otkazivanje, rezervaciju
-artikla i odbijanje prekomjerne količine, portale osoblja te mobilni prikaz (bez
-vodoravnog prelijeva, dohvatljiv CTA, izbornik).
+E2E covers sign-up → adding a vehicle → booking → cancelling, item reservation and rejection
+of an excessive quantity, the staff portals, and the mobile view (no horizontal overflow,
+reachable CTA, menu).
 
 ---
 
-## Arhitektura ukratko
+## Architecture in brief
 
 ```
 frontend/  React 19 + TypeScript + Vite + Tailwind 4 + TanStack Query
 backend/   Spring Boot 3.5 + Spring Security 6 + JPA + Flyway + PostgreSQL 16
 ```
 
-Backend je **modularni monolit**: `auth`, `users`, `vehicles`, `appointments`, `catalog`,
-`inventory`, `reservations`, `notifications`, `admin`. Svaki modul izlaže jedno javno
-sučelje (`XxxFacade`); entiteti i repozitoriji su package-private i ne izlaze iz modula.
+The backend is a **modular monolith**: `auth`, `users`, `vehicles`, `appointments`, `catalog`,
+`inventory`, `reservations`, `notifications`, `admin`. Each module exposes one public
+interface (`XxxFacade`); entities and repositories are package-private and never leave
+their module.
 
-Tri odluke koje objašnjavaju većinu koda:
+Three decisions explain most of the code:
 
-1. **Dvostruka rezervacija sprječava se u bazi**, PostgreSQL `EXCLUDE` constraintom nad
-   `(bay_id, tstzrange(start_at, end_at))`, parcijalnim po aktivnim statusima. Ne postoji
-   aplikacijsko zaključavanje koje bi se moglo zaboraviti.
-2. **Zaliha se mijenja isključivo uvjetnim `UPDATE`-om** uz `CHECK` constraint
-   `reserved_quantity <= physical_quantity`. Svaka promjena ostavlja zapis u
+1. **Double booking is prevented in the database**, by a PostgreSQL `EXCLUDE` constraint over
+   `(bay_id, tstzrange(start_at, end_at))`, partial on active statuses. There is no
+   application-level locking that could be forgotten.
+2. **Stock changes only through a conditional `UPDATE`** together with a `CHECK` constraint
+   `reserved_quantity <= physical_quantity`. Every change leaves a record in
    `stock_movements`.
-3. **Zaštita tuđih podataka je u upitu, ne u provjeri** — `findByIdAndCustomerId(...)`
-   umjesto `findById(...)` + naknadnog `if`. Upit ne može „zakazati otvoreno".
+3. **Protecting other users' data is in the query, not in a check** —
+   `findByIdAndCustomerId(...)` instead of `findById(...)` followed by an `if`. A query
+   can't "forget" to check.
 
-Detaljno: [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
+Details: [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
 
 ---
 
-## Konfiguracija
+## Configuration
 
-Sve se postavlja kroz varijable okoline; predložak je [`.env.example`](.env.example).
-**U kodu nema nijedne tajne** i `.env` je u `.gitignore`.
+Everything is set through environment variables; the template is [`.env.example`](.env.example).
+**There are no secrets in the code** and `.env` is in `.gitignore`.
 
-| Varijabla | Obavezna | Opis |
+| Variable | Required | Description |
 |---|---|---|
-| `POSTGRES_USER`, `POSTGRES_PASSWORD`, `POSTGRES_DB` | da | pristup bazi |
-| `JWT_SECRET` | da (prod) | potpisni ključ, min. 32 znaka; aplikacija se bez njega ne diže u `prod` profilu |
-| `SPRING_PROFILES_ACTIVE` | ne | `demo` (sa seed podacima) ili `prod` |
-| `COOKIE_SECURE` | ne | **mora biti `true` u produkciji** |
-| `CORS_ALLOWED_ORIGINS` | ne | potreban samo ako frontend nije na istom originu |
-| `MAIL_ENABLED` | ne | `false` (default) = dojava se ispisuje u log umjesto da se šalje |
-| `MAIL_USERNAME`, `MAIL_PASSWORD`, `MAIL_FROM`, `MAIL_SHOP_RECIPIENT` | da, ako je `MAIL_ENABLED=true` | bez ijedne od njih aplikacija se ne diže |
-| `VITE_ANALYTICS_ID` | ne | prazno = mjerenje posjeta isključeno |
+| `POSTGRES_USER`, `POSTGRES_PASSWORD`, `POSTGRES_DB` | yes | database access |
+| `JWT_SECRET` | yes (prod) | signing key, min. 32 characters; the app won't start without it in the `prod` profile |
+| `SPRING_PROFILES_ACTIVE` | no | `demo` (with seed data) or `prod` |
+| `COOKIE_SECURE` | no | **must be `true` in production** |
+| `CORS_ALLOWED_ORIGINS` | no | needed only if the frontend is not on the same origin |
+| `MAIL_ENABLED` | no | `false` (default) = the notification is written to the log instead of being sent |
+| `MAIL_USERNAME`, `MAIL_PASSWORD`, `MAIL_FROM`, `MAIL_SHOP_RECIPIENT` | yes, if `MAIL_ENABLED=true` | the app won't start without any of them |
+| `VITE_ANALYTICS_ID` | no | empty = visit analytics disabled |
 
-### E-mail dojava o novoj rezervaciji
+### E-mail notification about a new booking
 
-Kad kupac rezervira termin, servis dobiva e-mail s terminom, uslugom, kupcem, telefonom
-i vozilom. **Kupcu se potvrda ne šalje** — nemamo provjeru je li adresa koju je upisao
-stvarno njegova, a slanje na neprovjerenu adresu je put u spam liste. Preduvjeti su
-popisani u [docs/OPEN-QUESTIONS.md](docs/OPEN-QUESTIONS.md).
+When a customer books a slot, the shop receives an e-mail with the slot, service, customer,
+phone and vehicle. **No confirmation is sent to the customer** — we have no verification that
+the address they entered is really theirs, and sending to unverified addresses is a path to
+spam lists. Prerequisites are listed in [docs/OPEN-QUESTIONS.md](docs/OPEN-QUESTIONS.md).
 
-Po defaultu slanje je **isključeno** i poruka se ispiše u log, pa se sadržaj može
-provjeriti bez ijednog poslanog maila. Za stvarno slanje preko Gmaila:
+By default sending is **disabled** and the message is written to the log, so the content can
+be checked without sending a single e-mail. To actually send via Gmail:
 
-1. Uključi dvofaktorsku prijavu na Google računu (bez nje App Password ne postoji).
-2. Na <https://myaccount.google.com/apppasswords> generiraj lozinku za aplikaciju —
-   dobiješ 16 znakova u četiri skupine.
-3. Postavi varijable i pokreni:
+1. Enable two-factor sign-in on the Google account (an App Password doesn't exist without it).
+2. Generate an app password at <https://myaccount.google.com/apppasswords> —
+   you get 16 characters in four groups.
+3. Set the variables and run:
 
 ```bash
 export MAIL_ENABLED=true
-export MAIL_USERNAME=adresa@gmail.com
-export MAIL_PASSWORD='xxxx xxxx xxxx xxxx'   # App Password, NE lozinka računa
-export MAIL_FROM=adresa@gmail.com            # Gmail traži da bude isti kao MAIL_USERNAME
-export MAIL_SHOP_RECIPIENT=servis@primjer.hr
+export MAIL_USERNAME=address@gmail.com
+export MAIL_PASSWORD='xxxx xxxx xxxx xxxx'   # App Password, NOT the account password
+export MAIL_FROM=address@gmail.com           # Gmail requires it to match MAIL_USERNAME
+export MAIL_SHOP_RECIPIENT=shop@example.com
 ./scripts/start-dev.sh
 ```
 
-Ako poruka ne stigne, razlog je u logu backenda: `535` znači krivu App Password,
-`Connection timed out` znači da mreža blokira port 587. Prva poruka zna završiti u
-„Promocijama" ili spamu — označi je jednom kao „nije spam".
+If the message doesn't arrive, the reason is in the backend log: `535` means a wrong App
+Password, `Connection timed out` means the network blocks port 587. The first message may end
+up in "Promotions" or spam — mark it once as "not spam".
 
-Gmail je izbor za demo (nula registracije, ~500 poruka dnevno). Za produkciju s vlastitom
-domenom ide transakcijski pružatelj (Resend, Brevo, Postmark) zbog dostavljivosti —
-mijenja se samo `SmtpMailSender`, ostatak koda ne zna kojim putem poruka ide.
+Gmail is the choice for the demo (zero sign-up, ~500 messages a day). For production with
+your own domain, a transactional provider (Resend, Brevo, Postmark) is the way to go for
+deliverability — only `SmtpMailSender` changes, the rest of the code doesn't know which route
+a message takes.
 
-Podaci o servisu (naziv, adresa, telefon, OIB, koordinate) nisu u varijablama okoline nego
-u [`frontend/src/config/site.ts`](frontend/src/config/site.ts), jer se ugrađuju u build.
-To je **jedino mjesto** koje klijent mijenja.
+Shop details (name, address, phone, tax ID, coordinates) are not in environment variables but
+in [`frontend/src/config/site.ts`](frontend/src/config/site.ts), because they are baked into
+the build. That is the **only place** the client changes.
 
 ---
 
-## Dokumentacija
+## Documentation
 
-| Dokument | Sadržaj |
+| Document | Contents |
 |---|---|
-| [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) | moduli, ER model, ključne odluke i zašto su takve |
-| [docs/SECURITY.md](docs/SECURITY.md) | svih 20 sigurnosnih zahtjeva: što je implementirano, što pripremljeno, što nije i zašto |
-| [docs/IMPLEMENTED.md](docs/IMPLEMENTED.md) | popis implementiranih funkcionalnosti |
-| [docs/OPEN-QUESTIONS.md](docs/OPEN-QUESTIONS.md) | pitanja za klijenta i popis budućih funkcionalnosti |
-| [PRODUCT.md](PRODUCT.md) | proizvodni kontekst: tko je korisnik, u kojoj situaciji, što sustav mora omogućiti |
-| [DESIGN.md](DESIGN.md) | vizualni sustav: tokeni, komponente, pravila |
+| [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) | modules, ER model, key decisions and why they were made |
+| [docs/SECURITY.md](docs/SECURITY.md) | all 20 security requirements: what is implemented, what is prepared, what isn't and why |
+| [docs/IMPLEMENTED.md](docs/IMPLEMENTED.md) | list of implemented features |
+| [docs/OPEN-QUESTIONS.md](docs/OPEN-QUESTIONS.md) | questions for the client and a list of future features |
+| [PRODUCT.md](PRODUCT.md) | product context: who the user is, in what situation, what the system must enable |
+| [DESIGN.md](DESIGN.md) | visual system: tokens, components, rules |
